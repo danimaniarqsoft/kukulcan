@@ -26,7 +26,7 @@ package mx.infotec.dads.kukulkan.domain;
 import java.util.List;
 
 /**
- * The Context Class is used for create a set of elements generated for a
+ * The Generator Context Class is used for create a set of elements generated for a
  * specific tecnology (Java, C#, Python, and so on). For instance, there could
  * be a set of elements that we would generate per each module of our
  * architecture and each module could be composed by differents elements
@@ -41,11 +41,19 @@ import java.util.List;
  * @version 1.0.0
  */
 
-public class Context {
+public class GeneratorContext {
 	/**
 	 * The elements that compound the Context. The root element could be a
 	 * module element or a layer element.
 	 */
 	private List<Element> elements;
+
+	public List<Element> getElements() {
+		return elements;
+	}
+
+	public void setElements(List<Element> elements) {
+		this.elements = elements;
+	}
 
 }
