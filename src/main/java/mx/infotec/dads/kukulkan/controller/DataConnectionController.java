@@ -27,20 +27,19 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.metamodel.DataContext;
+import org.apache.metamodel.factory.DataContextFactoryRegistryImpl;
+import org.apache.metamodel.factory.DataContextPropertiesImpl;
+import org.apache.metamodel.schema.Schema;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
-import mx.infotec.dads.kukulkan.domain.Technology;
-import mx.infotec.dads.kukulkan.service.CatalogService;
+import mx.infotec.dads.kukulkan.domain.DataConnection;
+import mx.infotec.dads.kukulkan.repositories.DataConnectionRepository;
 
 /**
  * 
@@ -50,17 +49,29 @@ import mx.infotec.dads.kukulkan.service.CatalogService;
  */
 
 @RestController
-public class MainController {
+@RequestMapping(value = "/dataConnections")
+public class DataConnectionController {
     @Inject
-    private CatalogService catalogoService;
+    private DataConnectionRepository repository;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public MappingJacksonValue getTechnologies(@RequestParam MultiValueMap<String, String> params) {
-        List<Technology> technologyList = catalogoService.getTechnology();
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(technologyList);
-        FilterProvider filters = new SimpleFilterProvider().addFilter("mx.infotec.dads.kukulkan.domain.Technology",
-                SimpleBeanPropertyFilter.filterOutAllExcept("name"));
-        mappingJacksonValue.setFilters(filters);
-        return mappingJacksonValue;
+    public List<DataConnection> getDataConnections(@RequestParam MultiValueMap<String, String> params) {
+        List<DataConnection> dataConnections = repository.findAll();
+        return dataConnections;
+    }
+
+    @RequestMapping(value = "/tables", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String[] getTables(@RequestParam MultiValueMap<String, String> params) {
+        DataConnection dataConnection = repository.findOne(1L);
+        final DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
+        properties.put("type", "jdbc");
+        properties.put("url", dataConnection.getUrl());
+        properties.put("username", dataConnection.getUsername());
+        properties.put("password", dataConnection.getPassword());
+        DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
+        Schema defaultSchema = dataContext.getDefaultSchema();
+        String[] tables = defaultSchema.getTableNames();
+        
+        return tables;
     }
 }

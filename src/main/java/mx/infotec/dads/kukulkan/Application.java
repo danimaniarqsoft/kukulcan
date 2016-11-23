@@ -38,14 +38,33 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class Application {
-	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(Application.class, args);
+    public static void main(String[] args) {
+        ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
-		String[] beanNames = ctx.getBeanDefinitionNames();
-		Arrays.sort(beanNames);
-		for (String beanName : beanNames) {
-			System.out.println(beanName);
-		}
-	}
+        String[] beanNames = ctx.getBeanDefinitionNames();
+        Arrays.sort(beanNames);
+        for (String beanName : beanNames) {
+            System.out.println(beanName);
+        }
+//        final DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
+//        properties.put("type", "jdbc");
+//        properties.put("url", "jdbc:mysql://localhost/membership?autoReconnect=true");
+//        properties.put("username", "developer");
+//        properties.put("password", "temporal123");
+//        DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
+//        String[] schemaNames = dataContext.getSchemaNames();
+//        for (String string : schemaNames) {
+//            System.out.println(string);
+//        }
+//        Schema defaultSchema = dataContext.getDefaultSchema();
+//        Table[] tables = defaultSchema.getTables();
+//        for (Table table : tables) {
+//            Column[] columns = table.getColumns();
+//            for (Column column : columns) {
+//                System.out.printf(", "+column.getType()+", ");
+//            }
+//            System.out.println();
+//        }
+    }
 
 }
