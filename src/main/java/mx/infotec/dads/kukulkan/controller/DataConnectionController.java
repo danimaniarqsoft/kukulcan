@@ -23,6 +23,7 @@
  */
 package mx.infotec.dads.kukulkan.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +39,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import mx.infotec.dads.kukulkan.domain.DataConnection;
 import mx.infotec.dads.kukulkan.repositories.DataConnectionRepository;
 
@@ -51,27 +54,41 @@ import mx.infotec.dads.kukulkan.repositories.DataConnectionRepository;
 @RestController
 @RequestMapping(value = "/dataConnections")
 public class DataConnectionController {
-    @Inject
-    private DataConnectionRepository repository;
+	@Inject
+	private DataConnectionRepository repository;
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<DataConnection> getDataConnections(@RequestParam MultiValueMap<String, String> params) {
-        List<DataConnection> dataConnections = repository.findAll();
-        return dataConnections;
-    }
+	@Inject
+	private Configuration configuration;
 
-    @RequestMapping(value = "/tables", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String[] getTables(@RequestParam MultiValueMap<String, String> params) {
-        DataConnection dataConnection = repository.findOne(1L);
-        final DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
-        properties.put("type", "jdbc");
-        properties.put("url", dataConnection.getUrl());
-        properties.put("username", dataConnection.getUsername());
-        properties.put("password", dataConnection.getPassword());
-        DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
-        Schema defaultSchema = dataContext.getDefaultSchema();
-        String[] tables = defaultSchema.getTableNames();
-        
-        return tables;
-    }
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<DataConnection> getDataConnections(@RequestParam MultiValueMap<String, String> params) {
+		System.out.println("antes");
+		
+		try {
+			Template template = configuration.getTemplate("welcomed.ftl");
+			System.out.println(template.getName());
+
+		} catch (IOException e) {
+			System.out.println("hola");
+			e.printStackTrace();
+		}
+		
+		List<DataConnection> dataConnections = repository.findAll();
+		return dataConnections;
+	}
+
+	@RequestMapping(value = "/tables", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String[] getTables(@RequestParam MultiValueMap<String, String> params) {
+		DataConnection dataConnection = repository.findOne(1L);
+		final DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
+		properties.put("type", "jdbc");
+		properties.put("url", dataConnection.getUrl());
+		properties.put("username", dataConnection.getUsername());
+		properties.put("password", dataConnection.getPassword());
+		DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
+		Schema defaultSchema = dataContext.getDefaultSchema();
+		String[] tables = defaultSchema.getTableNames();
+
+		return tables;
+	}
 }
