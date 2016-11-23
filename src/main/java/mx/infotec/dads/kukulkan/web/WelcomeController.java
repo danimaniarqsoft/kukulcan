@@ -1,4 +1,4 @@
-package mx.infotec.dads.kukulkan.controller;
+package mx.infotec.dads.kukulkan.web;
 import java.util.Date;
 import java.util.Map;
 

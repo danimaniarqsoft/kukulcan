@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.domain;
+package mx.infotec.dads.kukulkan.engine.domain.core;
 
 /**
  * 
@@ -30,6 +30,6 @@ package mx.infotec.dads.kukulkan.domain;
  * @version 1.0.0
  */
 
-public class Template {
+public class DataModel {
 
 }

@@ -2,7 +2,7 @@
 
 ## Project description
 
-**Kukulkan** is an Abstract Generator for different platforms and technologies, it is the creator of the base software architect.
+**Kukulkan** is an Abstract Generator for different platforms and technologies, it is the creator of the base software architecture.
 
 ##Some history
 

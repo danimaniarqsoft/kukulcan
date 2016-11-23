@@ -21,26 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.service;
-
-import java.io.IOException;
-import java.util.Map;
-
-import freemarker.core.ParseException;
-import freemarker.template.MalformedTemplateNameException;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
+package mx.infotec.dads.kukulkan.engine.domain;
 
 /**
+ * The Element Class is the cornerstone of the domain model, It could be
+ * extended in order to create custom behaviors. The root element could be a
+ * model element or layer element. There could be more types of elements in
+ * order to extend the framework.
  * 
  * @author Daniel Cortes Pichardo
  * @since 1.0.0
  * @version 1.0.0
  */
 
-public interface TemplateService {
+public class Element {
 
-	String fillModel(String templateName, Map<String, Object> model)
-			throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException,
-			TemplateException;
 }

@@ -21,15 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.domain;
+
+package mx.infotec.dads.kukulkan.util.exceptions;
 
 /**
+ * Runtime Exception of the Applicaton
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+public class ApplicationException extends RuntimeException {
 
-public class DataModel {
+    private static final long serialVersionUID = 1L;
+
+    public ApplicationException() {
+        super();
+    }
+
+    public ApplicationException(String s) {
+        super(s);
+    }
+
+    public ApplicationException(String s, Throwable throwable) {
+        super(s, throwable);
+    }
+
+    public ApplicationException(Throwable throwable) {
+        super(throwable);
+    }
 
 }

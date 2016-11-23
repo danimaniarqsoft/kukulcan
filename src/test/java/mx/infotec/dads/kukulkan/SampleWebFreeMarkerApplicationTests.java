@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import mx.infotec.dads.kukulkan.service.TemplateService;
+import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 
 /**
  * Basic integration tests for FreeMarker application.

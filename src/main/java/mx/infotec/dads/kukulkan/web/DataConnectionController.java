@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.controller;
+package mx.infotec.dads.kukulkan.web;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,8 +41,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import mx.infotec.dads.kukulkan.domain.DataConnection;
-import mx.infotec.dads.kukulkan.repositories.DataConnectionRepository;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataConnection;
+import mx.infotec.dads.kukulkan.engine.repository.DataConnectionRepository;
 
 /**
  * 

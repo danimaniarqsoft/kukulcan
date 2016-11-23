@@ -21,41 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.service;
+package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
-import mx.infotec.dads.kukulkan.domain.Technology;
+import java.util.Collection;
 
 /**
- * Default CatalogoServiceImpl
+ * 
+ * PropertyHolder Class that is used for hold the properties of a table
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-@Service
-public class CatalogServiceImpl implements CatalogService {
+public interface PropertyHolder {
 
-    @Override
-    public List<Technology> getTechnology() {
-        List<Technology> technologyList = new ArrayList<>();
-        Technology tech1 = new Technology();
-        tech1.setName("Java");
-        tech1.setBriefDescription("Java version 1.8");
-        tech1.setDescription("Java framework supported: 1.8 with different frameworks");
-        tech1.setCreationDate(new Date());
-        Technology tech2 = new Technology();
-        tech2.setName("C#");
-        tech2.setBriefDescription("C# Latest version");
-        tech2.setDescription("C# framework supported with different frameworks");
-        tech2.setCreationDate(new Date());
-        technologyList.add(tech1);
-        technologyList.add(tech2);
-        return technologyList;
-    }
+    /**
+     * Return the name of the property
+     * 
+     * @return propertyName
+     */
+    String getPropertyName();
+
+    /**
+     * Return the type of the property
+     * 
+     * @return propertyType
+     */
+    String getPropertyType();
+
+    /**
+     * Return the qualified name of the type of the Property, in order to create
+     * a import statement in the generation fase;
+     * 
+     * @return qualifiedName
+     */
+    String getQualifiedName();
+
+    /**
+     * Return associations if it exists
+     * 
+     * @return associations
+     */
+    Collection<PropertyHolder> getAssociations();
 
 }

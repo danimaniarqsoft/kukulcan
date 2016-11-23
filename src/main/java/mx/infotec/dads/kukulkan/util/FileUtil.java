@@ -21,15 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.domain;
+package mx.infotec.dads.kukulkan.util;
+
+import java.io.Closeable;
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * The FileUtil Class is used for common File operations
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+public class FileUtil {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
-public class GeneratedElement {
+    public static void close(Closeable e) {
+        if (e != null) {
+            try {
+                e.close();
+            } catch (IOException e1) {
+                LOGGER.error("The resource actually exist: ", e);
+            }
+        }
+    }
 
 }

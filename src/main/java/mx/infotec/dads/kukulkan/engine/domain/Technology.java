@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.domain;
+package mx.infotec.dads.kukulkan.engine.domain;
 
 import java.io.Serializable;
 import java.util.Date;

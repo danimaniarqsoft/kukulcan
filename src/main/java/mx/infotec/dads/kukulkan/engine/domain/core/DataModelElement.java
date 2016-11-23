@@ -21,57 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.domain;
+package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.Collection;
 
 /**
- * The Connection Class is used for hold the connection credentials to a
- * datasource
+ * The DataModelElement represent a Table mapped into a specific technology
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-@Entity
-public class DataConnection {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String url;
-    private String username;
-    private String password;
+public abstract class DataModelElement {
+    /**
+     * Name of the dataModel, usually it is the name of the Schema formatted for
+     * specific technology. For instance, in java it is a the java Class name
+     */
+    protected String name;
 
-    public Long getId() {
-        return id;
+    /**
+     * BaseName of the dataModel, usually it is the name of the Schema formatted
+     * for specific technology. For instance, in java it is a the package of the
+     * java Class name
+     */
+    protected String baseName;
+
+    protected Collection<PropertyHolder> properties;
+
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public Collection<PropertyHolder> getProperties() {
+        return properties;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setProperties(Collection<PropertyHolder> properties) {
+        this.properties = properties;
     }
 
-    public String getUsername() {
-        return username;
+    public String getBaseName() {
+        return baseName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setBaseName(String baseName) {
+        this.baseName = baseName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

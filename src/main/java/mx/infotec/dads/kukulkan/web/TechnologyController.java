@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.controller;
+package mx.infotec.dads.kukulkan.web;
 
 import java.util.List;
 
@@ -39,8 +39,8 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import mx.infotec.dads.kukulkan.domain.Technology;
-import mx.infotec.dads.kukulkan.service.CatalogService;;
+import mx.infotec.dads.kukulkan.engine.domain.Technology;
+import mx.infotec.dads.kukulkan.engine.service.CatalogService;;
 
 /**
  * The class ShowcaseApi used for understand the use of Spring Rest Framework

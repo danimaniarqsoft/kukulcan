@@ -21,39 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.domain;
+package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import java.util.List;
+import org.apache.metamodel.DataContext;
 
 /**
- * The Generator Context Class is used for create a set of elements generated for a
- * specific tecnology (Java, C#, Python, and so on). For instance, there could
- * be a set of elements that we would generate per each module of our
- * architecture and each module could be composed by differents elements
- * (controllers, services, data acces elements, and so on) and on each layer
- * there could be elements that we would like to generate, so The context Class
- * encapsulate a set o families of generated elements that could be generated in
- * each tecnology (Java and its frameworks, C# and its frameworks, python and
- * its framework, and so on).
+ * The DataModelContext class is an abstraction of the DataModel of the
+ * application and it is agnostic technology model.
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+public abstract class DataModelContext {
 
-public class GeneratorContext {
-	/**
-	 * The elements that compound the Context. The root element could be a
-	 * module element or a layer element.
-	 */
-	private List<Element> elements;
+    protected DataContext dataContext;
+    protected DataModelGroup dataModelGroup;
 
-	public List<Element> getElements() {
-		return elements;
-	}
+    protected DataModelContext(DataContext dataContext) {
+        this.dataContext = dataContext;
+    }
 
-	public void setElements(List<Element> elements) {
-		this.elements = elements;
-	}
+    public DataContext getDataContext() {
+        return dataContext;
+    }
 
+    public void setDataContext(DataContext dataContext) {
+        this.dataContext = dataContext;
+    }
 }

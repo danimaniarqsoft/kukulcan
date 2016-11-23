@@ -21,12 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.repositories;
+package mx.infotec.dads.kukulkan.engine.domain.java;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import mx.infotec.dads.kukulkan.domain.DataConnection;
-
-public interface DataConnectionRepository extends JpaRepository<DataConnection, Long> {
+/**
+ * The JavaDataModelElement, represent a element that could be used for
+ * templating
+ * 
+ * @author Daniel Cortes Pichardo
+ *
+ */
+public class JavaDataModelElement {
 
 }

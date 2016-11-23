@@ -21,13 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.service;
+package mx.infotec.dads.kukulkan.templating.service;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.Map;
 
-import mx.infotec.dads.kukulkan.domain.Technology;
+import freemarker.core.ParseException;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
-public interface CatalogService {
+/**
+ * 
+ * @author Daniel Cortes Pichardo
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 
-    List<Technology> getTechnology();
+public interface TemplateService {
+
+	String fillModel(String templateName, Map<String, Object> model)
+			throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException,
+			TemplateException;
 }

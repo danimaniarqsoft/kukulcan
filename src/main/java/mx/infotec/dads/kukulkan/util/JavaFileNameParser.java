@@ -21,19 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.domain;
+package mx.infotec.dads.kukulkan.util;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * The Element Class is the cornerstone of the domain model, It could be
- * extended in order to create custom behaviors. The root element could be a
- * model element or layer element. There could be more types of elements in
- * order to extend the framework.
+ * The JavaFileNameParser Class is used for parsing the filename of a Java class and formatted to the most
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+public class JavaFileNameParser {
 
-public class Element {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaFileNameParser.class);
+
+    private JavaFileNameParser(){
+        
+    }
+    /**
+     * Covierte un string con formato JavaFile.java a javaFile
+     * 
+     * @param javaFileName
+     * @return String javaFileName con formato camelcase
+     */
+    public static String parseToPropertyName(String javaFileName) {
+        return javaFileName.replaceFirst(javaFileName.charAt(0) + "", (javaFileName.charAt(0) + "").toLowerCase())
+                .replaceAll(".java", "");
+    }
+
+    /**
+     * Convierte javaFileName.java a JavaFileName
+     * 
+     * @param javaFileName
+     * @return String
+     */
+    public static String parseToPropertyType(String javaFileName) {
+        return javaFileName.replaceAll(".java", "");
+    }
 
 }
