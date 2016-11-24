@@ -21,37 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.core;
+package mx.infotec.dads.kukulkan.templating.service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import mx.infotec.dads.kukulkan.engine.domain.Technology;
 
 /**
- * The Generator Context Class is used for create a set of elements generated
- * for a specific tecnology (Java, C#, Python, and so on). For instance, there
- * could be a set of elements that we would generate per each module of our
- * architecture and each module could be composed by differents elements
- * (controllers, services, data acces elements, and so on) and on each layer
- * there could be elements that we would like to generate, so The context Class
- * encapsulate a set o families of generated elements that could be generated in
- * each tecnology (Java and its frameworks, C# and its frameworks, python and
- * its framework, and so on).
+ * Default CatalogoServiceImpl
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+@Service
+public class CatalogServiceImpl implements CatalogService {
 
-public class GeneratorContext {
-
-    /**
-     * The DataModelContext of the MetaModel
-     */
-    private DataModelContext dataModelContext;
-
-    public GeneratorContext(DataModelContext dataModelContext) {
-        this.dataModelContext = dataModelContext;
-    }
-
-    public DataModelContext getDataModelContext() {
-        return dataModelContext;
+    @Override
+    public List<Technology> getTechnology() {
+        List<Technology> technologyList = new ArrayList<>();
+        Technology tech1 = new Technology();
+        tech1.setName("Java");
+        tech1.setBriefDescription("Java version 1.8");
+        tech1.setDescription("Java framework supported: 1.8 with different frameworks");
+        tech1.setCreationDate(new Date());
+        Technology tech2 = new Technology();
+        tech2.setName("C#");
+        tech2.setBriefDescription("C# Latest version");
+        tech2.setDescription("C# framework supported with different frameworks");
+        tech2.setCreationDate(new Date());
+        technologyList.add(tech1);
+        technologyList.add(tech2);
+        return technologyList;
     }
 
 }

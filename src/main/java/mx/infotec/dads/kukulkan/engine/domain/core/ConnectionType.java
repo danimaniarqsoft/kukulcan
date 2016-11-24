@@ -21,13 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.service;
+package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import java.util.List;
-
-import mx.infotec.dads.kukulkan.engine.domain.Technology;
-
-public interface CatalogService {
-
-    List<Technology> getTechnology();
+/**
+ * Supported dataSourceConnectionType
+ * 
+ * @author Daniel Cortes Pichardo
+ *
+ */
+public enum ConnectionType {
+    JDBC, CSV, XML, JSON, MONGO_DB
 }

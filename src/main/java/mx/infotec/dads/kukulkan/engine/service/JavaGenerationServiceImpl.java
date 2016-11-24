@@ -23,39 +23,22 @@
  */
 package mx.infotec.dads.kukulkan.engine.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import mx.infotec.dads.kukulkan.engine.domain.Technology;
+import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 
 /**
- * Default CatalogoServiceImpl
+ * Generation service for java applications
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-@Service
-public class CatalogServiceImpl implements CatalogService {
+@Service("javaGenerationService")
+public class JavaGenerationServiceImpl implements GenerationService {
 
     @Override
-    public List<Technology> getTechnology() {
-        List<Technology> technologyList = new ArrayList<>();
-        Technology tech1 = new Technology();
-        tech1.setName("Java");
-        tech1.setBriefDescription("Java version 1.8");
-        tech1.setDescription("Java framework supported: 1.8 with different frameworks");
-        tech1.setCreationDate(new Date());
-        Technology tech2 = new Technology();
-        tech2.setName("C#");
-        tech2.setBriefDescription("C# Latest version");
-        tech2.setDescription("C# framework supported with different frameworks");
-        tech2.setCreationDate(new Date());
-        technologyList.add(tech1);
-        technologyList.add(tech2);
-        return technologyList;
+    public void process(GeneratorContext generatorContext) {
+        //Read DataConnection
+        
     }
-
 }

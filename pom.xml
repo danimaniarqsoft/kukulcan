@@ -87,7 +87,11 @@
 			<groupId>org.apache.metamodel</groupId>
 			<artifactId>MetaModel-jdbc</artifactId>
 			<version>${metamodel.version}</version>
-		</dependency> 
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>kukulkan</finalName>

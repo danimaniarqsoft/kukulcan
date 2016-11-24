@@ -23,6 +23,8 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
+import java.util.Collection;
+
 import org.apache.metamodel.DataContext;
 
 /**
@@ -35,7 +37,12 @@ import org.apache.metamodel.DataContext;
 public abstract class DataModelContext {
 
     protected DataContext dataContext;
-    protected DataModelGroup dataModelGroup;
+    protected DataConnection dataModelConnection;
+    protected Collection<DataModelGroup> dataModelGroup;
+
+    public DataModelContext(DataConnection connection) {
+        this.dataModelConnection = connection;
+    }
 
     protected DataModelContext(DataContext dataContext) {
         this.dataContext = dataContext;
@@ -47,5 +54,21 @@ public abstract class DataModelContext {
 
     public void setDataContext(DataContext dataContext) {
         this.dataContext = dataContext;
+    }
+
+    public DataConnection getDataModelConnection() {
+        return dataModelConnection;
+    }
+
+    public void setDataModelConnection(DataConnection dataModelConnection) {
+        this.dataModelConnection = dataModelConnection;
+    }
+
+    public Collection<DataModelGroup> getDataModelGroup() {
+        return dataModelGroup;
+    }
+
+    public void setDataModelGroup(Collection<DataModelGroup> dataModelGroup) {
+        this.dataModelGroup = dataModelGroup;
     }
 }

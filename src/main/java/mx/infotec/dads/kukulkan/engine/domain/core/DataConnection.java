@@ -24,6 +24,8 @@
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -42,6 +44,8 @@ public class DataConnection {
     private String url;
     private String username;
     private String password;
+    @Enumerated(EnumType.ORDINAL)
+    private ConnectionType connectionType;
 
     public Long getId() {
         return id;
@@ -73,5 +77,13 @@ public class DataConnection {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ConnectionType getConnectionType() {
+        return connectionType;
+    }
+
+    public void setConnectionType(ConnectionType connectionType) {
+        this.connectionType = connectionType;
     }
 }
