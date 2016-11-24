@@ -31,8 +31,8 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
  */
 public class JavaDataModelContext extends DataModelContext {
 
-    public JavaDataModelContext(DataConnection connection) {
-        super(connection);
+    public JavaDataModelContext(DataStore dataStore) {
+        super(dataStore);
     }
 
 }

@@ -23,6 +23,10 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
+import org.apache.metamodel.DataContext;
+import org.apache.metamodel.factory.DataContextFactoryRegistryImpl;
+import org.apache.metamodel.factory.DataContextPropertiesImpl;
+
 /**
  * The Generator Context Class is used for create a set of elements generated
  * for a specific tecnology (Java, C#, Python, and so on). For instance, there
@@ -46,6 +50,8 @@ public class GeneratorContext {
      */
     private DataModelContext dataModelContext;
 
+    private boolean connected;
+
     public GeneratorContext(DataModelContext dataModelContext) {
         this.dataModelContext = dataModelContext;
     }
@@ -54,4 +60,28 @@ public class GeneratorContext {
         return dataModelContext;
     }
 
+    public boolean connect() {
+        DataStore dataStore = dataModelContext.getDataStore();
+        switch (dataStore.getDataStoreType()) {
+        case JDBC:
+            DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
+            properties.put("type", dataStore.getDataStoreType().type());
+            properties.put("url", dataStore.getUrl());
+            properties.put("driver-class", dataStore.getDriverClass());
+            properties.put("username", dataStore.getUsername());
+            properties.put("password", dataStore.getPassword());
+            DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
+            dataModelContext.setDataContext(dataContext);
+            connected = true;
+            return connected;
+        case CSV:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
 }

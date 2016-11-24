@@ -21,19 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain;
+package mx.infotec.dads.kukulkan.engine.repository;
 
-/**
- * The Element Class is the cornerstone of the domain model, It could be
- * extended in order to create custom behaviors. The root element could be a
- * model element or layer element. There could be more types of elements in
- * order to extend the framework.
- * 
- * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
- */
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public class Element {
+import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
+
+public interface DataStoreRepository extends JpaRepository<DataStore, Long> {
 
 }

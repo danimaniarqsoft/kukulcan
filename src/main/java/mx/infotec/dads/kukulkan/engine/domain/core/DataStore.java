@@ -23,6 +23,7 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,15 +38,19 @@ import javax.persistence.Id;
  *
  */
 @Entity
-public class DataConnection {
+public class DataStore {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private DataStoreType dataStoreType;
+    @Column(nullable = false)
     private String url;
+    private String driverClass;
     private String username;
     private String password;
-    @Enumerated(EnumType.ORDINAL)
-    private ConnectionType connectionType;
+    private String tableTypes;
 
     public Long getId() {
         return id;
@@ -79,11 +84,27 @@ public class DataConnection {
         this.password = password;
     }
 
-    public ConnectionType getConnectionType() {
-        return connectionType;
+    public String getDriverClass() {
+        return driverClass;
     }
 
-    public void setConnectionType(ConnectionType connectionType) {
-        this.connectionType = connectionType;
+    public void setDriverClass(String driverClass) {
+        this.driverClass = driverClass;
+    }
+
+    public String getTableTypes() {
+        return tableTypes;
+    }
+
+    public void setTableTypes(String tableTypes) {
+        this.tableTypes = tableTypes;
+    }
+
+    public DataStoreType getDataStoreType() {
+        return dataStoreType;
+    }
+
+    public void setDataStoreType(DataStoreType dataStoreType) {
+        this.dataStoreType = dataStoreType;
     }
 }

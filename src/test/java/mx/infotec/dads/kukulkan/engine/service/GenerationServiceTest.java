@@ -23,6 +23,10 @@
  */
 package mx.infotec.dads.kukulkan.engine.service;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +35,11 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import mx.infotec.dads.kukulkan.engine.domain.core.DataConnection;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelContext;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
-import mx.infotec.dads.kukulkan.engine.repository.DataConnectionRepository;
+import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 
 /**
@@ -56,23 +60,26 @@ public class GenerationServiceTest {
     private GenerationService generationService;
 
     @Autowired
-    private DataConnectionRepository repository;
+    private DataStoreRepository repository;
 
     @Test
     public void generationService() throws Exception {
-
-        DataConnection connection = repository.findOne(1l);
-        DataModelContext dmCtx = new JavaDataModelContext(connection);
+        DataStore dataStore = repository.findOne(1l);
+        DataModelContext dmCtx = new JavaDataModelContext(dataStore);
         GeneratorContext genCtx = new GeneratorContext(dmCtx);
+        genCtx.connect();
         generationService.process(genCtx);
-        System.out.println(connection.getUrl());
-        System.out.println(connection.getUsername());
-        System.out.println(connection.getPassword());
-        System.out.println(connection.getConnectionType().ordinal());
-        // Map<String, Object> model = new HashMap<>();
-        // model.put("javaType", "Integer");
-        // model.put("propertyName", "name");
-        //
-        // templateService.fillModel("model.ftl", model);
+        Map<String, Object> model = new HashMap<>();
+        model.put("year", "2016");
+        model.put("author", "Daniel Cortes Pichardo");
+        model.put("package", "com.danimanicp.kukulkan");
+        model.put("imports", "import java.util.Long;");
+        model.put("className", "DataConnection");
+        model.put("tableName", "DATA_CONNECTION");
+        model.put("propertyType", "Long");
+        model.put("propertyName", "id");
+        model.put("propertyNameMethod", "Id");
+        model.put("date", new Date());
+        templateService.fillModel("rest-spring-jpa/model.ftl", model);
     }
 }

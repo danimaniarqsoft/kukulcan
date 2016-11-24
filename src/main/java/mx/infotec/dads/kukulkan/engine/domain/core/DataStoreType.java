@@ -29,6 +29,16 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
  * @author Daniel Cortes Pichardo
  *
  */
-public enum ConnectionType {
-    JDBC, CSV, XML, JSON, MONGO_DB
+public enum DataStoreType {
+    JDBC("jdbc"), CSV("csv");
+
+    private final String type;
+
+    private DataStoreType(String type) {
+        this.type = type;
+    }
+
+    public String type() {
+        return type;
+    }
 }

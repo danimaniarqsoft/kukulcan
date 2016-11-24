@@ -1,4 +1,5 @@
 package mx.infotec.dads.kukulkan.web;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -9,14 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WelcomeController {
 
-	@Value("${application.message:Hello World}")
-	private String message = "Hello World";
+    @Value("${application.message:Hello World}")
+    private String message = "Hello World";
 
-	@GetMapping("/welcome")
-	public String welcome(Map<String, Object> model) {
-		model.put("time", new Date());
-		model.put("message", this.message);
-		return "welcome";
-	}
+    @GetMapping("/welcome")
+    public String welcome(Map<String, Object> model) {
+        model.put("time", new Date());
+        model.put("message", this.message);
+        return "welcome";
+    }
 
 }

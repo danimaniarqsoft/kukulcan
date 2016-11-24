@@ -26,12 +26,11 @@ package mx.infotec.dads.kukulkan.web;
 import java.io.IOException;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.factory.DataContextFactoryRegistryImpl;
 import org.apache.metamodel.factory.DataContextPropertiesImpl;
 import org.apache.metamodel.schema.Schema;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,8 +40,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import mx.infotec.dads.kukulkan.engine.domain.core.DataConnection;
-import mx.infotec.dads.kukulkan.engine.repository.DataConnectionRepository;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
+import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
 
 /**
  * 
@@ -52,43 +51,43 @@ import mx.infotec.dads.kukulkan.engine.repository.DataConnectionRepository;
  */
 
 @RestController
-@RequestMapping(value = "/dataConnections")
-public class DataConnectionController {
-	@Inject
-	private DataConnectionRepository repository;
+@RequestMapping(value = "/dataStores")
+public class DataStoreController {
+    @Autowired
+    private DataStoreRepository repository;
 
-	@Inject
-	private Configuration configuration;
+    @Autowired
+    private Configuration configuration;
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<DataConnection> getDataConnections(@RequestParam MultiValueMap<String, String> params) {
-		System.out.println("antes");
-		
-		try {
-			Template template = configuration.getTemplate("welcomed.ftl");
-			System.out.println(template.getName());
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<DataStore> getDataConnections(@RequestParam MultiValueMap<String, String> params) {
+        System.out.println("antes");
 
-		} catch (IOException e) {
-			System.out.println("hola");
-			e.printStackTrace();
-		}
-		
-		List<DataConnection> dataConnections = repository.findAll();
-		return dataConnections;
-	}
+        try {
+            Template template = configuration.getTemplate("welcomed.ftl");
+            System.out.println(template.getName());
 
-	@RequestMapping(value = "/tables", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String[] getTables(@RequestParam MultiValueMap<String, String> params) {
-		DataConnection dataConnection = repository.findOne(1L);
-		final DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
-		properties.put("type", "jdbc");
-		properties.put("url", dataConnection.getUrl());
-		properties.put("username", dataConnection.getUsername());
-		properties.put("password", dataConnection.getPassword());
-		DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
-		Schema defaultSchema = dataContext.getDefaultSchema();
-		String[] tables = defaultSchema.getTableNames();
+        } catch (IOException e) {
+            System.out.println("hola");
+            e.printStackTrace();
+        }
 
-		return tables;
-	}
+        List<DataStore> dataConnections = repository.findAll();
+        return dataConnections;
+    }
+
+    @RequestMapping(value = "/tables", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String[] getTables(@RequestParam MultiValueMap<String, String> params) {
+        DataStore dataConnection = repository.findOne(1L);
+        final DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
+        properties.put("type", "jdbc");
+        properties.put("url", dataConnection.getUrl());
+        properties.put("username", dataConnection.getUsername());
+        properties.put("password", dataConnection.getPassword());
+        DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
+        Schema defaultSchema = dataContext.getDefaultSchema();
+        String[] tables = defaultSchema.getTableNames();
+
+        return tables;
+    }
 }

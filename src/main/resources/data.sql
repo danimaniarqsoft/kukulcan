@@ -1,2 +1,2 @@
-INSERT INTO data_connection(id, url, username, password, connection_type)
-    VALUES (1, 'jdbc:mysql://localhost/membership?autoReconnect=true','developer','temporal123',0);
+INSERT INTO data_store(id, data_store_type, url, driver_class, username, password, table_types)
+    VALUES (1, 0, 'jdbc:mysql://localhost/membership?autoReconnect=true', 'com.mysql.jdbc.Driver', 'developer','temporal123', 'TABLE,VIEW');

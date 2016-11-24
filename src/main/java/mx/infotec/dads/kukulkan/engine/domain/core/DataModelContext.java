@@ -37,11 +37,11 @@ import org.apache.metamodel.DataContext;
 public abstract class DataModelContext {
 
     protected DataContext dataContext;
-    protected DataConnection dataModelConnection;
+    protected DataStore dataStore;
     protected Collection<DataModelGroup> dataModelGroup;
 
-    public DataModelContext(DataConnection connection) {
-        this.dataModelConnection = connection;
+    public DataModelContext(DataStore dataStore) {
+        this.dataStore = dataStore;
     }
 
     protected DataModelContext(DataContext dataContext) {
@@ -56,12 +56,13 @@ public abstract class DataModelContext {
         this.dataContext = dataContext;
     }
 
-    public DataConnection getDataModelConnection() {
-        return dataModelConnection;
+
+    public DataStore getDataStore() {
+        return dataStore;
     }
 
-    public void setDataModelConnection(DataConnection dataModelConnection) {
-        this.dataModelConnection = dataModelConnection;
+    public void setDataStore(DataStore dataStore) {
+        this.dataStore = dataStore;
     }
 
     public Collection<DataModelGroup> getDataModelGroup() {
@@ -71,4 +72,5 @@ public abstract class DataModelContext {
     public void setDataModelGroup(Collection<DataModelGroup> dataModelGroup) {
         this.dataModelGroup = dataModelGroup;
     }
+
 }
