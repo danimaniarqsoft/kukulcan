@@ -23,12 +23,10 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * The Connection Class is used for hold the connection credentials to a
@@ -42,23 +40,13 @@ public class DataStore {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @OneToOne
     private DataStoreType dataStoreType;
-    @Column(nullable = false)
     private String url;
     private String driverClass;
     private String username;
     private String password;
     private String tableTypes;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUrl() {
         return url;
@@ -106,5 +94,13 @@ public class DataStore {
 
     public void setDataStoreType(DataStoreType dataStoreType) {
         this.dataStoreType = dataStoreType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

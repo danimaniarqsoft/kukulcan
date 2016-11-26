@@ -62,10 +62,10 @@ public class GeneratorContext {
 
     public boolean connect() {
         DataStore dataStore = dataModelContext.getDataStore();
-        switch (dataStore.getDataStoreType()) {
-        case JDBC:
+        switch (dataStore.getDataStoreType().getId()) {
+        case 1: // JDBC
             DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
-            properties.put("type", dataStore.getDataStoreType().type());
+            properties.put("type", dataStore.getDataStoreType().getName());
             properties.put("url", dataStore.getUrl());
             properties.put("driver-class", dataStore.getDriverClass());
             properties.put("username", dataStore.getUsername());
@@ -74,7 +74,7 @@ public class GeneratorContext {
             dataModelContext.setDataContext(dataContext);
             connected = true;
             return connected;
-        case CSV:
+        case 2: // CSV
             return true;
         default:
             return false;

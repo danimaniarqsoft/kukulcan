@@ -1,11 +1,26 @@
 CREATE SEQUENCE IF NOT EXISTS credentials_id_seq START WITH 1 INCREMENT BY 1;
 
-create table data_store(
-   id              serial DEFAULT nextval('credentials_id_seq'),
-   data_store_type INT,
-   url             VARCHAR(100) null,
-   driver_class    VARCHAR(50) null,
-   username        VARCHAR(20) null,
-   password        VARCHAR(20) null,
-   table_types     VARCHAR(20) null
+/*==============================================================*/
+/*Table: CATALOGS                                               */
+/*==============================================================*/
+create table DATA_STORE_TYPE(
+   ID                 INT,
+   NAME               VARCHAR(10),
+   DESCRIPTION        VARCHAR(50)
+);
+
+/*==============================================================*/
+/*Table: DATA STORE                                             */
+/*==============================================================*/
+create table DATA_STORE(
+   ID                 SERIAL DEFAULT nextval('credentials_id_seq'),
+   DATA_STORE_TYPE_ID INT,
+   URL                VARCHAR(100) null,
+   DRIVER_CLASS       VARCHAR(50) null,
+   USERNAME           VARCHAR(20) null,
+   PASSWORD           VARCHAR(20) null,
+   TABLE_TYPES        VARCHAR(20) null,
+   constraint PK_DATA_STORE primary key (ID),
+   constraint FK_DATA_STORE_TYPE foreign key (DATA_STORE_TYPE_ID)
+   references DATA_STORE_TYPE (ID) 
 );
