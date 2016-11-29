@@ -23,7 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.web;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.metamodel.DataContext;
@@ -33,15 +32,16 @@ import org.apache.metamodel.schema.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import freemarker.template.Configuration;
-import freemarker.template.Template;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
+import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
 
 /**
  * 
@@ -60,20 +60,15 @@ public class DataStoreController {
     private Configuration configuration;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<DataStore> getDataConnections(@RequestParam MultiValueMap<String, String> params) {
-        System.out.println("antes");
+    public List<DataStore> getDataConnections() {
+        return repository.findAll();
+    }
 
-        try {
-            Template template = configuration.getTemplate("welcomed.ftl");
-            System.out.println(template.getName());
-
-        } catch (IOException e) {
-            System.out.println("hola");
-            e.printStackTrace();
-        }
-
-        List<DataStore> dataConnections = repository.findAll();
-        return dataConnections;
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public DataStore getDataConnection(@PathVariable("id") Long id) throws Exception {
+        if (id >= 2)
+            throw new ApplicationException();
+        return repository.findOne(id);
     }
 
     @RequestMapping(value = "/tables", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -87,7 +82,6 @@ public class DataStoreController {
         DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
         Schema defaultSchema = dataContext.getDefaultSchema();
         String[] tables = defaultSchema.getTableNames();
-
         return tables;
     }
 }

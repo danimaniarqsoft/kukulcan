@@ -21,24 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.service;
+package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
 
-import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
+public class Valor {
 
-/**
- * Generation service for java applications
- * 
- * @author Daniel Cortes Pichardo
- *
- */
-@Service("javaGenerationService")
-public class JavaGenerationServiceImpl implements GenerationService {
+    String clave;
+    String nombre;
 
-    @Override
-    public void process(GeneratorContext generatorContext) {
-        //Read DataConnection
-        
+    public Valor(String clave, String nombre) {
+        this.clave = clave;
+        this.nombre = nombre;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public static List<Valor> getDefault() {
+        List<Valor> valores = new ArrayList<>();
+        valores.add(new Valor("pd", "Prudencia"));
+        valores.add(new Valor("js", "Justicia"));
+        valores.add(new Valor("fr", "Fortaleza"));
+        valores.add(new Valor("tm", "Templanza"));
+        return valores;
     }
 }

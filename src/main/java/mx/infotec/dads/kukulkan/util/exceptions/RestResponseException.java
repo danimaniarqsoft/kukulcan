@@ -21,43 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.core;
+
+package mx.infotec.dads.kukulkan.util.exceptions;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * The Generator Context Class is used for create a set of elements generated
- * for a specific tecnology (Java, C#, Python, and so on). For instance, there
- * could be a set of elements that we would generate per each module of our
- * architecture and each module could be composed by differents elements
- * (controllers, services, data acces elements, and so on) and on each layer
- * there could be elements that we would like to generate, so The context Class
- * encapsulate a set o families of generated elements that could be generated in
- * each tecnology (Java and its frameworks, C# and its frameworks, python and
- * its framework, and so on).
+ * Runtime Exception of the Applicaton
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
 
-public class GeneratorContext {
-
-    /**
-     * The DataModelContext of the MetaModel
-     */
-    private DataModelContext dataModelContext;
-
-    private boolean connected;
-
-    public GeneratorContext(DataModelContext dataModelContext) {
-        this.dataModelContext = dataModelContext;
-    }
-
-    public DataModelContext getDataModelContext() {
-        return dataModelContext;
-    }
-
-    public boolean isConnected() {
-        return connected;
-    }
-
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Los valores no son válidos")
+public class RestResponseException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
 }

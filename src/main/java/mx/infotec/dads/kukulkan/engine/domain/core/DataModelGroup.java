@@ -36,6 +36,48 @@ public class DataModelGroup {
     protected String name;
     protected String briefDescription;
     protected String description;
+    protected String layerName;
+    
     protected Collection<DataModelElement> dataModelElements;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBriefDescription() {
+        return briefDescription;
+    }
+
+    public void setBriefDescription(String briefDescription) {
+        this.briefDescription = briefDescription;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Collection<DataModelElement> getDataModelElements() {
+        return dataModelElements;
+    }
+
+    public void setDataModelElements(Collection<DataModelElement> dataModelElements) {
+        this.dataModelElements = dataModelElements;
+    }
+
+    public String getLayerName() {
+        return layerName;
+    }
+
+    public void setLayerName(String layerName) {
+        this.layerName = layerName;
+    }
 
 }

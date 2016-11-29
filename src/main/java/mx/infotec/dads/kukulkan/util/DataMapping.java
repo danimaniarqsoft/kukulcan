@@ -21,43 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.core;
+package mx.infotec.dads.kukulkan.util;
+
+import org.apache.metamodel.DataContext;
+import org.apache.metamodel.schema.Table;
+
+import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 
 /**
- * The Generator Context Class is used for create a set of elements generated
- * for a specific tecnology (Java, C#, Python, and so on). For instance, there
- * could be a set of elements that we would generate per each module of our
- * architecture and each module could be composed by differents elements
- * (controllers, services, data acces elements, and so on) and on each layer
- * there could be elements that we would like to generate, so The context Class
- * encapsulate a set o families of generated elements that could be generated in
- * each tecnology (Java and its frameworks, C# and its frameworks, python and
- * its framework, and so on).
+ * DataMapping utility class
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+public class DataMapping {
 
-public class GeneratorContext {
+    private DataMapping() {
+
+    }
 
     /**
-     * The DataModelContext of the MetaModel
+     * Create a DataModelGroup Class
+     * 
+     * @param dataContext
+     * @return DataModelGroup
      */
-    private DataModelContext dataModelContext;
-
-    private boolean connected;
-
-    public GeneratorContext(DataModelContext dataModelContext) {
-        this.dataModelContext = dataModelContext;
+    public static DataModelGroup createDataModelGroup(DataContext dataContext) {
+        DataModelGroup dmg = new DataModelGroup();
+        dmg.setName("Default description");
+        dmg.setDescription("Default description");
+        dmg.setBriefDescription("Default description");
+        dmg.setLayerName("model");
+        Table[] tables = dataContext.getDefaultSchema().getTables();
+        for (Table table : tables) {
+            DataModelElement dme = new DataModelElement();
+            dme.setTableName(table.getName());
+            dme.setName(SchemaPropertiesParser.parseToPropertyName(table.getName()));
+        }
+        return dmg;
     }
-
-    public DataModelContext getDataModelContext() {
-        return dataModelContext;
-    }
-
-    public boolean isConnected() {
-        return connected;
-    }
-
 }

@@ -23,15 +23,16 @@
  */
 package mx.infotec.dads.kukulkan.engine.service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.metamodel.DataContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -39,8 +40,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataModelContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
-import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
-import mx.infotec.dads.kukulkan.templating.service.TemplateService;
+import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 
 /**
  * Test for GeneratorService
@@ -54,32 +54,31 @@ import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 public class GenerationServiceTest {
 
     @Autowired
-    private TemplateService templateService;
-
-    @Autowired
     private GenerationService generationService;
+    @Autowired
+    private DataStoreService dataStoreService;
 
     @Autowired
-    private DataStoreRepository repository;
+    private ApplicationContext appContext;
 
     @Test
     public void generationService() throws Exception {
-        DataStore dataStore = repository.findOne(1l);
+        // Create DataStore
+        DataStore dataStore = dataStoreService.getDataStore(1l);
+        // Create DataModel
         DataModelContext dmCtx = new JavaDataModelContext(dataStore);
+        // Create DataContext
+        DataContext dataContext = dataStoreService.getDataContext(dataStore);
+        dmCtx.setDataContext(dataContext);
+        // Create GeneratorContext
         GeneratorContext genCtx = new GeneratorContext(dmCtx);
-        genCtx.connect();
-        generationService.process(genCtx);
-        Map<String, Object> model = new HashMap<>();
-        model.put("year", "2016");
-        model.put("author", "Daniel Cortes Pichardo");
-        model.put("package", "com.danimanicp.kukulkan");
-        model.put("imports", "import java.util.Long;");
-        model.put("className", "DataConnection");
-        model.put("tableName", "DATA_CONNECTION");
-        model.put("propertyType", "Long");
-        model.put("propertyName", "id");
-        model.put("propertyNameMethod", "Id");
-        model.put("date", new Date());
-        templateService.fillModel("rest-spring-jpa/model.ftl", model);
+
+        // Process Activities
+        List<LayerTask> tasks = new ArrayList<>();
+        tasks.add((LayerTask) appContext.getBean("controllerLayerTask"));
+        tasks.add((LayerTask) appContext.getBean("repositoryLayerTask"));
+        tasks.add((LayerTask) appContext.getBean("serviceLayerTask"));
+        generationService.process(genCtx, tasks);
+
     }
 }

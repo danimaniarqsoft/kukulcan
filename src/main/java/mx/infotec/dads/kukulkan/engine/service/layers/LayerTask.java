@@ -21,18 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.templating.service;
+package mx.infotec.dads.kukulkan.engine.service.layers;
 
-import java.util.Map;
+import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 
-/**
- * 
- * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
- */
+public interface LayerTask {
 
-public interface TemplateService {
-
-    String fillModel(String templateName, Map<String, Object> model);
+    boolean doTask(GeneratorContext context);
 }

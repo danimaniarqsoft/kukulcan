@@ -21,43 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.core;
+package mx.infotec.dads.kukulkan.engine.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
+import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 
 /**
- * The Generator Context Class is used for create a set of elements generated
- * for a specific tecnology (Java, C#, Python, and so on). For instance, there
- * could be a set of elements that we would generate per each module of our
- * architecture and each module could be composed by differents elements
- * (controllers, services, data acces elements, and so on) and on each layer
- * there could be elements that we would like to generate, so The context Class
- * encapsulate a set o families of generated elements that could be generated in
- * each tecnology (Java and its frameworks, C# and its frameworks, python and
- * its framework, and so on).
+ * Generation service for java applications
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+@Service("javaGenerationService")
+public class GenerationServiceImpl implements GenerationService {
 
-public class GeneratorContext {
-
-    /**
-     * The DataModelContext of the MetaModel
-     */
-    private DataModelContext dataModelContext;
-
-    private boolean connected;
-
-    public GeneratorContext(DataModelContext dataModelContext) {
-        this.dataModelContext = dataModelContext;
+    @Override
+    public void process(GeneratorContext context, List<LayerTask> tasks) {
+        for (LayerTask task : tasks) {
+            task.doTask(context);
+        }
     }
-
-    public DataModelContext getDataModelContext() {
-        return dataModelContext;
-    }
-
-    public boolean isConnected() {
-        return connected;
-    }
-
 }

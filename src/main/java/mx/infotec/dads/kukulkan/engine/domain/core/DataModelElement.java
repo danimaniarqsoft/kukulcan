@@ -31,7 +31,7 @@ import java.util.Collection;
  * @author Daniel Cortes Pichardo
  *
  */
-public abstract class DataModelElement {
+public class DataModelElement {
     /**
      * Name of the dataModel, usually it is the name of the Schema formatted for
      * specific technology. For instance, in java it is a the java Class name
@@ -44,6 +44,8 @@ public abstract class DataModelElement {
      * java Class name
      */
     protected String baseName;
+
+    protected String tableName;
 
     protected Collection<PropertyHolder> properties;
 
@@ -69,6 +71,14 @@ public abstract class DataModelElement {
 
     public void setBaseName(String baseName) {
         this.baseName = baseName;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
 }

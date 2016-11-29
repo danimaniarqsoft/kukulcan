@@ -33,12 +33,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import freemarker.core.ParseException;
 import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
+import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
 
 /**
  * 
@@ -50,22 +48,25 @@ import freemarker.template.TemplateNotFoundException;
 @Service
 public class TemplateServiceImpl implements TemplateService {
 
-	@Autowired
-	private Configuration fmConfiguration;
+    @Autowired
+    private Configuration fmConfiguration;
 
-	@Override
-	public String fillModel(String templateName, Map<String, Object> model) throws TemplateNotFoundException,
-			MalformedTemplateNameException, ParseException, IOException, TemplateException {
-		Template template = fmConfiguration.getTemplate(templateName);
-		Writer consoleWriter = new OutputStreamWriter(System.out);
-		template.process(model, consoleWriter);
-		Writer fileWriter = new FileWriter(new File("output.html"));
-		try {
-			template.process(model, fileWriter);
-		} finally {
-			fileWriter.close();
-		}
-		return null;
-	}
+    @Override
+    public String fillModel(String templateName, Map<String, Object> model) {
+        Template template;
+        try {
+            template = fmConfiguration.getTemplate(templateName);
+            Writer consoleWriter = new OutputStreamWriter(System.out);
+            template.process(model, consoleWriter);
+            Writer fileWriter = new FileWriter(new File("output.html"));
+            template.process(model, fileWriter);
+        } catch (IOException | TemplateException e) {
+            throw new ApplicationException("Fill Model Error", e);
+        } finally {
+
+        }
+
+        return null;
+    }
 
 }
