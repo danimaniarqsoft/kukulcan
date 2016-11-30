@@ -58,25 +58,28 @@ public class RepositoryLayerTask implements LayerTask {
         LOGGER.debug("Service Layer Task Executing");
         Map<String, Object> model = new HashMap<>();
         model.put("year", context.getProjectConfiguration().getYear());
-        model.put("autor", context.getProjectConfiguration().getAuthor());
+        model.put("author", context.getProjectConfiguration().getAuthor());
         // model.put("package", context.getProjectConfiguration().getGroupId();
-        doForEachDataModelGroup(context.getProjectConfiguration(), context.getDataModelContext().getDataModelGroup(),
-                model);
-        model.put("importModel", "import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;");
-        model.put("propertyName", "dataStore");
-        model.put("name", "DataStore");
-        model.put("id", "Long");
-        templateService.fillModel("rest-spring-jpa/repository.ftl", model);
+        ProjectConfiguration pConfiguration = context.getProjectConfiguration();
+        Collection<DataModelGroup> dataModelGroup = context.getDataModelContext().getDataModelGroup();
+        doForEachDataModelGroup(pConfiguration, dataModelGroup, model);
         return true;
     }
 
     public void doForEachDataModelGroup(ProjectConfiguration pConf, Collection<DataModelGroup> dmGroup,
             Map<String, Object> model) {
-
+        for (DataModelGroup dataModelGroup : dmGroup) {
+            doForEachDataModelElement(pConf, dataModelGroup.getDataModelElements(), model);
+        }
     }
 
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElement,
             Map<String, Object> model) {
+        model.put("importModel", "import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;");
+        model.put("propertyName", "dataStore");
+        model.put("name", "DataStore");
+        model.put("id", "Long");
+        templateService.fillModel("rest-spring-jpa/repository.ftl", model);
 
     }
 
