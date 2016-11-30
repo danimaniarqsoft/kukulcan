@@ -41,23 +41,27 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
 
 public class GeneratorContext {
 
+    private ProjectConfiguration projectConfiguration;
     /**
      * The DataModelContext of the MetaModel
      */
     private DataModelContext dataModelContext;
 
-    private boolean connected;
-
-    public GeneratorContext(DataModelContext dataModelContext) {
+    public GeneratorContext(DataModelContext dataModelContext, ProjectConfiguration projectConfiguration) {
         this.dataModelContext = dataModelContext;
+        this.setProjectConfiguration(projectConfiguration);
     }
 
     public DataModelContext getDataModelContext() {
         return dataModelContext;
     }
+    
+    public ProjectConfiguration getProjectConfiguration() {
+        return projectConfiguration;
+    }
 
-    public boolean isConnected() {
-        return connected;
+    public void setProjectConfiguration(ProjectConfiguration projectConfiguration) {
+        this.projectConfiguration = projectConfiguration;
     }
 
 }

@@ -36,8 +36,7 @@ public class DataModelGroup {
     protected String name;
     protected String briefDescription;
     protected String description;
-    protected String layerName;
-    
+
     protected Collection<DataModelElement> dataModelElements;
 
     public String getName() {
@@ -70,14 +69,6 @@ public class DataModelGroup {
 
     public void setDataModelElements(Collection<DataModelElement> dataModelElements) {
         this.dataModelElements = dataModelElements;
-    }
-
-    public String getLayerName() {
-        return layerName;
-    }
-
-    public void setLayerName(String layerName) {
-        this.layerName = layerName;
     }
 
 }

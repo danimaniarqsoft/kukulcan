@@ -40,6 +40,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataModelContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
+import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 
 /**
@@ -63,6 +64,14 @@ public class GenerationServiceTest {
 
     @Test
     public void generationService() throws Exception {
+        // Create ProjectConfiguration
+        ProjectConfiguration pConf = new ProjectConfiguration();
+        pConf.setId("gen");
+        pConf.setGroupId("mx.dads.infotec");
+        pConf.setVersion("1.0.0");
+        pConf.setPackaging("mx.dads.infotec");
+        pConf.setYear("29/10/2017");
+        pConf.setAuthor("Daniel Cortes Pichardo");
         // Create DataStore
         DataStore dataStore = dataStoreService.getDataStore(1l);
         // Create DataModel
@@ -71,13 +80,12 @@ public class GenerationServiceTest {
         DataContext dataContext = dataStoreService.getDataContext(dataStore);
         dmCtx.setDataContext(dataContext);
         // Create GeneratorContext
-        GeneratorContext genCtx = new GeneratorContext(dmCtx);
+        GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);
 
         // Process Activities
         List<LayerTask> tasks = new ArrayList<>();
-        tasks.add((LayerTask) appContext.getBean("controllerLayerTask"));
         tasks.add((LayerTask) appContext.getBean("repositoryLayerTask"));
-        tasks.add((LayerTask) appContext.getBean("serviceLayerTask"));
+        tasks.add((LayerTask) appContext.getBean("restControllerLayerTask"));
         generationService.process(genCtx, tasks);
 
     }

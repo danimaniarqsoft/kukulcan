@@ -23,7 +23,7 @@
  */
 package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
 
-import java.util.Date;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +32,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
+import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 
@@ -52,21 +55,29 @@ public class RepositoryLayerTask implements LayerTask {
 
     @Override
     public boolean doTask(GeneratorContext context) {
-        LOGGER.debug("Repository Layer Task Executing");
-        System.out.println("Repository Layer Task");
+        LOGGER.debug("Service Layer Task Executing");
         Map<String, Object> model = new HashMap<>();
-        model.put("year", "2016");
-        model.put("author", "Daniel Cortes Pichardo");
-        model.put("package", "com.danimanicp.kukulkan");
-        model.put("imports", "import java.util.Long;");
-        model.put("className", "DataConnection");
-        model.put("tableName", "DATA_CONNECTION");
-        model.put("propertyType", "Long");
-        model.put("propertyName", "id");
-        model.put("propertyNameMethod", "Id");
-        model.put("date", new Date());
-        templateService.fillModel("rest-spring-jpa/model.ftl", model);
+        model.put("year", context.getProjectConfiguration().getYear());
+        model.put("autor", context.getProjectConfiguration().getAuthor());
+        // model.put("package", context.getProjectConfiguration().getGroupId();
+        doForEachDataModelGroup(context.getProjectConfiguration(), context.getDataModelContext().getDataModelGroup(),
+                model);
+        model.put("importModel", "import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;");
+        model.put("propertyName", "dataStore");
+        model.put("name", "DataStore");
+        model.put("id", "Long");
+        templateService.fillModel("rest-spring-jpa/repository.ftl", model);
         return true;
+    }
+
+    public void doForEachDataModelGroup(ProjectConfiguration pConf, Collection<DataModelGroup> dmGroup,
+            Map<String, Object> model) {
+
+    }
+
+    public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElement,
+            Map<String, Object> model) {
+
     }
 
 }

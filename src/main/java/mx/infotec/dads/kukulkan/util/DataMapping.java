@@ -49,15 +49,15 @@ public class DataMapping {
      */
     public static DataModelGroup createDataModelGroup(DataContext dataContext) {
         DataModelGroup dmg = new DataModelGroup();
-        dmg.setName("Default description");
-        dmg.setDescription("Default description");
-        dmg.setBriefDescription("Default description");
-        dmg.setLayerName("model");
+        dmg.setName("");
+        dmg.setDescription("Default package");
+        dmg.setBriefDescription("Default package");
         Table[] tables = dataContext.getDefaultSchema().getTables();
         for (Table table : tables) {
             DataModelElement dme = new DataModelElement();
             dme.setTableName(table.getName());
-            dme.setName(SchemaPropertiesParser.parseToPropertyName(table.getName()));
+            dme.setName(SchemaPropertiesParser.parseToClassName(table.getName()));
+            dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(table.getName()));
         }
         return dmg;
     }

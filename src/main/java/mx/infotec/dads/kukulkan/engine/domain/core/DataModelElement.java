@@ -24,6 +24,7 @@
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The DataModelElement represent a Table mapped into a specific technology
@@ -32,21 +33,36 @@ import java.util.Collection;
  *
  */
 public class DataModelElement {
+
+    /**
+     * urlName statements of the elements
+     */
+    protected String urlName;
+
+    /**
+     * imports statements of the elements
+     */
+    protected List<String> imports;
+
     /**
      * Name of the dataModel, usually it is the name of the Schema formatted for
-     * specific technology. For instance, in java it is a the java Class name
+     * specific technology. For instance, in java it is the java Class name
      */
     protected String name;
 
     /**
-     * BaseName of the dataModel, usually it is the name of the Schema formatted
-     * for specific technology. For instance, in java it is a the package of the
-     * java Class name
+     * The name of the database Table
      */
-    protected String baseName;
-
     protected String tableName;
 
+    /**
+     * The name of the table formated to java world.
+     */
+    protected String propertyName;
+
+    /**
+     * The columns mapped into the PropertyHolder class
+     */
     protected Collection<PropertyHolder> properties;
 
     public String getName() {
@@ -65,20 +81,36 @@ public class DataModelElement {
         this.properties = properties;
     }
 
-    public String getBaseName() {
-        return baseName;
-    }
-
-    public void setBaseName(String baseName) {
-        this.baseName = baseName;
-    }
-
     public String getTableName() {
         return tableName;
     }
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
+    }
+
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
+    }
+
+    public String getUrlName() {
+        return urlName;
+    }
+
+    public void setUrlName(String urlName) {
+        this.urlName = urlName;
+    }
+
+    public List<String> getImports() {
+        return imports;
+    }
+
+    public void setImports(List<String> imports) {
+        this.imports = imports;
     }
 
 }

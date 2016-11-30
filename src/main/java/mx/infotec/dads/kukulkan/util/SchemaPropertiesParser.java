@@ -46,6 +46,10 @@ public class SchemaPropertiesParser {
         return trimUnderscore(propertyName);
     }
 
+    public static String parseToClassName(String columnName) {
+        return parseToUpperCaseFirstChar(parseToPropertyName(columnName));
+    }
+
     public static String parseToUpperCaseFirstChar(String element) {
         return element.replace(element.charAt(0) + "", (element.charAt(0) + "").toUpperCase());
     }

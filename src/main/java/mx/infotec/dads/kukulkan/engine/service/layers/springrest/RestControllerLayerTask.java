@@ -23,7 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,30 +41,27 @@ import mx.infotec.dads.kukulkan.templating.service.TemplateService;
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("serviceLayerTask")
-public class ServiceLayerTask implements LayerTask {
+@Service("restControllerLayerTask")
+public class RestControllerLayerTask implements LayerTask {
 
     @Autowired
     private TemplateService templateService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceLayerTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestControllerLayerTask.class);
 
     @Override
     public boolean doTask(GeneratorContext context) {
         LOGGER.debug("Service Layer Task Executing");
-        System.out.println("Service Layer Task");
         Map<String, Object> model = new HashMap<>();
         model.put("year", "2016");
-        model.put("author", "Daniel Cortes Pichardo");
-        model.put("package", "com.danimanicp.kukulkan");
-        model.put("imports", "import java.util.Long;");
-        model.put("className", "DataConnection");
-        model.put("tableName", "DATA_CONNECTION");
-        model.put("propertyType", "Long");
-        model.put("propertyName", "id");
-        model.put("propertyNameMethod", "Id");
-        model.put("date", new Date());
-        templateService.fillModel("rest-spring-jpa/model.ftl", model);
+        model.put("autor", "Daniel Cortes Pichardo");
+        model.put("package", "package mx.infotec.dads.kukulkan.web;");
+        model.put("importModel", "import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;");
+        model.put("importRepository", "import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;");
+        model.put("propertyName", "dataStore");
+        model.put("name", "DataStore");
+        model.put("urlName", "dataStores");
+        templateService.fillModel("rest-spring-jpa/restController.ftl", model);
         return true;
     }
 
