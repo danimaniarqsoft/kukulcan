@@ -34,5 +34,5 @@ import java.util.Map;
 
 public interface TemplateService {
 
-    String fillModel(String templateName, Map<String, Object> model);
+    String fillModel(String templateName, Map<String, Object> model, String filePath);
 }

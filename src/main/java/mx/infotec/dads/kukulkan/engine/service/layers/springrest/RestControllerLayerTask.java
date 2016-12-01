@@ -23,6 +23,10 @@
  */
 package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
 
+import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToImportStatement;
+import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +35,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
+import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 
@@ -54,15 +61,36 @@ public class RestControllerLayerTask implements LayerTask {
         LOGGER.debug("Service Layer Task Executing");
         Map<String, Object> model = new HashMap<>();
         model.put("year", "2016");
-        model.put("autor", "Daniel Cortes Pichardo");
-        model.put("package", "package mx.infotec.dads.kukulkan.web;");
-        model.put("importModel", "import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;");
-        model.put("importRepository", "import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;");
-        model.put("propertyName", "dataStore");
-        model.put("name", "DataStore");
-        model.put("urlName", "dataStores");
-        templateService.fillModel("rest-spring-jpa/restController.ftl", model);
+        model.put("author", "Daniel Cortes Pichardo");
+        ProjectConfiguration pConfiguration = context.getProjectConfiguration();
+        Collection<DataModelGroup> dataModelGroupCollection = context.getDataModelContext().getDataModelGroup();
+        doForEachDataModelGroup(pConfiguration, dataModelGroupCollection, model);
         return true;
     }
 
+    public void doForEachDataModelGroup(ProjectConfiguration pConf, Collection<DataModelGroup> dmGroup,
+            Map<String, Object> model) {
+        for (DataModelGroup dataModelGroup : dmGroup) {
+            doForEachDataModelElement(pConf, dataModelGroup.getDataModelElements(), model, dataModelGroup.getName());
+        }
+    }
+
+    public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
+            Map<String, Object> model, String dmgName) {
+        for (DataModelElement dmElement : dmElementCollection) {
+            String basePackage = pConf.getGroupId() + dmgName;
+            model.put("package", formatToPackageStatement(basePackage, pConf.getWebLayerName()));
+            model.put("importRepository", formatToImportStatement(basePackage, pConf.getDaoLayerName(),
+                    dmElement.getName() + RepositoryLayerTask.NAME_CONVENTION));
+            model.put("importModel",
+                    formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
+            model.put("propertyName", dmElement.getPropertyName());
+            model.put("name", dmElement.getName());
+            model.put("urlName", dmElement.getPropertyName());
+            model.put("id", "Long");
+            templateService.fillModel("rest-spring-jpa/restController.ftl", model, basePackage.replace('.', '/') + "/"
+                    + dmgName + "/" + pConf.getWebLayerName() + "/" + dmElement.getName() + "RestController.java");
+
+        }
+    }
 }

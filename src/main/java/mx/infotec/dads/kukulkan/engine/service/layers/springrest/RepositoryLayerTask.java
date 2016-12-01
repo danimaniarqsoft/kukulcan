@@ -23,6 +23,9 @@
  */
 package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
 
+import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToImportStatement;
+import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +51,7 @@ import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 @Service("repositoryLayerTask")
 public class RepositoryLayerTask implements LayerTask {
 
+    public static final String NAME_CONVENTION = "Repository";
     @Autowired
     private TemplateService templateService;
 
@@ -59,7 +63,6 @@ public class RepositoryLayerTask implements LayerTask {
         Map<String, Object> model = new HashMap<>();
         model.put("year", context.getProjectConfiguration().getYear());
         model.put("author", context.getProjectConfiguration().getAuthor());
-        // model.put("package", context.getProjectConfiguration().getGroupId();
         ProjectConfiguration pConfiguration = context.getProjectConfiguration();
         Collection<DataModelGroup> dataModelGroup = context.getDataModelContext().getDataModelGroup();
         doForEachDataModelGroup(pConfiguration, dataModelGroup, model);
@@ -69,18 +72,22 @@ public class RepositoryLayerTask implements LayerTask {
     public void doForEachDataModelGroup(ProjectConfiguration pConf, Collection<DataModelGroup> dmGroup,
             Map<String, Object> model) {
         for (DataModelGroup dataModelGroup : dmGroup) {
-            doForEachDataModelElement(pConf, dataModelGroup.getDataModelElements(), model);
+            doForEachDataModelElement(pConf, dataModelGroup.getDataModelElements(), model, dataModelGroup.getName());
         }
     }
 
-    public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElement,
-            Map<String, Object> model) {
-        model.put("importModel", "import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;");
-        model.put("propertyName", "dataStore");
-        model.put("name", "DataStore");
-        model.put("id", "Long");
-        templateService.fillModel("rest-spring-jpa/repository.ftl", model);
-
+    public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
+            Map<String, Object> model, String dmgName) {
+        String basePackage = pConf.getGroupId() + dmgName;
+        for (DataModelElement dmElement : dmElementCollection) {
+            model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
+            model.put("importModel",
+                    formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
+            model.put("propertyName", dmElement.getPropertyName());
+            model.put("name", dmElement.getName());
+            model.put("id", "Long");
+            templateService.fillModel("rest-spring-jpa/repository.ftl", model, basePackage.replace('.', '/') + "/"
+                    + dmgName + "/" + pConf.getDaoLayerName() + "/" + dmElement.getName() + "Repository.java");
+        }
     }
-
 }

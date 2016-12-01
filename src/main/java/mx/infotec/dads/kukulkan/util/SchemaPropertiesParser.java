@@ -51,7 +51,7 @@ public class SchemaPropertiesParser {
     }
 
     public static String parseToUpperCaseFirstChar(String element) {
-        return element.replace(element.charAt(0) + "", (element.charAt(0) + "").toUpperCase());
+        return element.replaceFirst(element.charAt(0) + "", (element.charAt(0) + "").toUpperCase());
     }
 
     /**
@@ -75,7 +75,7 @@ public class SchemaPropertiesParser {
     }
 
     public static void main(String[] args) {
-        System.out.println(parseToPropertyName("_BASE_DATOS_OFERTA_"));
+        System.out.println(parseToClassName("entity_field_lang"));
     }
 
 }

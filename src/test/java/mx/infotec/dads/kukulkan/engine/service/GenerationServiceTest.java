@@ -23,7 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.engine.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.metamodel.DataContext;
@@ -32,18 +31,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelContext;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.factories.LayerTaskFactory;
-import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
+import mx.infotec.dads.kukulkan.util.DataMapping;
 
 /**
  * Test for GeneratorService
@@ -60,10 +59,6 @@ public class GenerationServiceTest {
     private GenerationService generationService;
     @Autowired
     private DataStoreService dataStoreService;
-
-    @Autowired
-    private ApplicationContext appContext;
-
     @Autowired
     private LayerTaskFactory layerTaskFactory;
 
@@ -75,8 +70,12 @@ public class GenerationServiceTest {
         pConf.setGroupId("mx.dads.infotec");
         pConf.setVersion("1.0.0");
         pConf.setPackaging("mx.dads.infotec");
-        pConf.setYear("29/10/2017");
+        pConf.setYear("2016");
         pConf.setAuthor("Daniel Cortes Pichardo");
+        pConf.setWebLayerName("web");
+        pConf.setServiceLayerName("service");
+        pConf.setDaoLayerName("repository");
+        pConf.setDomainLayerName("model");
         // Create DataStore
         DataStore dataStore = dataStoreService.getDataStore(1l);
         // Create DataModel
@@ -84,6 +83,9 @@ public class GenerationServiceTest {
         // Create DataContext
         DataContext dataContext = dataStoreService.getDataContext(dataStore);
         dmCtx.setDataContext(dataContext);
+        // Mapping DataContext into DataModel
+        List<DataModelGroup> dmgList = DataMapping.createSingleDataModelGroupList(dmCtx.getDataContext());
+        dmCtx.setDataModelGroup(dmgList);
         // Create GeneratorContext
         GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);
 

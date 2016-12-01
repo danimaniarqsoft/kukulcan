@@ -23,11 +23,18 @@
  */
 package mx.infotec.dads.kukulkan.util;
 
+import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.schema.Table;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
+import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 
 /**
  * DataMapping utility class
@@ -52,13 +59,38 @@ public class DataMapping {
         dmg.setName("");
         dmg.setDescription("Default package");
         dmg.setBriefDescription("Default package");
+        dmg.setDataModelElements(new ArrayList<>());
         Table[] tables = dataContext.getDefaultSchema().getTables();
+        List<DataModelElement> dmeList = new ArrayList<>();
         for (Table table : tables) {
             DataModelElement dme = new DataModelElement();
             dme.setTableName(table.getName());
             dme.setName(SchemaPropertiesParser.parseToClassName(table.getName()));
             dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(table.getName()));
+            dmeList.add(dme);
         }
+        dmg.setDataModelElements(dmeList);
         return dmg;
+    }
+
+    /**
+     * Create a List of DataModelGroup into a single group from a DataContext
+     * Element
+     * 
+     * @param dataContext
+     * @return
+     */
+    public static List<DataModelGroup> createSingleDataModelGroupList(DataContext dataContext) {
+        List<DataModelGroup> dataModelGroupList = new ArrayList<>();
+        dataModelGroupList.add(createDataModelGroup(dataContext));
+        return dataModelGroupList;
+    }
+
+    public void mapCommonProperties(ProjectConfiguration pConf, Map<String, Object> model, DataModelElement dmElement,
+            String basePackage) {
+        model.put("package", formatToPackageStatement(basePackage, pConf.getWebLayerName()));
+        model.put("propertyName", dmElement.getPropertyName());
+        model.put("name", dmElement.getName());
+        model.put("id", "Long");
     }
 }

@@ -33,7 +33,7 @@ public class SampleWebFreeMarkerApplicationTests {
 		model.put("javaType", "Integer");
 		model.put("propertyName", "name");
 
-		templateService.fillModel("model.ftl", model);
+		templateService.fillModel("model.ftl", model,"mx/com/hola.java");
 	}
 
 }

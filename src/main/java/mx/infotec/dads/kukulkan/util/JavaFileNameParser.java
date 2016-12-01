@@ -27,7 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The JavaFileNameParser Class is used for parsing the filename of a Java class and formatted to the most
+ * The JavaFileNameParser Class is used for parsing the filename of a Java class
+ * and formatted to the most
  * 
  * @author Daniel Cortes Pichardo
  *
@@ -36,9 +37,10 @@ public class JavaFileNameParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JavaFileNameParser.class);
 
-    private JavaFileNameParser(){
-        
+    private JavaFileNameParser() {
+
     }
+
     /**
      * Covierte un string con formato JavaFile.java a javaFile
      * 
@@ -58,6 +60,47 @@ public class JavaFileNameParser {
      */
     public static String parseToPropertyType(String javaFileName) {
         return javaFileName.replaceAll(".java", "");
+    }
+
+    /**
+     * Create a package statement based on a String[] Arrays of words
+     * 
+     * @param words
+     * @return
+     */
+    public static String formatToImportStatement(String... words) {
+        return formatHeaderElementStatement("import", words);
+    }
+
+    /**
+     * Create a package statement based on a String[] Arrays of words
+     * 
+     * @param words
+     * @return
+     */
+    public static String formatToPackageStatement(String... words) {
+        return formatHeaderElementStatement("package", words);
+    }
+
+    /**
+     * Create a package statement based on a String[] Arrays of words
+     * 
+     * @param words
+     * @return
+     */
+    public static String formatHeaderElementStatement(String name, String... words) {
+        if (words == null || words.length == 0) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append(" ").append(words[0].trim());
+        for (int i = 1; i < words.length; i++) {
+            if (!words[i].trim().isEmpty()) {
+                sb.append(".").append(words[i].trim());
+            }
+        }
+        sb.append(";");
+        return sb.toString();
     }
 
 }

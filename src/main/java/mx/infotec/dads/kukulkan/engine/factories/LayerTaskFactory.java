@@ -36,5 +36,11 @@ import mx.infotec.dads.kukulkan.util.ArchetypeType;
  */
 public interface LayerTaskFactory {
 
+    /**
+     * It Create a family of LayersTask according to a specific technology
+     * 
+     * @param restSpringJpa
+     * @return
+     */
     List<LayerTask> getLayerTaskSet(ArchetypeType restSpringJpa);
 }

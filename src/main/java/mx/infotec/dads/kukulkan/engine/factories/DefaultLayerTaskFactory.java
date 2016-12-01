@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
+import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
 
 /**
  * DefaultLayerTaskFactory
@@ -47,9 +48,15 @@ public class DefaultLayerTaskFactory implements LayerTaskFactory {
 
     @Override
     public List<LayerTask> getLayerTaskSet(ArchetypeType archetypeType) {
-        List<LayerTask> tasks = new ArrayList<>();
-        tasks.add((LayerTask) appContext.getBean("repositoryLayerTask"));
-        tasks.add((LayerTask) appContext.getBean("restControllerLayerTask"));
-        return tasks;
+        switch (archetypeType) {
+        case REST_SPRING_JPA:
+            List<LayerTask> tasks = new ArrayList<>();
+            tasks.add((LayerTask) appContext.getBean("repositoryLayerTask"));
+            tasks.add((LayerTask) appContext.getBean("restControllerLayerTask"));
+            return tasks;
+        default:
+            throw new ApplicationException("Operation Not Supported" + archetypeType.toString());
+        }
+
     }
 }

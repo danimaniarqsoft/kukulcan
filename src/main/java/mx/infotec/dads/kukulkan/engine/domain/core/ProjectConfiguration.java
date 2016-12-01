@@ -40,6 +40,11 @@ public class ProjectConfiguration {
     private String author;
     private String year;
 
+    private String webLayerName;
+    private String serviceLayerName;
+    private String daoLayerName;
+    private String domainLayerName;
+
     public String getId() {
         return id;
     }
@@ -86,6 +91,38 @@ public class ProjectConfiguration {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getWebLayerName() {
+        return webLayerName;
+    }
+
+    public void setWebLayerName(String webLayerName) {
+        this.webLayerName = webLayerName;
+    }
+
+    public String getServiceLayerName() {
+        return serviceLayerName;
+    }
+
+    public void setServiceLayerName(String serviceLayerName) {
+        this.serviceLayerName = serviceLayerName;
+    }
+
+    public String getDaoLayerName() {
+        return daoLayerName;
+    }
+
+    public void setDaoLayerName(String daoLayerName) {
+        this.daoLayerName = daoLayerName;
+    }
+
+    public String getDomainLayerName() {
+        return domainLayerName;
+    }
+
+    public void setDomainLayerName(String domainLayerName) {
+        this.domainLayerName = domainLayerName;
     }
 
 }
