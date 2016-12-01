@@ -41,7 +41,9 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
+import mx.infotec.dads.kukulkan.engine.factories.LayerTaskFactory;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
+import mx.infotec.dads.kukulkan.util.ArchetypeType;
 
 /**
  * Test for GeneratorService
@@ -61,6 +63,9 @@ public class GenerationServiceTest {
 
     @Autowired
     private ApplicationContext appContext;
+
+    @Autowired
+    private LayerTaskFactory layerTaskFactory;
 
     @Test
     public void generationService() throws Exception {
@@ -83,10 +88,7 @@ public class GenerationServiceTest {
         GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);
 
         // Process Activities
-        List<LayerTask> tasks = new ArrayList<>();
-        tasks.add((LayerTask) appContext.getBean("repositoryLayerTask"));
-        tasks.add((LayerTask) appContext.getBean("restControllerLayerTask"));
-        generationService.process(genCtx, tasks);
+        generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.REST_SPRING_JPA));
 
     }
 }
