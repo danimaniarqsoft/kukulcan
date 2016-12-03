@@ -1,7 +1,7 @@
 /*
  *  
  * The MIT License (MIT)
- * Copyright (c) 2016 Daniel Cortes Pichardo
+ * Copyright (c) ${year} ${author}
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,91 +21,69 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.service;
+${package}
 
-import java.util.List;
-
-import org.apache.metamodel.DataContext;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
+import org.springframework.data.jpa.repository.JpaRepository;
+${importModel}
 
 /**
- * DataStore Service
+ * ${name}Service
  * 
- * @author Daniel Cortes Pichardo
+ * @author ${author}
  *
  */
-public interface DataStoreService {
-    /**
-     * Get a DataContext
-     * 
-     * @param dataStore
-     * @return DataContext
-     */
-    public DataContext getDataContext(DataStore dataStore);
+public interface ${name}Service {
 
     /**
-     * Get a DataStore
+     * regresa una lista con todos los elementos ${name}
      * 
-     * @param id
-     *            of the data store
-     * @return DataContext
+     * @return List<${name}>
      */
-    public DataStore getDataStore(Long id);
+    List<${name}> findAll();
 
     /**
-     * regresa una lista con todos los elementos DataStore
-     * 
-     * @return List<DataStore>
-     */
-    List<DataStore> findAll();
-
-    /**
-     * regresa una lista de elementos DataStore por página
+     * regresa una lista de elementos ${name} por página
      * 
      * @param pagable
      * @return
      */
-    Page<DataStore> findAllByPage(Pageable pagable);
+    Page<${name}> findAllByPage(Pageable pagable);
 
     /**
-     * Consulta un DataStore por su llave primaria
+     * Consulta un ${name} por su llave primaria
      * 
      * @param id
-     * @return DataStore
+     * @return ${name}
      */
-    DataStore findById(Long id);
+    ${name} findById(${id} id);
 
     /**
-     * Guarda o actualiza un DataStore
+     * Guarda o actualiza un ${name}
      * 
-     * @param dataStore
+     * @param ${propertyName}
      * @return boolean
      */
-    DataStore save(DataStore dataStore);
+    DataStore save(${name} ${propertyName});
 
     /**
-     * Regresa true o false si existe un DataStore almacenado
+     * Regresa true o false si existe un ${name} almacenado
      * 
      * @param id
      * @return boolean
      */
-    boolean exists(Long id);
+    boolean exists(${id} id);
 
     /**
-     * Borrar un DataStore por su llave primaria
+     * Borrar un ${name} por su llave primaria
      * 
      * @param id
      */
-    void delete(Long id);
+    void delete(${id} id);
 
     /**
-     * Borrar todos los elementos DataStore almacenados
+     * Borrar todos los elementos ${name} almacenados
      * 
      * @param id
      */
     void deleteAll();
-
 }

@@ -53,6 +53,7 @@ public class DefaultLayerTaskFactory implements LayerTaskFactory {
             List<LayerTask> tasks = new ArrayList<>();
             tasks.add((LayerTask) appContext.getBean("repositoryLayerTask"));
             tasks.add((LayerTask) appContext.getBean("restControllerLayerTask"));
+            tasks.add((LayerTask) appContext.getBean("serviceLayerTask"));
             return tasks;
         default:
             throw new ApplicationException("Operation Not Supported" + archetypeType.toString());

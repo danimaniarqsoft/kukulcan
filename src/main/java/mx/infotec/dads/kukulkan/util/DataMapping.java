@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.metamodel.DataContext;
+import org.apache.metamodel.schema.Column;
 import org.apache.metamodel.schema.Table;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
@@ -54,7 +55,7 @@ public class DataMapping {
      * @param dataContext
      * @return DataModelGroup
      */
-    public static DataModelGroup createDataModelGroup(DataContext dataContext) {
+    public static DataModelGroup createDataModelGroup(DataContext dataContext, List<String> tablesToProcess) {
         DataModelGroup dmg = new DataModelGroup();
         dmg.setName("");
         dmg.setDescription("Default package");
@@ -63,14 +64,26 @@ public class DataMapping {
         Table[] tables = dataContext.getDefaultSchema().getTables();
         List<DataModelElement> dmeList = new ArrayList<>();
         for (Table table : tables) {
-            DataModelElement dme = new DataModelElement();
-            dme.setTableName(table.getName());
-            dme.setName(SchemaPropertiesParser.parseToClassName(table.getName()));
-            dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(table.getName()));
-            dmeList.add(dme);
+            if (tablesToProcess.contains(table.getName())) {
+                DataModelElement dme = new DataModelElement();
+                dme.setTableName(table.getName());
+                dme.setName(SchemaPropertiesParser.parseToClassName(table.getName()));
+                dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(table.getName()));
+                dme.setId(extractPrimaryKey(table.getPrimaryKeys()));
+                dmeList.add(dme);
+            }
         }
         dmg.setDataModelElements(dmeList);
         return dmg;
+    }
+
+    public static String extractPrimaryKey(Column[] columns) {
+        if (columns.length == 1) {
+            Column col = columns[0];
+            return col.getType().getJavaEquivalentClass().getSimpleName();
+        } else {
+            return "PK_NO_IMPLEMENTED";
+        }
     }
 
     /**
@@ -80,9 +93,10 @@ public class DataMapping {
      * @param dataContext
      * @return
      */
-    public static List<DataModelGroup> createSingleDataModelGroupList(DataContext dataContext) {
+    public static List<DataModelGroup> createSingleDataModelGroupList(DataContext dataContext,
+            List<String> tablesToProces) {
         List<DataModelGroup> dataModelGroupList = new ArrayList<>();
-        dataModelGroupList.add(createDataModelGroup(dataContext));
+        dataModelGroupList.add(createDataModelGroup(dataContext,tablesToProces));
         return dataModelGroupList;
     }
 

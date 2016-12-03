@@ -87,7 +87,7 @@ public class RestControllerLayerTask implements LayerTask {
             model.put("propertyName", dmElement.getPropertyName());
             model.put("name", dmElement.getName());
             model.put("urlName", dmElement.getPropertyName());
-            model.put("id", "Long");
+            model.put("id", dmElement.getId());
             templateService.fillModel("rest-spring-jpa/restController.ftl", model, basePackage.replace('.', '/') + "/"
                     + dmgName + "/" + pConf.getWebLayerName() + "/" + dmElement.getName() + "RestController.java");
 

@@ -23,6 +23,7 @@
  */
 package mx.infotec.dads.kukulkan.engine.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.metamodel.DataContext;
@@ -83,8 +84,11 @@ public class GenerationServiceTest {
         // Create DataContext
         DataContext dataContext = dataStoreService.getDataContext(dataStore);
         dmCtx.setDataContext(dataContext);
+        // Tables to process
+        List<String> tablesToProcess = Arrays.asList("pais", "idioma");
         // Mapping DataContext into DataModel
-        List<DataModelGroup> dmgList = DataMapping.createSingleDataModelGroupList(dmCtx.getDataContext());
+        List<DataModelGroup> dmgList = DataMapping.createSingleDataModelGroupList(dmCtx.getDataContext(),
+                tablesToProcess);
         dmCtx.setDataModelGroup(dmgList);
         // Create GeneratorContext
         GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);

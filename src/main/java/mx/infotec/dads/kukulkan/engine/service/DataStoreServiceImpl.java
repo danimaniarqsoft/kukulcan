@@ -23,10 +23,14 @@
  */
 package mx.infotec.dads.kukulkan.engine.service;
 
+import java.util.List;
+
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.factory.DataContextFactoryRegistryImpl;
 import org.apache.metamodel.factory.DataContextPropertiesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
@@ -59,5 +63,40 @@ public class DataStoreServiceImpl implements DataStoreService {
     @Override
     public DataStore getDataStore(Long id) {
         return repository.findOne(id);
+    }
+
+    @Override
+    public Page<DataStore> findAllByPage(Pageable pagable) {
+        return repository.findAll(pagable);
+    }
+
+    @Override
+    public List<DataStore> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public DataStore findById(Long id) {
+        return repository.findOne(id);
+    }
+
+    @Override
+    public DataStore save(DataStore dataStore) {
+        return repository.save(dataStore);
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return repository.exists(id);
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.delete(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        repository.deleteAll();
     }
 }

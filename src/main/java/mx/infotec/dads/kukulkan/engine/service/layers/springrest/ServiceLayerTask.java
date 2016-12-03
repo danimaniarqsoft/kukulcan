@@ -48,14 +48,15 @@ import mx.infotec.dads.kukulkan.templating.service.TemplateService;
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("repositoryLayerTask")
-public class RepositoryLayerTask implements LayerTask {
+@Service("serviceLayerTask")
+public class ServiceLayerTask implements LayerTask {
 
-    public static final String NAME_CONVENTION = "Repository";
+    public static final String NAME_CONVENTION_SERVICE = "Service";
+    public static final String NAME_CONVENTION_SERVICE_IMPLEMENTS = "ServiceImpl";
     @Autowired
     private TemplateService templateService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryLayerTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceLayerTask.class);
 
     @Override
     public boolean doTask(GeneratorContext context) {
@@ -81,13 +82,19 @@ public class RepositoryLayerTask implements LayerTask {
         String basePackage = pConf.getGroupId() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
             model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
+            model.put("packageImpl", formatToPackageStatement(basePackage, pConf.getServiceLayerName(), "impl"));
             model.put("importModel",
                     formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
+            model.put("importRepository", formatToImportStatement(basePackage, pConf.getDaoLayerName(),
+                    dmElement.getName() + RepositoryLayerTask.NAME_CONVENTION));
             model.put("propertyName", dmElement.getPropertyName());
             model.put("name", dmElement.getName());
             model.put("id", dmElement.getId());
-            templateService.fillModel("rest-spring-jpa/repository.ftl", model, basePackage.replace('.', '/') + "/"
-                    + dmgName + "/" + pConf.getDaoLayerName() + "/" + dmElement.getName() + "Repository.java");
+            templateService.fillModel("rest-spring-jpa/service.ftl", model, basePackage.replace('.', '/') + "/"
+                    + dmgName + "/" + pConf.getServiceLayerName() + "/" + dmElement.getName() + "Service.java");
+            templateService.fillModel("rest-spring-jpa/serviceImpl.ftl", model,
+                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getServiceLayerName() + "/impl/"
+                            + dmElement.getName() + "ServiceImpl.java");
         }
     }
 }

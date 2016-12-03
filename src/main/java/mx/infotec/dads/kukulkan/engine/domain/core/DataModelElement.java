@@ -35,6 +35,11 @@ import java.util.List;
 public class DataModelElement {
 
     /**
+     * id of the dataModelElement, it is the primary key
+     */
+    protected String id;
+
+    /**
      * urlName statements of the elements
      */
     protected String urlName;
@@ -111,6 +116,14 @@ public class DataModelElement {
 
     public void setImports(List<String> imports) {
         this.imports = imports;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

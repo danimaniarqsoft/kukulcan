@@ -47,13 +47,13 @@ ${importRepository}
  */
 
 @RestController
-@RequestMapping(value = "/${urlName}")
+@RequestMapping(value = "/${propertyName}")
 public class ${name}RestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(${name}RestController.class);
 
     @Autowired
-    private ${name}Repository repository;
+    private ${name}Service service;
 
     /**
      * GET ALL recupera todos los ${name}
@@ -62,12 +62,28 @@ public class ${name}RestController {
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<${name}>> getAll${name}() {
-        List<${name}> ${propertyName}List = repository.findAll();
+        List<${name}> ${propertyName}List = service.findAll();
         if (${propertyName}List.isEmpty()) {
             // Se podría regresar HttpStatus.NOT_FOUND
             return new ResponseEntity<List<${name}>>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<${name}>>(${propertyName}List, HttpStatus.OK);
+        }
+    }
+
+    /**
+     * GET ALL BY PAGE recupera los ${name} por página
+     * 
+     * @return List<${name}>
+     */
+    @RequestMapping(value = "/pagable", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<${name}>> getAll${name}ByPage(Pageable pagable) {
+        Page<${name}> ${propertyName}Page = service.findAllByPage(pagable);
+        if (${propertyName}Page.getTotalElements() == 0) {
+            // Se podría regresar HttpStatus.NOT_FOUND
+            return new ResponseEntity<Page<${name}>>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<Page<${name}>>(${propertyName}Page, HttpStatus.OK);
         }
     }
 
@@ -78,8 +94,8 @@ public class ${name}RestController {
      * @return ${name}
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<${name}> get${name}(@PathVariable("id") Long id) {
-        ${name} ${propertyName} = repository.findOne(id);
+    public ResponseEntity<${name}> get${name}(@PathVariable("id") ${id} id) {
+        ${name} ${propertyName} = service.findById(id);
         if (${propertyName} == null) {
             return new ResponseEntity<${name}>(HttpStatus.NOT_FOUND);
         }
@@ -95,10 +111,10 @@ public class ${name}RestController {
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create${name}(@RequestBody ${name} ${propertyName}, UriComponentsBuilder ucBuilder) {
-        if (repository.exists(${propertyName}.getId())) {
+        if (service.exists(${propertyName}.getId())) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         } else {
-            repository.save(${propertyName});
+            service.save(${propertyName});
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(${propertyName}.getId()).toUri());
             return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -115,12 +131,12 @@ public class ${name}RestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<${name}> update${name}(@PathVariable("id") long id, @RequestBody ${name} ${propertyName}) {
         LOGGER.debug("Actualizando ${name}" + id);
-        ${name} current${name} = repository.findOne(id);
+        ${name} current${name} = service.findById(id);
         if (current${name} == null) {
             LOGGER.debug("${name} con id " + id + " no se encuentra");
             return new ResponseEntity<${name}>(HttpStatus.NOT_FOUND);
         }
-        repository.save(${propertyName});
+        service.save(${propertyName});
         return new ResponseEntity<${name}>(${propertyName}, HttpStatus.OK);
     }
 
@@ -131,14 +147,14 @@ public class ${name}RestController {
      * @return
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<${name}> delete${name}(@PathVariable("id") Long id) {
+    public ResponseEntity<${name}> delete${name}(@PathVariable("id") ${id} id) {
         LOGGER.debug("Buscar y borrar un ${name} con " + id);
-        ${name} ${propertyName} = repository.findOne(id);
+        ${name} ${propertyName} = service.findById(id);
         if (${propertyName} == null) {
             LOGGER.debug("No es posible borrar. El ${name} con id" + id + " no se encuentra");
             return new ResponseEntity<${name}>(HttpStatus.NOT_FOUND);
         }
-        repository.delete(id);
+        service.delete(id);
         return new ResponseEntity<${name}>(HttpStatus.NO_CONTENT);
     }
 
@@ -149,7 +165,7 @@ public class ${name}RestController {
      */
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<${name}> deleteAll${name}() {
-        repository.deleteAll();
+        service.deleteAll();
         return new ResponseEntity<${name}>(HttpStatus.NO_CONTENT);
     }
 }
