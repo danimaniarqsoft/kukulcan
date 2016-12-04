@@ -61,7 +61,7 @@ public class RestControllerLayerTask implements LayerTask {
         LOGGER.debug("Service Layer Task Executing");
         Map<String, Object> model = new HashMap<>();
         model.put("year", "2016");
-        model.put("author", "Daniel Cortes Pichardo");
+        model.put("author", context.getProjectConfiguration().getAuthor());
         ProjectConfiguration pConfiguration = context.getProjectConfiguration();
         Collection<DataModelGroup> dataModelGroupCollection = context.getDataModelContext().getDataModelGroup();
         doForEachDataModelGroup(pConfiguration, dataModelGroupCollection, model);
@@ -87,7 +87,7 @@ public class RestControllerLayerTask implements LayerTask {
             model.put("propertyName", dmElement.getPropertyName());
             model.put("name", dmElement.getName());
             model.put("urlName", dmElement.getPropertyName());
-            model.put("id", dmElement.getId());
+            model.put("id", dmElement.getPrimaryKey().getType());
             templateService.fillModel("rest-spring-jpa/restController.ftl", model, basePackage.replace('.', '/') + "/"
                     + dmgName + "/" + pConf.getWebLayerName() + "/" + dmElement.getName() + "RestController.java");
 

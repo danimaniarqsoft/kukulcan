@@ -35,6 +35,7 @@ import org.apache.metamodel.schema.Table;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
+import mx.infotec.dads.kukulkan.engine.domain.core.PrimaryKey;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 
 /**
@@ -69,7 +70,7 @@ public class DataMapping {
                 dme.setTableName(table.getName());
                 dme.setName(SchemaPropertiesParser.parseToClassName(table.getName()));
                 dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(table.getName()));
-                dme.setId(extractPrimaryKey(table.getPrimaryKeys()));
+                dme.setPrimaryKey(extractPrimaryKey(table.getPrimaryKeys()));
                 dmeList.add(dme);
             }
         }
@@ -77,13 +78,16 @@ public class DataMapping {
         return dmg;
     }
 
-    public static String extractPrimaryKey(Column[] columns) {
+    public static PrimaryKey extractPrimaryKey(Column[] columns) {
+        PrimaryKey pk = new PrimaryKey();
         if (columns.length == 1) {
-            Column col = columns[0];
-            return col.getType().getJavaEquivalentClass().getSimpleName();
+            pk.setType(columns[0].getType().getJavaEquivalentClass().getSimpleName());
+            pk.setName(SchemaPropertiesParser.parseToPropertyName(columns[0].getName()));
         } else {
-            return "PK_NO_IMPLEMENTED";
+            return null;
         }
+
+        return pk;
     }
 
     /**
@@ -96,7 +100,7 @@ public class DataMapping {
     public static List<DataModelGroup> createSingleDataModelGroupList(DataContext dataContext,
             List<String> tablesToProces) {
         List<DataModelGroup> dataModelGroupList = new ArrayList<>();
-        dataModelGroupList.add(createDataModelGroup(dataContext,tablesToProces));
+        dataModelGroupList.add(createDataModelGroup(dataContext, tablesToProces));
         return dataModelGroupList;
     }
 

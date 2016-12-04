@@ -85,7 +85,7 @@ public class RepositoryLayerTask implements LayerTask {
                     formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
             model.put("propertyName", dmElement.getPropertyName());
             model.put("name", dmElement.getName());
-            model.put("id", dmElement.getId());
+            model.put("id", dmElement.getPrimaryKey().getType());
             templateService.fillModel("rest-spring-jpa/repository.ftl", model, basePackage.replace('.', '/') + "/"
                     + dmgName + "/" + pConf.getDaoLayerName() + "/" + dmElement.getName() + "Repository.java");
         }

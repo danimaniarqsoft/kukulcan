@@ -37,7 +37,7 @@ public class DataModelElement {
     /**
      * id of the dataModelElement, it is the primary key
      */
-    protected String id;
+    protected PrimaryKey primaryKey;
 
     /**
      * urlName statements of the elements
@@ -118,12 +118,11 @@ public class DataModelElement {
         this.imports = imports;
     }
 
-    public String getId() {
-        return id;
+    public PrimaryKey getPrimaryKey() {
+        return primaryKey;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPrimaryKey(PrimaryKey primaryKey) {
+        this.primaryKey = primaryKey;
     }
-
 }

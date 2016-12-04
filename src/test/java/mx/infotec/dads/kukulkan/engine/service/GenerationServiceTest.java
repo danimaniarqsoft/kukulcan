@@ -68,11 +68,11 @@ public class GenerationServiceTest {
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("gen");
-        pConf.setGroupId("mx.dads.infotec");
+        pConf.setGroupId("mx.gelito.anzen");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.dads.infotec");
+        pConf.setPackaging("mx.gelito.anzen");
         pConf.setYear("2016");
-        pConf.setAuthor("Daniel Cortes Pichardo");
+        pConf.setAuthor("Maria de los Angeles Gamero Gonzalez");
         pConf.setWebLayerName("web");
         pConf.setServiceLayerName("service");
         pConf.setDaoLayerName("repository");
@@ -85,7 +85,7 @@ public class GenerationServiceTest {
         DataContext dataContext = dataStoreService.getDataContext(dataStore);
         dmCtx.setDataContext(dataContext);
         // Tables to process
-        List<String> tablesToProcess = Arrays.asList("pais", "idioma");
+        List<String> tablesToProcess = Arrays.asList("usuario", "perfil", "bitacora");
         // Mapping DataContext into DataModel
         List<DataModelGroup> dmgList = DataMapping.createSingleDataModelGroupList(dmCtx.getDataContext(),
                 tablesToProcess);

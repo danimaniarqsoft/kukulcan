@@ -89,7 +89,7 @@ public class ServiceLayerTask implements LayerTask {
                     dmElement.getName() + RepositoryLayerTask.NAME_CONVENTION));
             model.put("propertyName", dmElement.getPropertyName());
             model.put("name", dmElement.getName());
-            model.put("id", dmElement.getId());
+            model.put("id", dmElement.getPrimaryKey().getType());
             templateService.fillModel("rest-spring-jpa/service.ftl", model, basePackage.replace('.', '/') + "/"
                     + dmgName + "/" + pConf.getServiceLayerName() + "/" + dmElement.getName() + "Service.java");
             templateService.fillModel("rest-spring-jpa/serviceImpl.ftl", model,
