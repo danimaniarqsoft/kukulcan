@@ -68,11 +68,11 @@ public class GenerationServiceTest {
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("gen");
-        pConf.setGroupId("mx.gelito.anzen");
+        pConf.setGroupId("mx.infotec.dads.innovation");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.gelito.anzen");
+        pConf.setPackaging("mx.infotec.dads.innovation");
         pConf.setYear("2016");
-        pConf.setAuthor("Maria de los Angeles Gamero Gonzalez");
+        pConf.setAuthor("KUKULKAN");
         pConf.setWebLayerName("web");
         pConf.setServiceLayerName("service");
         pConf.setDaoLayerName("repository");
