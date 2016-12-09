@@ -65,7 +65,7 @@ public class DataMapping {
         Table[] tables = dataContext.getDefaultSchema().getTables();
         List<DataModelElement> dmeList = new ArrayList<>();
         for (Table table : tables) {
-            if (tablesToProcess.contains(table.getName())) {
+            if (tablesToProcess.contains(table.getName()) || tablesToProcess.isEmpty()) {
                 DataModelElement dme = new DataModelElement();
                 dme.setTableName(table.getName());
                 dme.setName(SchemaPropertiesParser.parseToClassName(table.getName()));

@@ -23,6 +23,9 @@
  */
 ${package}
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 ${importModel}
 
@@ -63,7 +66,7 @@ public interface ${name}Service {
      * @param ${propertyName}
      * @return boolean
      */
-    DataStore save(${name} ${propertyName});
+    ${name} save(${name} ${propertyName});
 
     /**
      * Regresa true o false si existe un ${name} almacenado
