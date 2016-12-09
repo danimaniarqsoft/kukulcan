@@ -82,6 +82,8 @@ public class RestControllerLayerTask implements LayerTask {
             model.put("package", formatToPackageStatement(basePackage, pConf.getWebLayerName()));
             model.put("importRepository", formatToImportStatement(basePackage, pConf.getDaoLayerName(),
                     dmElement.getName() + RepositoryLayerTask.NAME_CONVENTION));
+            model.put("importService", formatToImportStatement(basePackage, pConf.getServiceLayerName(),
+                    dmElement.getName() + ServiceLayerTask.NAME_CONVENTION_SERVICE));
             model.put("importModel",
                     formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
             model.put("propertyName", dmElement.getPropertyName());

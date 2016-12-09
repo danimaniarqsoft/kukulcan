@@ -81,12 +81,14 @@ public class ServiceLayerTask implements LayerTask {
             Map<String, Object> model, String dmgName) {
         String basePackage = pConf.getGroupId() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
-            model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
+            model.put("package", formatToPackageStatement(basePackage, pConf.getServiceLayerName()));
             model.put("packageImpl", formatToPackageStatement(basePackage, pConf.getServiceLayerName(), "impl"));
             model.put("importModel",
                     formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
             model.put("importRepository", formatToImportStatement(basePackage, pConf.getDaoLayerName(),
                     dmElement.getName() + RepositoryLayerTask.NAME_CONVENTION));
+            model.put("importService", formatToImportStatement(basePackage, pConf.getServiceLayerName(),
+                    dmElement.getName() + ServiceLayerTask.NAME_CONVENTION_SERVICE));
             model.put("propertyName", dmElement.getPropertyName());
             model.put("name", dmElement.getName());
             model.put("id", dmElement.getPrimaryKey().getType());
