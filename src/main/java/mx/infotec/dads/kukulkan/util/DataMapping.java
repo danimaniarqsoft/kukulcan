@@ -37,6 +37,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.PrimaryKey;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
+import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 
 /**
  * DataMapping utility class
@@ -103,6 +104,16 @@ public class DataMapping {
         List<DataModelGroup> dataModelGroupList = new ArrayList<>();
         dataModelGroupList.add(createDataModelGroup(dataContext, tablesToProces));
         return dataModelGroupList;
+    }
+
+    public static List<LayerTask> createLaterTaskList(Map<String, LayerTask> map, ArchetypeType archetype) {
+        List<LayerTask> layerTaskList = new ArrayList<>();
+        for (Map.Entry<String, LayerTask> layerTaskEntry : map.entrySet()) {
+            if (layerTaskEntry.getValue().getArchetypeType().equals(archetype)) {
+                layerTaskList.add(layerTaskEntry.getValue());
+            }
+        }
+        return layerTaskList;
     }
 
     public void mapCommonProperties(ProjectConfiguration pConf, Map<String, Object> model, DataModelElement dmElement,

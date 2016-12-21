@@ -41,6 +41,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
+import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 /**
@@ -51,6 +52,8 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
  */
 @Service("restControllerLayerTask")
 public class RestControllerLayerTask implements LayerTask {
+
+    private ArchetypeType archetypeType = ArchetypeType.REST_SPRING_JPA;
 
     @Autowired
     private TemplateService templateService;
@@ -96,5 +99,10 @@ public class RestControllerLayerTask implements LayerTask {
                             + dmElement.getName() + "RestController.java");
 
         }
+    }
+
+    @Override
+    public ArchetypeType getArchetypeType() {
+        return archetypeType;
     }
 }

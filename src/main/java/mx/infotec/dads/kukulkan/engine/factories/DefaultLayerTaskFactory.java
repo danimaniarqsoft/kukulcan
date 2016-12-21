@@ -25,6 +25,7 @@ package mx.infotec.dads.kukulkan.engine.factories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Service;
 
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
+import mx.infotec.dads.kukulkan.util.DataMapping;
 import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
 
 /**
@@ -51,10 +53,8 @@ public class DefaultLayerTaskFactory implements LayerTaskFactory {
         switch (archetypeType) {
         case REST_SPRING_JPA:
             List<LayerTask> tasks = new ArrayList<>();
-            tasks.add((LayerTask) appContext.getBean("repositoryLayerTask"));
-            tasks.add((LayerTask) appContext.getBean("restControllerLayerTask"));
-            tasks.add((LayerTask) appContext.getBean("serviceLayerTask"));
-            return tasks;
+            Map<String, LayerTask> taskMap = appContext.getBeansOfType(LayerTask.class);
+            return DataMapping.createLaterTaskList(taskMap, ArchetypeType.REST_SPRING_JPA);
         default:
             throw new ApplicationException("Operation Not Supported" + archetypeType.toString());
         }

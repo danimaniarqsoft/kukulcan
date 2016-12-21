@@ -41,6 +41,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
+import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 /**
@@ -54,6 +55,8 @@ public class ServiceLayerTask implements LayerTask {
 
     public static final String NAME_CONVENTION_SERVICE = "Service";
     public static final String NAME_CONVENTION_SERVICE_IMPLEMENTS = "ServiceImpl";
+    private ArchetypeType archetypeType = ArchetypeType.REST_SPRING_JPA;
+
     @Autowired
     private TemplateService templateService;
 
@@ -100,5 +103,10 @@ public class ServiceLayerTask implements LayerTask {
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getServiceLayerName() + "/impl/"
                             + dmElement.getName() + "ServiceImpl.java");
         }
+    }
+
+    @Override
+    public ArchetypeType getArchetypeType() {
+        return archetypeType;
     }
 }
