@@ -53,7 +53,7 @@ import mx.infotec.dads.kukulkan.engine.service.DataStoreService;
 @RequestMapping(value = "/dataStores")
 public class DataStoreRestController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataStoreRestController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataStoreRestControllerTest.class);
 
     @Autowired
     private DataStoreService service;

@@ -21,20 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.templating.service;
+package mx.infotec.dads.kukulkan.web;
 
-import java.util.Map;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import mx.infotec.dads.kukulkan.util.BasePathEnum;
+import mx.infotec.dads.kukulkan.Application;
+import mx.infotec.dads.kukulkan.engine.service.DataStoreService;
 
 /**
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
  */
 
-public interface TemplateService {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@WebAppConfiguration
+public class DataStoreRestControllerTest {
 
-    String fillModel(String templateName, Map<String, Object> model, BasePathEnum path, String filePath);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataStoreRestControllerTest.class);
+
+    @Autowired
+    private DataStoreService service;
+
 }

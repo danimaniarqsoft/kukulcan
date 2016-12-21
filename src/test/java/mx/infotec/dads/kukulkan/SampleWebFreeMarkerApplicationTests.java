@@ -12,6 +12,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
+import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 /**
  * Basic integration tests for FreeMarker application.
@@ -24,16 +25,16 @@ import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 @DirtiesContext
 public class SampleWebFreeMarkerApplicationTests {
 
-	@Autowired
-	private TemplateService templateService;
+    @Autowired
+    private TemplateService templateService;
 
-	@Test
-	public void testFreeMarkerTemplate() throws Exception {
-		Map<String, Object> model = new HashMap<>();
-		model.put("javaType", "Integer");
-		model.put("propertyName", "name");
+    @Test
+    public void testFreeMarkerTemplate() throws Exception {
+        Map<String, Object> model = new HashMap<>();
+        model.put("javaType", "Integer");
+        model.put("propertyName", "name");
 
-		templateService.fillModel("model.ftl", model,"mx/com/hola.java");
-	}
+        templateService.fillModel("model.ftl", model, BasePathEnum.SRC_MAIN_JAVA, "mx/com/hola.java");
+    }
 
 }

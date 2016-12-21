@@ -36,6 +36,7 @@ import org.springframework.stereotype.Service;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import mx.infotec.dads.kukulkan.util.BasePathEnum;
 import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
 
 /**
@@ -52,16 +53,16 @@ public class TemplateServiceImpl implements TemplateService {
     private Configuration fmConfiguration;
 
     @Override
-    public String fillModel(String templateName, Map<String, Object> model, String filePath) {
+    public String fillModel(String templateName, Map<String, Object> model, BasePathEnum path, String filePath) {
         Template template;
         try {
             template = fmConfiguration.getTemplate(templateName);
             Writer consoleWriter = new OutputStreamWriter(System.out);
             template.process(model, consoleWriter);
-            File file = new File("kukulkan-gen/" + filePath);
-            if(!file.exists()){
+            File file = new File("kukulkan-gen/" + path.getPath() + "/" + filePath);
+            if (!file.exists()) {
                 File parent = file.getParentFile();
-                if(!parent.exists() && !parent.mkdirs()){
+                if (!parent.exists() && !parent.mkdirs()) {
                     throw new IllegalStateException("Couldn't create dir: " + parent);
                 }
                 file.createNewFile();

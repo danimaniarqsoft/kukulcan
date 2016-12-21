@@ -41,6 +41,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
+import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 /**
  * Service Layer Task
@@ -90,8 +91,9 @@ public class RestControllerLayerTask implements LayerTask {
             model.put("name", dmElement.getName());
             model.put("urlName", dmElement.getPropertyName());
             model.put("id", dmElement.getPrimaryKey().getType());
-            templateService.fillModel("rest-spring-jpa/restController.ftl", model, basePackage.replace('.', '/') + "/"
-                    + dmgName + "/" + pConf.getWebLayerName() + "/" + dmElement.getName() + "RestController.java");
+            templateService.fillModel("rest-spring-jpa/restController.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getWebLayerName() + "/"
+                            + dmElement.getName() + "RestController.java");
 
         }
     }

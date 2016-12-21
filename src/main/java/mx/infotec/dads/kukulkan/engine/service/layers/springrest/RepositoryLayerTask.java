@@ -41,6 +41,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
+import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 /**
  * Repository Layer Task
@@ -87,8 +88,9 @@ public class RepositoryLayerTask implements LayerTask {
             model.put("name", dmElement.getName());
             System.out.println(dmElement.getName());
             model.put("id", dmElement.getPrimaryKey().getType());
-            templateService.fillModel("rest-spring-jpa/repository.ftl", model, basePackage.replace('.', '/') + "/"
-                    + dmgName + "/" + pConf.getDaoLayerName() + "/" + dmElement.getName() + "Repository.java");
+            templateService.fillModel("rest-spring-jpa/repository.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDaoLayerName() + "/"
+                            + dmElement.getName() + "Repository.java");
         }
     }
 }

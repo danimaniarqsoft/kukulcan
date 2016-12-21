@@ -44,20 +44,19 @@ import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 /**
- * Repository Layer Task
+ * Repository Layer Test Task
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("serviceLayerTask")
-public class ServiceLayerTask implements LayerTask {
+@Service("repositoryLayerTestTask")
+public class RepositoryLayerTestTask implements LayerTask {
 
-    public static final String NAME_CONVENTION_SERVICE = "Service";
-    public static final String NAME_CONVENTION_SERVICE_IMPLEMENTS = "ServiceImpl";
+    public static final String NAME_CONVENTION = "Repository";
     @Autowired
     private TemplateService templateService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceLayerTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryLayerTestTask.class);
 
     @Override
     public boolean doTask(GeneratorContext context) {
@@ -82,23 +81,16 @@ public class ServiceLayerTask implements LayerTask {
             Map<String, Object> model, String dmgName) {
         String basePackage = pConf.getGroupId() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
-            model.put("package", formatToPackageStatement(basePackage, pConf.getServiceLayerName()));
-            model.put("packageImpl", formatToPackageStatement(basePackage, pConf.getServiceLayerName(), "impl"));
+            model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
             model.put("importModel",
                     formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
-            model.put("importRepository", formatToImportStatement(basePackage, pConf.getDaoLayerName(),
-                    dmElement.getName() + RepositoryLayerTask.NAME_CONVENTION));
-            model.put("importService", formatToImportStatement(basePackage, pConf.getServiceLayerName(),
-                    dmElement.getName() + ServiceLayerTask.NAME_CONVENTION_SERVICE));
             model.put("propertyName", dmElement.getPropertyName());
             model.put("name", dmElement.getName());
+            System.out.println(dmElement.getName());
             model.put("id", dmElement.getPrimaryKey().getType());
-            templateService.fillModel("rest-spring-jpa/service.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
-                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getServiceLayerName() + "/"
-                            + dmElement.getName() + "Service.java");
-            templateService.fillModel("rest-spring-jpa/serviceImpl.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
-                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getServiceLayerName() + "/impl/"
-                            + dmElement.getName() + "ServiceImpl.java");
+            templateService.fillModel("rest-spring-jpa/repository.ftl", model, BasePathEnum.SRC_TEST_JAVA,
+                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDaoLayerName() + "/"
+                            + dmElement.getName() + "Repository.java");
         }
     }
 }

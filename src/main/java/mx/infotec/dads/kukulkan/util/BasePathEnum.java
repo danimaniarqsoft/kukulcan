@@ -21,20 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.templating.service;
-
-import java.util.Map;
-
-import mx.infotec.dads.kukulkan.util.BasePathEnum;
+package mx.infotec.dads.kukulkan.util;
 
 /**
+ * BasePathEnum used for initial path
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+public enum BasePathEnum {
+    SRC_MAIN_JAVA("src/main/java"), SRC_TEST_JAVA("src/test/java");
 
-public interface TemplateService {
+    private String path;
 
-    String fillModel(String templateName, Map<String, Object> model, BasePathEnum path, String filePath);
+    BasePathEnum(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
 }
