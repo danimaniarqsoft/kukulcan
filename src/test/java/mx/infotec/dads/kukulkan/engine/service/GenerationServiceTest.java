@@ -92,7 +92,7 @@ public class GenerationServiceTest {
         dmCtx.setDataModelGroup(dmgList);
         // Create GeneratorContext
         GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);
-
+        
         // Process Activities
         generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.REST_SPRING_JPA));
 
