@@ -13,4 +13,5 @@ Kukulcan is one of the three gods that was thought to have created the Earth. He
 
 # Reference
 
-For reference of Freemarker look at [Freemarker Vogella](http://www.vogella.com/tutorials/FreeMarker/article.html)
+For spring boot exception handling:
+http://www.baeldung.com/exception-handling-for-rest-with-spring
