@@ -23,32 +23,66 @@
  */
 package mx.infotec.dads.kukulkan.web;
 
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import mx.infotec.dads.kukulkan.Application;
-import mx.infotec.dads.kukulkan.engine.service.DataStoreService;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
+ * Del lunes al jueves,
  * 
  * @author Daniel Cortes Pichardo
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+//@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @WebAppConfiguration
+@ContextConfiguration
 public class DataStoreRestControllerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataStoreRestControllerTest.class);
-
     @Autowired
-    private DataStoreService service;
+    private WebApplicationContext wac;
+    private MockMvc mockMvc;
 
+    @Configuration
+    @EnableAutoConfiguration
+    public static class Config {
+        @Bean
+        public DataStoreRestControllerTest apiController() {
+            return new DataStoreRestControllerTest();
+        }
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
+
+    @Test
+    public void test() throws Exception {
+        mockMvc.perform(get("/dataStore").accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.first", is(1)));
+    }
 }

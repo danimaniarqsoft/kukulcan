@@ -33,7 +33,7 @@
 	</properties>
 
 	<dependencies>
-	
+
 		<!-- Web Layer -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,7 +49,7 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-		
+
 		<!-- Data Access Layer -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,7 +59,7 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
-		
+
 		<!-- Conector MySQL -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -71,7 +71,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
-		
+
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -92,6 +92,13 @@
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.modeshape/modeshape-common -->
+		<dependency>
+			<groupId>org.modeshape</groupId>
+			<artifactId>modeshape-common</artifactId>
+			<version>5.2.0.Final</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>kukulkan</finalName>

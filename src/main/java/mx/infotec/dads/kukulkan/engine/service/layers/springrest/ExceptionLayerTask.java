@@ -50,11 +50,11 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("repositoryLayerTask")
+@Service("exceptionLayerTask")
 public class ExceptionLayerTask implements LayerTask {
 
     public static final String NAME_CONVENTION = "Repository";
-    private ArchetypeType archetypeType = ArchetypeType.REST_SPRING_JPA;
+    private ArchetypeType archetypeType = ArchetypeType.PRIMEFACES_SPRING_MYBATIS;
     @Autowired
     private TemplateService templateService;
 

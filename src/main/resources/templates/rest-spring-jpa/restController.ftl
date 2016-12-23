@@ -49,7 +49,7 @@ ${importService}
  */
 
 @RestController
-@RequestMapping(value = "/${propertyName}")
+@RequestMapping(value = "/${propertyNamePlural}")
 public class ${name}RestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(${name}RestController.class);

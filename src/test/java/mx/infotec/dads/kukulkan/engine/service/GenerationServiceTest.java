@@ -29,6 +29,7 @@ import java.util.List;
 import org.apache.metamodel.DataContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.modeshape.common.text.Inflector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -65,6 +66,7 @@ public class GenerationServiceTest {
 
     @Test
     public void generationService() throws Exception {
+        Inflector.getInstance().addPluralize("Orientacion", "Orientaciones");
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("gen");
@@ -92,7 +94,7 @@ public class GenerationServiceTest {
         dmCtx.setDataModelGroup(dmgList);
         // Create GeneratorContext
         GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);
-        
+
         // Process Activities
         generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.REST_SPRING_JPA));
 
