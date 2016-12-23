@@ -67,12 +67,14 @@ public class GenerationServiceTest {
     @Test
     public void generationService() throws Exception {
         Inflector.getInstance().addPluralize("Orientacion", "Orientaciones");
+        Inflector.getInstance().addPluralize("Posicion", "Posiciones");
+        Inflector.getInstance().addPluralize("vendedor", "vendedores");
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("gen");
-        pConf.setGroupId("mx.infotec.dads.arquitectura");
+        pConf.setGroupId("mx.infotec.dads.innovation.codiga");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.infotec.dads.arquitectura");
+        pConf.setPackaging("mx.infotec.dads.innovation");
         pConf.setYear("2016");
         pConf.setAuthor("KUKULKAN");
         pConf.setWebLayerName("rest");
