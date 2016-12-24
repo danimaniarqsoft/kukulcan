@@ -53,10 +53,10 @@ import org.springframework.web.context.WebApplicationContext;
  * @author Daniel Cortes Pichardo
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@WebAppConfiguration
-@ContextConfiguration
+//@RunWith(SpringJUnit4ClassRunner.class)
+////@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+//@WebAppConfiguration
+//@ContextConfiguration
 public class DataStoreRestControllerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataStoreRestControllerTest.class);
