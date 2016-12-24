@@ -55,6 +55,7 @@ public class ExceptionLayerTask implements LayerTask {
 
     public static final String NAME_CONVENTION = "Repository";
     private ArchetypeType archetypeType = ArchetypeType.PRIMEFACES_SPRING_MYBATIS;
+
     @Autowired
     private TemplateService templateService;
 

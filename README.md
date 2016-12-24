@@ -18,4 +18,3 @@ http://www.baeldung.com/exception-handling-for-rest-with-spring
 
 Spring Reference
 https://github.com/eugenp/tutorials
-
