@@ -21,31 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan;
+package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import java.util.Arrays;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
+ * The Inflector Class
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+@Entity
+public class Inflector {
 
-@SpringBootApplication
-public class Application {
-    public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
-//
-//        String[] beanNames = ctx.getBeanDefinitionNames();
-//        Arrays.sort(beanNames);
-//        for (String beanName : beanNames) {
-//            System.out.println(beanName);
-//        }
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String singular;
+    private String plural;
+
+    public String getSingular() {
+        return singular;
     }
 
+    public void setSingular(String singular) {
+        this.singular = singular;
+    }
+
+    public String getPlural() {
+        return plural;
+    }
+
+    public void setPlural(String plural) {
+        this.plural = plural;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

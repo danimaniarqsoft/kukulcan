@@ -43,6 +43,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.factories.LayerTaskFactory;
+import mx.infotec.dads.kukulkan.engine.repository.InflectorRepository;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
 
@@ -62,19 +63,22 @@ public class GenerationServiceTest {
     @Autowired
     private DataStoreService dataStoreService;
     @Autowired
+    private InflectorRepository inflectorRepository;
+    @Autowired
     private LayerTaskFactory layerTaskFactory;
 
     @Test
     public void generationService() throws Exception {
-        Inflector.getInstance().addPluralize("Orientacion", "Orientaciones");
-        Inflector.getInstance().addPluralize("Posicion", "Posiciones");
-        Inflector.getInstance().addPluralize("vendedor", "vendedores");
+        List<mx.infotec.dads.kukulkan.engine.domain.core.Inflector> inflectorData = inflectorRepository.findAll();
+        for (mx.infotec.dads.kukulkan.engine.domain.core.Inflector inflector : inflectorData) {
+            Inflector.getInstance().addPluralize(inflector.getSingular(), inflector.getPlural());
+        }
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("gen");
-        pConf.setGroupId("mx.infotec.dads.innovation.codiga");
+        pConf.setGroupId("mx.infotec.dads.architecture");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.infotec.dads.innovation");
+        pConf.setPackaging("mx.infotec.dads.architecture");
         pConf.setYear("2016");
         pConf.setAuthor("KUKULKAN");
         pConf.setWebLayerName("rest");

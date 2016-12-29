@@ -21,31 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan;
+package mx.infotec.dads.kukulkan.engine.repository;
 
-import java.util.Arrays;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import mx.infotec.dads.kukulkan.engine.domain.core.Inflector;
 
 /**
+ * InflectorRepository
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
-
-@SpringBootApplication
-public class Application {
-    public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
-//
-//        String[] beanNames = ctx.getBeanDefinitionNames();
-//        Arrays.sort(beanNames);
-//        for (String beanName : beanNames) {
-//            System.out.println(beanName);
-//        }
-    }
+public interface InflectorRepository extends JpaRepository<Inflector, Long> {
 
 }
