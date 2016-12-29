@@ -28,6 +28,9 @@ https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
 https://en.wikibooks.org/wiki/Java_Persistence
 
 ### Spring Security
+#### Official Documentation
+http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/html5/
+
 #### CSRF Attacks
 https://spring.io/blog/2013/08/21/spring-security-3-2-0-rc1-highlights-csrf-protection/
 
