@@ -73,9 +73,4 @@ public class SchemaPropertiesParser {
             return columnName;
         }
     }
-
-    public static void main(String[] args) {
-        System.out.println(parseToClassName("entity_field_lang"));
-    }
-
 }

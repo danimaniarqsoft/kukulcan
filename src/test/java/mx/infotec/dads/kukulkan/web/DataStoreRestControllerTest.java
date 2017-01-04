@@ -32,17 +32,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -59,7 +53,7 @@ import org.springframework.web.context.WebApplicationContext;
 //@ContextConfiguration
 public class DataStoreRestControllerTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataStoreRestControllerTest.class);
+//    private static final Logger LOGGER = LoggerFactory.getLogger(DataStoreRestControllerTest.class);
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;

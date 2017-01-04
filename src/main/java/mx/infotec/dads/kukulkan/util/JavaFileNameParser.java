@@ -23,9 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * The JavaFileNameParser Class is used for parsing the filename of a Java class
  * and formatted to the most
@@ -35,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JavaFileNameParser {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JavaFileNameParser.class);
+//    private static final Logger LOGGER = LoggerFactory.getLogger(JavaFileNameParser.class);
 
     private JavaFileNameParser() {
 

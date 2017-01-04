@@ -23,8 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import javax.persistence.Entity;
-
 /**
  * ProrjectConfiguration Class
  * 
