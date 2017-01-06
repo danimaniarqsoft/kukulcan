@@ -35,8 +35,8 @@ import javax.persistence.Table;
  *
  */
 
-@Entity
-@Table(name = "RULES_TYPES")
+//@Entity
+//@Table(name = "RULES_TYPES")
 public class RuleType {
     @Id
     @GeneratedValue

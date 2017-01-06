@@ -35,8 +35,8 @@ import javax.persistence.Table;
  * @author Daniel Cortes Pichardo
  *
  */
-@Entity
-@Table(name = "RULES")
+//@Entity
+//@Table(name = "RULES")
 public class Rule {
 
     @Id

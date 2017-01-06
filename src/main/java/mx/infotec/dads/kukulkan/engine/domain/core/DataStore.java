@@ -27,6 +27,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * The Connection Class is used for hold the connection credentials to a
@@ -40,7 +41,7 @@ public class DataStore {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne
+    @OneToOne()
     private DataStoreType dataStoreType;
     private String url;
     private String driverClass;

@@ -32,7 +32,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.data.domain.Example;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -42,13 +41,10 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
-import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
-import mx.infotec.dads.kukulkan.engine.domain.core.RuleType;
 import mx.infotec.dads.kukulkan.engine.factories.LayerTaskFactory;
 import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
-import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 
 /**
  * Test for GeneratorService
@@ -65,8 +61,8 @@ public class GenerationServiceTest {
     private GenerationService generationService;
     @Autowired
     private DataStoreService dataStoreService;
-    @Autowired
-    private RuleRepository ruleRepository;
+//    @Autowired
+//    private RuleRepository ruleRepository;
     @Autowired
     private LayerTaskFactory layerTaskFactory;
 
