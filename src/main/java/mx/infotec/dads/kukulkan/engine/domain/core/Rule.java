@@ -21,18 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.repository;
+package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import mx.infotec.dads.kukulkan.engine.domain.core.Inflector;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
- * InflectorRepository
+ * The Inflector Class
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-public interface InflectorRepository extends JpaRepository<Inflector, Long> {
+@Entity
+@Table(name = "RULES")
+public class Rule {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String expression;
+    private String replacement;
+    @OneToOne
+    private RuleType ruleType;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+    }
+
+    public String getReplacement() {
+        return replacement;
+    }
+
+    public void setReplacement(String replacement) {
+        this.replacement = replacement;
+    }
+
+    public RuleType getRuleType() {
+        return ruleType;
+    }
+
+    public void setRuleType(RuleType ruleType) {
+        this.ruleType = ruleType;
+    }
 
 }

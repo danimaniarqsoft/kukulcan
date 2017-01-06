@@ -30,7 +30,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.modeshape.common.text.Inflector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +43,7 @@ import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
+import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 
 /**
  * Service Layer Task
@@ -92,7 +92,7 @@ public class RestControllerLayerTask implements LayerTask {
             model.put("importModel",
                     formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
             model.put("propertyName", dmElement.getPropertyName());
-            model.put("propertyNamePlural", Inflector.getInstance().pluralize(dmElement.getPropertyName()));
+            model.put("propertyNamePlural", InflectorProcessor.getInstance().pluralize(dmElement.getPropertyName()));
             model.put("name", dmElement.getName());
             model.put("urlName", dmElement.getPropertyName());
             model.put("id", dmElement.getPrimaryKey().getType());

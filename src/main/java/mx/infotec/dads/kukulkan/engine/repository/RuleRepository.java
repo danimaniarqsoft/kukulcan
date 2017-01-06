@@ -21,48 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.core;
+package mx.infotec.dads.kukulkan.engine.repository;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
 
 /**
- * The Inflector Class
+ * InflectorRepository
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-@Entity
-public class Inflector {
+public interface RuleRepository extends JpaRepository<Rule, Long> {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String singular;
-    private String plural;
-
-    public String getSingular() {
-        return singular;
-    }
-
-    public void setSingular(String singular) {
-        this.singular = singular;
-    }
-
-    public String getPlural() {
-        return plural;
-    }
-
-    public void setPlural(String plural) {
-        this.plural = plural;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

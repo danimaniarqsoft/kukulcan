@@ -31,7 +31,7 @@ import java.util.Map;
 
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.schema.Column;
-import org.apache.metamodel.schema.Table;
+import org.apache.metamodel.schema.Table;       
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
@@ -69,9 +69,10 @@ public class DataMapping {
             if ((tablesToProcess.contains(table.getName()) || tablesToProcess.isEmpty())
                     && (extractPrimaryKey(table.getPrimaryKeys()) != null)) {
                 DataModelElement dme = new DataModelElement();
+                String singularName = InflectorProcessor.getInstance().singularize(table.getName());
                 dme.setTableName(table.getName());
-                dme.setName(SchemaPropertiesParser.parseToClassName(table.getName()));
-                dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(table.getName()));
+                dme.setName(SchemaPropertiesParser.parseToClassName(singularName));
+                dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(singularName));
                 dme.setPrimaryKey(extractPrimaryKey(table.getPrimaryKeys()));
                 dmeList.add(dme);
             }

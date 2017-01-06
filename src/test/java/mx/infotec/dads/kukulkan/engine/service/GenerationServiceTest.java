@@ -29,10 +29,10 @@ import java.util.List;
 import org.apache.metamodel.DataContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.modeshape.common.text.Inflector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.data.domain.Example;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -42,10 +42,13 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
+import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
+import mx.infotec.dads.kukulkan.engine.domain.core.RuleType;
 import mx.infotec.dads.kukulkan.engine.factories.LayerTaskFactory;
-import mx.infotec.dads.kukulkan.engine.repository.InflectorRepository;
+import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
+import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 
 /**
  * Test for GeneratorService
@@ -63,23 +66,29 @@ public class GenerationServiceTest {
     @Autowired
     private DataStoreService dataStoreService;
     @Autowired
-    private InflectorRepository inflectorRepository;
+    private RuleRepository ruleRepository;
     @Autowired
     private LayerTaskFactory layerTaskFactory;
 
     @Test
     public void generationService() throws Exception {
-        List<mx.infotec.dads.kukulkan.engine.domain.core.Inflector> inflectorData = inflectorRepository.findAll();
-        for (mx.infotec.dads.kukulkan.engine.domain.core.Inflector inflector : inflectorData) {
-            Inflector.getInstance().addPluralize(inflector.getSingular(), inflector.getPlural());
-        }
+//        List<Rule> rules = ruleRepository.findAll();
+//        Rule rule = new Rule();
+//        RuleType ruleType = new RuleType();
+//        ruleType.setId(1);//singular
+//        rule.setRuleType(ru))
+//        Example<Rule> ruleExample = Example.of(Rule.class);
+//        ruleRepository.findAll(arg0);
+//        for (Rule rule : rules) {
+//            InflectorProcessor.getInstance().addPluralize(rule.getExpression(), rule.getReplacement());
+//        }
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("gen");
-        pConf.setGroupId("mx.infotec.dads.architecture");
+        pConf.setGroupId("mx.infotec.dads.innovation.zonacero");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.infotec.dads.architecture");
-        pConf.setYear("2016");
+        pConf.setPackaging("mx.infotec.dads.innovation");
+        pConf.setYear("2017");
         pConf.setAuthor("KUKULKAN");
         pConf.setWebLayerName("rest");
         pConf.setServiceLayerName("service");

@@ -98,12 +98,8 @@
 			<artifactId>groovy</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.modeshape/modeshape-common -->
-		<dependency>
-			<groupId>org.modeshape</groupId>
-			<artifactId>modeshape-common</artifactId>
-			<version>5.2.0.Final</version>
-		</dependency>
-
+		<!-- <dependency> <groupId>org.modeshape</groupId> <artifactId>modeshape-common</artifactId> 
+			<version>5.2.0.Final</version> </dependency> -->
 	</dependencies>
 	<build>
 		<finalName>kukulkan</finalName>
