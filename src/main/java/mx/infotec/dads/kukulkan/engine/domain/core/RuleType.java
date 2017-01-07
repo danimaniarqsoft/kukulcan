@@ -26,7 +26,6 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * Supported dataSourceConnectionType
@@ -35,8 +34,7 @@ import javax.persistence.Table;
  *
  */
 
-//@Entity
-//@Table(name = "RULES_TYPES")
+@Entity
 public class RuleType {
     @Id
     @GeneratedValue

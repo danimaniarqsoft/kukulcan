@@ -33,6 +33,6 @@ import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
  * @author Daniel Cortes Pichardo
  *
  */
-public interface RuleRepository {
+public interface RuleRepository extends JpaRepository<Rule, Long> {
 
 }
