@@ -26,7 +26,6 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * Supported dataSourceConnectionType

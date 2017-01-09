@@ -83,7 +83,7 @@ public class RestControllerLayerTask implements LayerTask {
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
         for (DataModelElement dmElement : dmElementCollection) {
-            String basePackage = pConf.getGroupId() + dmgName;
+            String basePackage = pConf.getPackaging() + dmgName;
             model.put("package", formatToPackageStatement(basePackage, pConf.getWebLayerName()));
             model.put("importRepository", formatToImportStatement(basePackage, pConf.getDaoLayerName(),
                     dmElement.getName() + RepositoryLayerTask.NAME_CONVENTION));

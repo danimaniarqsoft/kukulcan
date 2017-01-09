@@ -83,7 +83,7 @@ public class ServiceLayerTask implements LayerTask {
 
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
-        String basePackage = pConf.getGroupId() + dmgName;
+        String basePackage = pConf.getPackaging() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
             model.put("package", formatToPackageStatement(basePackage, pConf.getServiceLayerName()));
             model.put("packageImpl", formatToPackageStatement(basePackage, pConf.getServiceLayerName(), "impl"));

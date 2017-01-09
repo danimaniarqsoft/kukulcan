@@ -27,7 +27,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * The Inflector Class
@@ -35,8 +34,7 @@ import javax.persistence.Table;
  * @author Daniel Cortes Pichardo
  *
  */
-//@Entity
-//@Table(name = "RULES")
+@Entity
 public class Rule {
 
     @Id

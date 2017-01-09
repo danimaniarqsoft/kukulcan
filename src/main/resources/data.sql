@@ -9,5 +9,9 @@ INSERT INTO data_store(data_store_type_id, url, driver_class, username, password
 INSERT INTO rule_type(id, name, description) VALUES (1, 'singular','regla que aplica para palabras convertir palabras de plural a singular');
 INSERT INTO rule_type(id, name, description) VALUES (2, 'plural','regla que aplica para palabras convertir palabras de singular a plural');
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'develop' of git@github.com:danimaniarqsoft/kukulcan.git
 INSERT INTO rule(rule_type_id, expression, replacement) VALUES (1, 'os$', 'o');
 INSERT INTO rule(rule_type_id, expression, replacement) VALUES (1, 'es$', '');

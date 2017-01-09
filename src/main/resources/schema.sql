@@ -39,4 +39,8 @@ create table IF NOT EXISTS RULE(
    RULE_TYPE_ID       INT,
    EXPRESSION         VARCHAR(100) null,
    REPLACEMENT        VARCHAR(100) null
+<<<<<<< HEAD
 );
+=======
+);
+>>>>>>> branch 'develop' of git@github.com:danimaniarqsoft/kukulcan.git
