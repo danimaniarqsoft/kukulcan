@@ -42,6 +42,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 ${importModel}
+<#if importPrimaryKey??>
+${importPrimaryKey}
+</#if>
 ${importService}
 /**
  * 

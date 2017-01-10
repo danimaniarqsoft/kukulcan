@@ -96,6 +96,10 @@ public class RestControllerLayerTask implements LayerTask {
             model.put("name", dmElement.getName());
             model.put("urlName", dmElement.getPropertyName());
             model.put("id", dmElement.getPrimaryKey().getType());
+            if (dmElement.getPrimaryKey().isComposed()) {
+                model.put("importPrimaryKey", formatToImportStatement(basePackage, pConf.getDomainLayerName(),
+                        dmElement.getPrimaryKey().getType()));
+            }
             templateService.fillModel("rest-spring-jpa/restController.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getWebLayerName() + "/"
                             + dmElement.getName() + "RestController.java");

@@ -31,7 +31,7 @@ import java.util.Map;
 
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.schema.Column;
-import org.apache.metamodel.schema.Table;       
+import org.apache.metamodel.schema.Table;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
@@ -67,13 +67,13 @@ public class DataMapping {
         List<DataModelElement> dmeList = new ArrayList<>();
         for (Table table : tables) {
             if ((tablesToProcess.contains(table.getName()) || tablesToProcess.isEmpty())
-                    && (extractPrimaryKey(table.getPrimaryKeys()) != null)) {
+                    && hasPrimaryKey(table.getPrimaryKeys())) {
                 DataModelElement dme = new DataModelElement();
                 String singularName = InflectorProcessor.getInstance().singularize(table.getName());
                 dme.setTableName(table.getName());
                 dme.setName(SchemaPropertiesParser.parseToClassName(singularName));
                 dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(singularName));
-                dme.setPrimaryKey(extractPrimaryKey(table.getPrimaryKeys()));
+                dme.setPrimaryKey(extractPrimaryKey(singularName, table.getPrimaryKeys()));
                 dmeList.add(dme);
             }
         }
@@ -81,13 +81,30 @@ public class DataMapping {
         return dmg;
     }
 
-    public static PrimaryKey extractPrimaryKey(Column[] columns) {
+    public static boolean hasPrimaryKey(Column[] columns) {
+        if (columns.length == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static PrimaryKey extractPrimaryKey(String singularName, Column[] columns) {
         PrimaryKey pk = new PrimaryKey();
+        // Not primary key found
+        if (columns.length == 0) {
+            return null;
+        }
+        // Simple Primary key
         if (columns.length == 1) {
             pk.setType(columns[0].getType().getJavaEquivalentClass().getSimpleName());
             pk.setName(SchemaPropertiesParser.parseToPropertyName(columns[0].getName()));
+            pk.setComposed(false);
         } else {
-            return null;
+            // Primary key
+            pk.setType(SchemaPropertiesParser.parseToClassName(singularName) + "PK");
+            pk.setName(SchemaPropertiesParser.parseToPropertyName(singularName) + "PK");
+            pk.setComposed(true);
         }
 
         return pk;

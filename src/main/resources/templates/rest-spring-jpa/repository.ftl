@@ -25,6 +25,9 @@ ${package}
 
 import org.springframework.data.jpa.repository.JpaRepository;
 ${importModel}
+<#if importPrimaryKey??>
+${importPrimaryKey}
+</#if>
 
 /**
  * ${name}Repository

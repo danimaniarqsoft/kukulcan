@@ -96,6 +96,10 @@ public class ServiceLayerTask implements LayerTask {
             model.put("propertyName", dmElement.getPropertyName());
             model.put("name", dmElement.getName());
             model.put("id", dmElement.getPrimaryKey().getType());
+            if (dmElement.getPrimaryKey().isComposed()) {
+                model.put("importPrimaryKey", formatToImportStatement(basePackage, pConf.getDomainLayerName(),
+                        dmElement.getPrimaryKey().getType()));
+            }
             templateService.fillModel("rest-spring-jpa/service.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getServiceLayerName() + "/"
                             + dmElement.getName() + "Service.java");

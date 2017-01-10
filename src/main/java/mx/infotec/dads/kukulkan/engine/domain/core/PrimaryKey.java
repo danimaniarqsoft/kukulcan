@@ -33,17 +33,30 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
 public class PrimaryKey {
 
     private String name;
+    private String type;
+    private boolean isComposed;
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getType() {
         return type;
     }
+
     public void setType(String type) {
         this.type = type;
     }
-    private String type;
+
+    public boolean isComposed() {
+        return isComposed;
+    }
+
+    public void setComposed(boolean isComposed) {
+        this.isComposed = isComposed;
+    }
 }
