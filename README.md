@@ -10,6 +10,7 @@ Kukulcan is one of the three gods that was thought to have created the Earth. He
 
 ## Running the App
 
+The app is under development so that you need to run the next test class: GenerationServiceTest
 
 # References
 
