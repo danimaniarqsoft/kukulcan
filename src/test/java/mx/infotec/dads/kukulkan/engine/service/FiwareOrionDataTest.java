@@ -60,10 +60,85 @@ public class FiwareOrionDataTest {
         List<Room> rooms = new ArrayList<>();
         Map<String, Object> input = new HashMap<String, Object>();
 
-        for (int i = 1; i < 100; i++) {
+        int order = 1;
+        for (int i = 1; i < 10; i++) {
             Random random = new Random();
             Room room = new Room();
             room.setEntityType("Room");
+            room.setCategory("GeneralRoom");
+            room.setOrder(order++);
+            room.setCount(i);
+            room.setId(room.getId() + "-" + room.getCount());
+            room.setPressureValue(random.nextInt(79 - 10 + 1) + 10);
+            room.setTemperatureValue(random.nextInt(79 - 10 + 1) + 10);
+            rooms.add(room);
+        }
+        for (int i = 1; i < 30; i++) {
+            Random random = new Random();
+            Room room = new Room();
+            room.setEntityType("Car");
+            room.setCategory("CarShop");
+            room.setOrder(order++);
+            room.setCount(i);
+            room.setId(room.getId() + "-" + room.getCount());
+            room.setPressureValue(random.nextInt(79 - 10 + 1) + 10);
+            room.setTemperatureValue(random.nextInt(79 - 10 + 1) + 10);
+            rooms.add(room);
+        }
+        for (int i = 1; i < 47; i++) {
+            Random random = new Random();
+            Room room = new Room();
+            room.setEntityType("Kitchen");
+            room.setCategory("HouseRoom");
+            room.setOrder(order++);
+            room.setCount(i);
+            room.setId(room.getId() + "-" + room.getCount());
+            room.setPressureValue(random.nextInt(79 - 10 + 1) + 10);
+            room.setTemperatureValue(random.nextInt(79 - 10 + 1) + 10);
+            rooms.add(room);
+        }
+        for (int i = 1; i < 36; i++) {
+            Random random = new Random();
+            Room room = new Room();
+            room.setEntityType("Bathroom");
+            room.setCategory("HouseRoom");
+            room.setOrder(order++);
+            room.setCount(i);
+            room.setId(room.getId() + "-" + room.getCount());
+            room.setPressureValue(random.nextInt(79 - 10 + 1) + 10);
+            room.setTemperatureValue(random.nextInt(79 - 10 + 1) + 10);
+            rooms.add(room);
+        }
+        for (int i = 1; i < 24; i++) {
+            Random random = new Random();
+            Room room = new Room();
+            room.setEntityType("Garage");
+            room.setCategory("HouseRoom");
+            room.setOrder(order++);
+            room.setCount(i);
+            room.setId(room.getId() + "-" + room.getCount());
+            room.setPressureValue(random.nextInt(79 - 10 + 1) + 10);
+            room.setTemperatureValue(random.nextInt(79 - 10 + 1) + 10);
+            rooms.add(room);
+        }
+        for (int i = 1; i < 12; i++) {
+            Random random = new Random();
+            Room room = new Room();
+            room.setEntityType("LivingRoom");
+            room.setCategory("HouseRoom");
+            room.setOrder(order++);
+            room.setCount(i);
+            room.setId(room.getId() + "-" + room.getCount());
+            room.setPressureValue(random.nextInt(79 - 10 + 1) + 10);
+            room.setTemperatureValue(random.nextInt(79 - 10 + 1) + 10);
+            rooms.add(room);
+        }
+        for (int i = 1; i < 7; i++) {
+            Random random = new Random();
+            Room room = new Room();
+            room.setEntityType("Church");
+            room.setCategory("ReligionRoom");
+            room.setOrder(order++);
             room.setCount(i);
             room.setId(room.getId() + "-" + room.getCount());
             room.setPressureValue(random.nextInt(79 - 10 + 1) + 10);

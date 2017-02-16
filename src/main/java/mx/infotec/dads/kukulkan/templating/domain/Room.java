@@ -32,6 +32,34 @@ package mx.infotec.dads.kukulkan.templating.domain;
 public class Room {
     private String id;
     private String entityType;
+    private int order;
+    private String category;
+    private String name;
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private int count;
     private int temperatureValue;
     private int pressureValue;
@@ -76,5 +104,4 @@ public class Room {
         this.pressureValue = pressureValue;
     }
 
-   
 }
