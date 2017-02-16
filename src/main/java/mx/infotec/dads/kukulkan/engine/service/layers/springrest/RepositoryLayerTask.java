@@ -39,7 +39,6 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
-import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
@@ -51,7 +50,7 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
  *
  */
 @Service("repositoryLayerTask")
-public class RepositoryLayerTask implements LayerTask {
+public class RepositoryLayerTask extends TemplateLayerTask {
 
     public static final String NAME_CONVENTION = "Repository";
     private ArchetypeType archetypeType = ArchetypeType.REST_SPRING_JPA;

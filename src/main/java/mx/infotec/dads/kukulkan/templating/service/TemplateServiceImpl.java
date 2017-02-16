@@ -77,4 +77,29 @@ public class TemplateServiceImpl implements TemplateService {
         return null;
     }
 
+    @Override
+    public String fillModel(String templateName, Object model, BasePathEnum path, String filePath) {
+        Template template;
+        try {
+            template = fmConfiguration.getTemplate(templateName);
+            Writer consoleWriter = new OutputStreamWriter(System.out);
+            template.process(model, consoleWriter);
+            File file = new File("kukulkan-gen/" + path.getPath() + "/" + filePath);
+            if (!file.exists()) {
+                File parent = file.getParentFile();
+                if (!parent.exists() && !parent.mkdirs()) {
+                    throw new IllegalStateException("Couldn't create dir: " + parent);
+                }
+                file.createNewFile();
+            }
+            Writer fileWriter = new FileWriter(file);
+            template.process(model, fileWriter);
+        } catch (IOException | TemplateException e) {
+            throw new ApplicationException("Fill Model Error", e);
+        } finally {
+
+        }
+        return null;
+    }
+
 }

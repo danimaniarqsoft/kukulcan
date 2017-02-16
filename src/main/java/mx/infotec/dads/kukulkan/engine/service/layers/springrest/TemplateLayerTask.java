@@ -21,22 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.templating.service;
+package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
 
-import java.util.Map;
-
-import mx.infotec.dads.kukulkan.util.BasePathEnum;
+import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 
 /**
+ * Abstract Template ControllerLayerTask
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
-
-public interface TemplateService {
-
-    String fillModel(String templateName, Map<String, Object> model, BasePathEnum path, String filePath);
-    String fillModel(String templateName, Object model, BasePathEnum path, String filePath);
+public abstract class TemplateLayerTask implements LayerTask {
 
 }

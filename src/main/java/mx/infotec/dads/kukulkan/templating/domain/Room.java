@@ -21,22 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.templating.service;
-
-import java.util.Map;
-
-import mx.infotec.dads.kukulkan.util.BasePathEnum;
+package mx.infotec.dads.kukulkan.templating.domain;
 
 /**
+ * For Fiware Orion Context Broker Demo App
  * 
  * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ *
  */
+public class Room {
+    private String id;
+    private String entityType;
+    private int count;
+    private int temperatureValue;
+    private int pressureValue;
 
-public interface TemplateService {
+    public String getId() {
+        return id;
+    }
 
-    String fillModel(String templateName, Map<String, Object> model, BasePathEnum path, String filePath);
-    String fillModel(String templateName, Object model, BasePathEnum path, String filePath);
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getTemperatureValue() {
+        return temperatureValue;
+    }
+
+    public void setTemperatureValue(int temperatureValue) {
+        this.temperatureValue = temperatureValue;
+    }
+
+    public int getPressureValue() {
+        return pressureValue;
+    }
+
+    public void setPressureValue(int pressureValue) {
+        this.pressureValue = pressureValue;
+    }
+
+   
 }
