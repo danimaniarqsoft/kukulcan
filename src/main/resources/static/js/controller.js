@@ -8,3 +8,11 @@ app.controller('Hello', function($scope, $http) {
 			$scope.greeting = response.data;
 		});
 });
+
+
+app.controller('generatorController', function($scope, $http) {
+	$scope.dataStores = [];
+	$http.get('http://localhost:8080/dataStores').then(function(response) {
+		$scope.dataStores = response.data;
+	});
+});

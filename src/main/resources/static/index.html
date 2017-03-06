@@ -58,10 +58,185 @@
 		</a>
 
 		<!--   Big container   -->
-		<div class="container">
+		<div class="container" ng-controller="generatorController">
 			<div class="row">
 				<div class="col-sm-8 col-sm-offset-2">
-					<div ng-view></div>
+					<!--      Wizard container        -->
+					<div class="wizard-container">
+						<div class="card wizard-card" data-color="green" id="wizard">
+							<form action="" method="">
+								<!--        You can switch " data-color="green" "  with one of the next bright colors: "blue", "azure", "orange", "red"       -->
+
+								<div class="wizard-header">
+									<h3 class="wizard-title">Kukulkan Generator</h3>
+									<p class="category">This information will let us generate your application</p>
+								</div>
+								<div class="wizard-navigation">
+									<div class="progress-with-circle">
+										<div class="progress-bar" role="progressbar" aria-valuenow="1"
+											aria-valuemin="1" aria-valuemax="4" style="width: 15%;"></div>
+									</div>
+									<ul>
+										<li><a href="#location" data-toggle="tab">
+												<div class="icon-circle">
+													<i class="ti-map"></i>
+												</div> Project Configuration
+										</a></li>
+										<li><a href="#type" data-toggle="tab">
+												<div class="icon-circle">
+													<i class="ti-direction-alt"></i>
+												</div> Layers Descriptions
+										</a></li>
+										<li><a href="#facilities" data-toggle="tab">
+												<div class="icon-circle">
+													<i class="ti-panel"></i>
+												</div> Data Stores
+										</a></li>
+										<li><a href="#description" data-toggle="tab">
+												<div class="icon-circle">
+													<i class="ti-comments"></i>
+												</div> Select Tables
+										</a></li>
+									</ul>
+								</div>
+								<div class="tab-content">
+									<div class="tab-pane" id="location">
+										<div class="row">
+											<div class="col-sm-12">
+												<h5 class="info-text">Let's start with the basic
+													 Project details</h5>
+											</div>
+											<div class="col-sm-5 col-sm-offset-1">
+												<div class="form-group">
+													<label>Id</label> <input type="text" class="form-control"
+														id="exampleInputEmail1"
+														placeholder="gen">
+												</div>
+											</div>
+											<div class="col-sm-5">
+												<div class="form-group">
+													<label>GroupId</label> <input type="text"
+														class="form-control" id="exampleInputEmail1"
+														placeholder="mx.infotec.dads.innovation">
+												</div>
+											</div>
+											<div class="col-sm-5 col-sm-offset-1">
+												<div class="form-group">
+													<label>Version</label> <input type="text"
+														class="form-control" id="exampleInputEmail1"
+														placeholder="1.0.0">
+												</div>
+											</div>
+											<div class="col-sm-5">
+												<div class="form-group">
+													<label>Packaging</label> <input type="text"
+														class="form-control" id="exampleInputEmail1"
+														placeholder="mx.infotec.dads.innovation.zonacero">
+												</div>
+											</div>
+											<div class="col-sm-5 col-sm-offset-1"">
+												<div class="form-group">
+													<label>Year</label> <input type="text"
+														class="form-control" id="exampleInputEmail1"
+														placeholder="2017">
+												</div>
+											</div>
+											<div class="col-sm-5">
+												<div class="form-group">
+													<label>Author</label> <input type="text"
+														class="form-control" id="exampleInputEmail1"
+														placeholder="Kukulkan">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="type">
+										<h5 class="info-text">Layer's Descriptions</h5>
+										<div class="row">
+											<div class="col-sm-5 col-sm-offset-1">
+												<div class="form-group">
+													<label>Web Layer Name</label> <input type="text" class="form-control"
+														id="exampleInputEmail1"
+														placeholder="rest">
+												</div>
+											</div>
+											<div class="col-sm-5">
+												<div class="form-group">
+													<label>Service Layer Name</label> <input type="text"
+														class="form-control" id="exampleInputEmail1"
+														placeholder="service">
+												</div>
+											</div>
+											<div class="col-sm-5 col-sm-offset-1">
+												<div class="form-group">
+													<label>Dao Layer Name</label> <input type="text"
+														class="form-control" id="exampleInputEmail1"
+														placeholder="repository">
+												</div>
+											</div>
+											<div class="col-sm-5">
+												<div class="form-group">
+													<label>Domain Layer Name</label> <input type="text"
+														class="form-control" id="exampleInputEmail1"
+														placeholder="model">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="facilities">
+										<h5 class="info-text">Select the DataStore</h5>
+										<div class="row">
+											<div class="col-sm-5 col-sm-offset-4">
+												<div class="form-group">
+													<label>Data Store</label> <select
+														class="form-control"ng-repeat="dataStore in dataStores" >
+														<option disabled="" selected="">- type -</option>
+														<option>{{dataStore.url}}</option>
+													</select>
+												</div>
+											</div>
+											
+										</div>
+									</div>
+									<div class="tab-pane" id="description">
+										<div class="row">
+											<h5 class="info-text">Drop us a small description.</h5>
+											<div class="col-sm-6 col-sm-offset-1">
+												<div class="form-group">
+													<label>Place description</label>
+													<textarea class="form-control" placeholder="" rows="9"></textarea>
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="form-group">
+													<label>Example</label>
+													<p class="description">"The place is really nice. We
+														use it every sunday when we go fishing. It is so awesome."</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="wizard-footer">
+									<div class="pull-right">
+										<input type='button'
+											class='btn btn-next btn-fill btn-success btn-wd' name='next'
+											value='Next' /> <input type='button'
+											class='btn btn-finish btn-fill btn-success btn-wd'
+											name='finish' value='Generate' />
+									</div>
+
+									<div class="pull-left">
+										<input type='button'
+											class='btn btn-previous btn-default btn-wd' name='previous'
+											value='Previous' />
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- wizard container -->
 				</div>
 			</div>
 			<!-- row -->
