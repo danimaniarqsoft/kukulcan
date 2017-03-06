@@ -23,10 +23,8 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
  * The Connection Class is used for hold the connection credentials to a
@@ -35,12 +33,8 @@ import javax.persistence.OneToOne;
  * @author Daniel Cortes Pichardo
  *
  */
-@Entity
-public class DataStore {
-    @Id
-    @GeneratedValue
-    private Long id;
-    @OneToOne()
+public class DataStore extends AbstractDocument {
+    @DBRef
     private DataStoreType dataStoreType;
     private String url;
     private String driverClass;
@@ -94,13 +88,5 @@ public class DataStore {
 
     public void setDataStoreType(DataStoreType dataStoreType) {
         this.dataStoreType = dataStoreType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

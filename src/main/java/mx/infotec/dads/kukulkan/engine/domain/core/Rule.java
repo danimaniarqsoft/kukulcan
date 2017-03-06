@@ -23,10 +23,8 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
  * The Inflector Class
@@ -34,24 +32,14 @@ import javax.persistence.OneToOne;
  * @author Daniel Cortes Pichardo
  *
  */
-@Entity
 public class Rule {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
     private String expression;
     private String replacement;
-    @OneToOne
+    @DBRef
     private RuleType ruleType;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getExpression() {
         return expression;
@@ -75,6 +63,14 @@ public class Rule {
 
     public void setRuleType(RuleType ruleType) {
         this.ruleType = ruleType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

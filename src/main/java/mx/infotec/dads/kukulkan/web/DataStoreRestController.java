@@ -114,14 +114,14 @@ public class DataStoreRestController {
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createDataStore(@RequestBody DataStore dataStore, UriComponentsBuilder ucBuilder) {
-        if (service.exists(dataStore.getId())) {
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        } else {
-            service.save(dataStore);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(dataStore.getId()).toUri());
-            return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-        }
+        // if (service.exists(dataStore.getId())) {
+        // return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        // } else {
+        service.save(dataStore);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(dataStore.getId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        // }
     }
 
     /**

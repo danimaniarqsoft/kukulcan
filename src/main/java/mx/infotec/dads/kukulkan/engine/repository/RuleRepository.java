@@ -23,7 +23,7 @@
  */
 package mx.infotec.dads.kukulkan.engine.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
 
@@ -33,6 +33,6 @@ import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
  * @author Daniel Cortes Pichardo
  *
  */
-public interface RuleRepository extends JpaRepository<Rule, Long> {
+public interface RuleRepository extends MongoRepository<Rule, String> {
 
 }

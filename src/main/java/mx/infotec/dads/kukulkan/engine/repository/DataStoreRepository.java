@@ -23,7 +23,8 @@
  */
 package mx.infotec.dads.kukulkan.engine.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 
 /**
@@ -32,6 +33,6 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
  * @author Daniel Cortes Pichardo
  *
  */
-public interface DataStoreRepository extends JpaRepository<DataStore, Long> {
+public interface DataStoreRepository extends MongoRepository<DataStore, Long> {
 
 }

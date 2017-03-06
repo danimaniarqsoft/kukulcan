@@ -23,9 +23,21 @@
  */
 package mx.infotec.dads.kukulkan;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataStoreType;
+import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
+import mx.infotec.dads.kukulkan.engine.domain.core.RuleType;
+import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
+import mx.infotec.dads.kukulkan.engine.repository.DataStoreTypeRepository;
+import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
+import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
 
 /**
  * 
@@ -35,16 +47,59 @@ import org.springframework.context.ApplicationContext;
  */
 
 @SpringBootApplication
+@EnableMongoRepositories
 public class Application {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
-        //
-        // String[] beanNames = ctx.getBeanDefinitionNames();
-        // Arrays.sort(beanNames);
-        // for (String beanName : beanNames) {
-        // System.out.println(beanName);
-        // }
+    }
+
+    @Bean
+    CommandLineRunner init(final DataStoreRepository repository, final DataStoreTypeRepository dsRepository,
+            final RuleRepository ruleRepository, final RuleTypeRepository ruleTypeRepository) {
+        return new CommandLineRunner() {
+            @Override
+            public void run(String... arg0) throws Exception {
+                repository.deleteAll();
+                dsRepository.deleteAll();
+                ruleRepository.deleteAll();
+                ruleTypeRepository.deleteAll();
+                DataStoreType dst = new DataStoreType();
+                dst.setDescription("Data Store for JDBC connector");
+                dst.setName("jdbc");
+                dst = dsRepository.save(dst);
+                DataStore ds = new DataStore();
+                ds.setDataStoreType(dst);
+                ds.setDriverClass("com.mysql.jdbc.Driver");
+                ds.setPassword("temporal123");
+                ds.setTableTypes("TABLE,VIEW");
+                ds.setUrl("jdbc:mysql://localhost/zonacero?autoReconnect=true");
+                ds.setUsername("developer");
+                repository.save(ds);
+                // RulesTypes
+                RuleType singularRuleType = new RuleType();
+                singularRuleType
+                        .setDescription("regla que aplica para palabras convertir palabras de plural a singular");
+                singularRuleType.setName("singular");
+                RuleType plurarlRuleType = new RuleType();
+                plurarlRuleType
+                        .setDescription("regla que aplica para palabras convertir palabras de singular a plural");
+                plurarlRuleType.setName("plural");
+                singularRuleType = ruleTypeRepository.save(singularRuleType);
+                ruleTypeRepository.save(plurarlRuleType);
+                // Rules Repositories
+                Rule r1 = new Rule();
+                r1.setExpression("os$");
+                r1.setReplacement("o");
+                r1.setRuleType(singularRuleType);
+                Rule r2 = new Rule();
+                r2.setExpression("es$");
+                r2.setReplacement("");
+                r2.setRuleType(singularRuleType);
+                ruleRepository.save(r1);
+                ruleRepository.save(r2);
+            }
+        };
     }
 
 }

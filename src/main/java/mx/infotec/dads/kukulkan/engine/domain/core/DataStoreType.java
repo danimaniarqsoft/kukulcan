@@ -23,10 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 /**
  * Supported dataSourceConnectionType
  * 
@@ -34,11 +30,8 @@ import javax.persistence.Id;
  *
  */
 
-@Entity
-public class DataStoreType {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class DataStoreType extends AbstractDocument {
+
     private String name;
     private String description;
 
@@ -56,13 +49,5 @@ public class DataStoreType {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

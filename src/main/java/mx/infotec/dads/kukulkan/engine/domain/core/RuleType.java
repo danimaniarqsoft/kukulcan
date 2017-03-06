@@ -23,9 +23,9 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
+
+import org.springframework.data.annotation.Id;
 
 /**
  * Supported dataSourceConnectionType
@@ -34,11 +34,10 @@ import javax.persistence.Id;
  *
  */
 
-@Entity
-public class RuleType {
+public class RuleType implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue
-    private Integer id;
+    private String id;
     private String name;
     private String description;
 
@@ -58,11 +57,12 @@ public class RuleType {
         this.description = description;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
+
 }

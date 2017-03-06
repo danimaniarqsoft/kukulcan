@@ -56,27 +56,42 @@
 		<!-- Data Access Layer -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jersey</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-jdbc</artifactId> 
+			</dependency> <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-data-jpa</artifactId> 
+			</dependency> <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId> 
+			</dependency> -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+		<!-- Angular -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jersey</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.webjars</groupId>
+			<artifactId>angularjs</artifactId>
+			<version>1.4.9</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.6</version>
+			<scope>runtime</scope>
 		</dependency>
-
-		<!-- Conector MySQL -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-
 		<!-- Template Layer -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -97,6 +112,11 @@
 			<groupId>org.apache.metamodel</groupId>
 			<artifactId>MetaModel-jdbc</artifactId>
 			<version>${metamodel.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -143,44 +163,6 @@
 						<groupId>com.h2database</groupId>
 						<artifactId>h2</artifactId>
 						<version>1.0.60</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>ro.isdc.wro4j</groupId>
-				<artifactId>wro4j-maven-plugin</artifactId>
-				<version>${wro4j.version}</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
-					<cssDestinationFolder>${project.build.directory}/generated-resources/static/css</cssDestinationFolder>
-					<jsDestinationFolder>${project.build.directory}/generated-resources/static/js</jsDestinationFolder>
-					<wroFile>${basedir}/src/main/wro/wro.xml</wroFile>
-					<extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
-					<contextFolder>${basedir}/src/main/wro</contextFolder>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.webjars</groupId>
-						<artifactId>jquery</artifactId>
-						<version>2.2.4</version>
-					</dependency>
-					<dependency>
-						<groupId>org.webjars</groupId>
-						<artifactId>angularjs</artifactId>
-						<version>1.4.9</version>
-					</dependency>
-					<dependency>
-						<groupId>org.webjars</groupId>
-						<artifactId>bootstrap</artifactId>
-						<version>3.3.7-1</version>
 					</dependency>
 				</dependencies>
 			</plugin>

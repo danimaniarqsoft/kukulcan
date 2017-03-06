@@ -57,7 +57,7 @@ public class MetaModelTest {
 
     @Test
     public void generationService() throws Exception {
-        DataStore dataStore = repository.findOne(1l);
+        DataStore dataStore = repository.findAll().get(0);
         DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
         properties.put("type", dataStore.getDataStoreType().getName());
         properties.put("url", dataStore.getUrl());

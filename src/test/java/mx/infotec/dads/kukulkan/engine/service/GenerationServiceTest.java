@@ -46,6 +46,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
 import mx.infotec.dads.kukulkan.engine.domain.core.RuleType;
 import mx.infotec.dads.kukulkan.engine.factories.LayerTaskFactory;
 import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
+import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
 import mx.infotec.dads.kukulkan.util.InflectorProcessor;
@@ -69,17 +70,18 @@ public class GenerationServiceTest {
     private RuleRepository ruleRepository;
     @Autowired
     private LayerTaskFactory layerTaskFactory;
+    @Autowired
+    private RuleTypeRepository ruleTypeRepository;
 
     @Test
     public void generationService() throws Exception {
         Rule rule = new Rule();
-        RuleType ruleType = new RuleType();
-        ruleType.setId(1);// singular
+        RuleType ruleType = ruleTypeRepository.findAll().get(0);
+        ruleType.setName("singular");
         rule.setRuleType(ruleType);
         Example<Rule> ruleExample = Example.of(rule);
         List<Rule> rulesList = ruleRepository.findAll(ruleExample);
         for (Rule item : rulesList) {
-            System.out.println(item.getReplacement());
             InflectorProcessor.getInstance().addSingularize(item.getExpression(), item.getReplacement());
         }
         // Create ProjectConfiguration
@@ -95,7 +97,8 @@ public class GenerationServiceTest {
         pConf.setDaoLayerName("repository");
         pConf.setDomainLayerName("model");
         // Create DataStore
-        DataStore dataStore = dataStoreService.getDataStore(1l);
+        List<DataStore> findAllDataStores = dataStoreService.findAll();
+        DataStore dataStore = findAllDataStores.get(0);
         // Create DataModel
         DataModelContext dmCtx = new JavaDataModelContext(dataStore);
         // Create DataContext

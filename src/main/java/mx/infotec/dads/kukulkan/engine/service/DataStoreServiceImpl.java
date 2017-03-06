@@ -43,8 +43,7 @@ public class DataStoreServiceImpl implements DataStoreService {
 
     @Override
     public DataContext getDataContext(DataStore dataStore) {
-        switch (dataStore.getDataStoreType().getId()) {
-        case 1: // JDBC
+        if (dataStore.getDataStoreType().getName().equals("jdbc")) {
             DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
             properties.put("type", dataStore.getDataStoreType().getName());
             properties.put("url", dataStore.getUrl());
@@ -53,9 +52,7 @@ public class DataStoreServiceImpl implements DataStoreService {
             properties.put("password", dataStore.getPassword());
             DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
             return dataContext;
-        case 2: // CSV
-            return null;
-        default:
+        } else {
             return null;
         }
     }
