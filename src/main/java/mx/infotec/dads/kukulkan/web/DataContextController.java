@@ -24,7 +24,7 @@ public class DataContextController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Table getDataContext(@RequestParam MultiValueMap<String, String> params) throws Exception {
         try {
-            DataStore dataStore = repository.findOne(1l);
+            DataStore dataStore = repository.findAll().get(0);
             DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
             properties.put("type", dataStore.getDataStoreType().getName());
             System.out.println(dataStore.getDataStoreType().getName());

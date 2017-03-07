@@ -58,7 +58,7 @@ public class DataStoreServiceImpl implements DataStoreService {
     }
 
     @Override
-    public DataStore getDataStore(Long id) {
+    public DataStore getDataStore(String id) {
         return repository.findOne(id);
     }
 
@@ -73,7 +73,7 @@ public class DataStoreServiceImpl implements DataStoreService {
     }
 
     @Override
-    public DataStore findById(Long id) {
+    public DataStore findById(String id) {
         return repository.findOne(id);
     }
 
@@ -83,12 +83,12 @@ public class DataStoreServiceImpl implements DataStoreService {
     }
 
     @Override
-    public boolean exists(Long id) {
+    public boolean exists(String id) {
         return repository.exists(id);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         repository.delete(id);
     }
 

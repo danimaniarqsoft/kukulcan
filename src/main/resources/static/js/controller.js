@@ -15,4 +15,16 @@ app.controller('generatorController', function($scope, $http) {
 	$http.get('http://localhost:8080/dataStores').then(function(response) {
 		$scope.dataStores = response.data;
 	});
+	
+	$http.get('http://localhost:8080/generateApplication/newContext').then(function(response) {
+		$scope.context = response.data;
+	});
+	
+	$scope.submit = function() {		
+		$http.post('http://localhost:8080/generateApplication', $scope.context).then(function(response) {
+			console.log("ok");
+		}, function(response) {
+			console.log(response);
+		});
+	};
 });

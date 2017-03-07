@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataStoreType;
 import mx.infotec.dads.kukulkan.engine.service.DataStoreService;
 
 /**
@@ -97,7 +98,7 @@ public class DataStoreRestController {
      * @return DataStore
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DataStore> getDataStore(@PathVariable("id") Long id) {
+    public ResponseEntity<DataStore> getDataStore(@PathVariable("id") String id) {
         DataStore dataStore = service.findById(id);
         if (dataStore == null) {
             return new ResponseEntity<DataStore>(HttpStatus.NOT_FOUND);
@@ -132,7 +133,7 @@ public class DataStoreRestController {
      * @return DataStore updated
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<DataStore> updateDataStore(@PathVariable("id") long id, @RequestBody DataStore dataStore) {
+    public ResponseEntity<DataStore> updateDataStore(@PathVariable("id") String id, @RequestBody DataStore dataStore) {
         LOGGER.debug("Actualizando DataStore" + id);
         DataStore currentDataStore = service.findById(id);
         if (currentDataStore == null) {
@@ -150,7 +151,7 @@ public class DataStoreRestController {
      * @return
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<DataStore> deleteDataStore(@PathVariable("id") Long id) {
+    public ResponseEntity<DataStore> deleteDataStore(@PathVariable("id") String id) {
         LOGGER.debug("Buscar y borrar un DataStore con " + id);
         DataStore dataStore = service.findById(id);
         if (dataStore == null) {
@@ -170,5 +171,17 @@ public class DataStoreRestController {
     public ResponseEntity<DataStore> deleteAllDataStore() {
         service.deleteAll();
         return new ResponseEntity<DataStore>(HttpStatus.NO_CONTENT);
+    }
+    
+    @RequestMapping(value = "/newDataStore", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DataStore> getNewDataStore() {
+        DataStore ds = new DataStore();
+        ds.setDataStoreType(new DataStoreType());
+        ds.setDriverClass("");
+        ds.setName("");
+        ds.setPassword("");
+        ds.setTableTypes("");
+        ds.setUsername("");
+        return new ResponseEntity<DataStore>(ds, HttpStatus.OK);
     }
 }

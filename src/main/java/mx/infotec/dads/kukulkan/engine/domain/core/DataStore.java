@@ -23,7 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
@@ -36,6 +35,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 public class DataStore extends AbstractDocument {
     @DBRef
     private DataStoreType dataStoreType;
+    private String name;
     private String url;
     private String driverClass;
     private String username;
@@ -88,5 +88,13 @@ public class DataStore extends AbstractDocument {
 
     public void setDataStoreType(DataStoreType dataStoreType) {
         this.dataStoreType = dataStoreType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

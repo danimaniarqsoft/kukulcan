@@ -33,6 +33,6 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
  * @author Daniel Cortes Pichardo
  *
  */
-public interface DataStoreRepository extends MongoRepository<DataStore, Long> {
+public interface DataStoreRepository extends MongoRepository<DataStore, String> {
 
 }

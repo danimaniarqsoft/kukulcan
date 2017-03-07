@@ -21,61 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.core;
+package mx.infotec.dads.kukulkan.util;
 
-import java.math.BigInteger;
+import java.io.Serializable;
 
-import org.springframework.data.annotation.Id;
+import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 
 /**
- * Base class for document classes.
+ * ProrjectConfiguration Class
  * 
- * @author Oliver Gierke, Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
+ * @author Daniel Cortes Pichardo
+ *
  */
+public class KukulkanContext implements Serializable {
 
-public class AbstractDocument {
-    @Id
-    private String id;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Returns the identifier of the document.
-     * 
-     * @return the id
-     */
-    public String getId() {
-        return id;
+    public KukulkanContext(ProjectConfiguration pc, String dataStore) {
+        this.pc = pc;
+        this.dataStore = dataStore;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
+    private ProjectConfiguration pc;
+    private String dataStore;
 
-        if (this == obj) {
-            return true;
-        }
-
-        if (this.id == null || obj == null || !(this.getClass().equals(obj.getClass()))) {
-            return false;
-        }
-
-        AbstractDocument that = (AbstractDocument) obj;
-
-        return this.id.equals(that.getId());
+    public ProjectConfiguration getPc() {
+        return pc;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return id == null ? 0 : id.hashCode();
+    public void setPc(ProjectConfiguration pc) {
+        this.pc = pc;
+    }
+
+    public String getDataStore() {
+        return dataStore;
+    }
+
+    public void setDataStore(String dataStore) {
+        this.dataStore = dataStore;
     }
 }

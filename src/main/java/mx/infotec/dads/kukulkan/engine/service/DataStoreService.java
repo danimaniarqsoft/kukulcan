@@ -53,7 +53,7 @@ public interface DataStoreService {
      *            of the data store
      * @return DataContext
      */
-    public DataStore getDataStore(Long id);
+    public DataStore getDataStore(String id);
 
     /**
      * regresa una lista con todos los elementos DataStore
@@ -76,7 +76,7 @@ public interface DataStoreService {
      * @param id
      * @return DataStore
      */
-    DataStore findById(Long id);
+    DataStore findById(String id);
 
     /**
      * Guarda o actualiza un DataStore
@@ -92,14 +92,14 @@ public interface DataStoreService {
      * @param id
      * @return boolean
      */
-    boolean exists(Long id);
+    boolean exists(String id);
 
     /**
      * Borrar un DataStore por su llave primaria
      * 
      * @param id
      */
-    void delete(Long id);
+    void delete(String id);
 
     /**
      * Borrar todos los elementos DataStore almacenados
