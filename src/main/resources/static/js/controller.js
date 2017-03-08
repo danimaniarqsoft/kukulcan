@@ -27,4 +27,15 @@ app.controller('generatorController', function($scope, $http) {
 			console.log(response);
 		});
 	};
+	
+	$scope.file_changed = function(element) {
+	     $scope.$apply(function(scope) {
+	         var photofile = element.files[0];
+	         var reader = new FileReader();
+	         reader.onload = function(e) {
+	            // handle onload
+	         };
+	         reader.readAsDataURL(photofile);
+	     });
+	};
 });

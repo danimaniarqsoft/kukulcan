@@ -106,7 +106,7 @@ public class KukulkanRestController {
         // Process Activities
         generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.REST_SPRING_JPA));
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(dataStore.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/{id}").buildAndExpand("generated").toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 

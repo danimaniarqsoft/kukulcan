@@ -87,9 +87,9 @@ public class GenerationServiceTest {
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("gen");
-        pConf.setGroupId("mx.infotec.dads.innovation");
+        pConf.setGroupId("mx.infotec.dads");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.infotec.dads.innovation.zonacero");
+        pConf.setPackaging("mx.infotec.dads.mapa");
         pConf.setYear("2017");
         pConf.setAuthor("KUKULKAN");
         pConf.setWebLayerName("rest");

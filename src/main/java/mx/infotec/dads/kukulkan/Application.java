@@ -75,11 +75,11 @@ public class Application {
                 DataStore ds = new DataStore();
                 ds.setDataStoreType(dst);
                 ds.setDriverClass("com.mysql.jdbc.Driver");
-                ds.setName("zonacero");
-                ds.setPassword("temporal123");
+                ds.setName("calidad_aire");
+                ds.setPassword("root");
                 ds.setTableTypes("TABLE,VIEW");
-                ds.setUrl("jdbc:mysql://localhost/zonacero?autoReconnect=true");
-                ds.setUsername("developer");
+                ds.setUrl("jdbc:mysql://localhost/calidad_aire?autoReconnect=true");
+                ds.setUsername("root");
                 repository.save(ds);
                 // RulesTypes
                 RuleType singularRuleType = new RuleType();
