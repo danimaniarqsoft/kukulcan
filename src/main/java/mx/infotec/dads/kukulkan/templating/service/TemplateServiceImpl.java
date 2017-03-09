@@ -28,7 +28,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,32 +52,6 @@ public class TemplateServiceImpl implements TemplateService {
     private Configuration fmConfiguration;
 
     private static String DEFAULT_OUTPUT_FOLDER = "/var/www/html/";
-
-    @Override
-    public String fillModel(String proyectoId, String templateName, Map<String, Object> model, BasePathEnum path,
-            String filePath) {
-        Template template;
-        try {
-            template = fmConfiguration.getTemplate(templateName);
-            Writer consoleWriter = new OutputStreamWriter(System.out);
-            template.process(model, consoleWriter);
-            File file = new File(DEFAULT_OUTPUT_FOLDER + proyectoId + "/" + path.getPath() + "/" + filePath);
-            if (!file.exists()) {
-                File parent = file.getParentFile();
-                if (!parent.exists() && !parent.mkdirs()) {
-                    throw new IllegalStateException("Couldn't create dir: " + parent);
-                }
-                file.createNewFile();
-            }
-            Writer fileWriter = new FileWriter(file);
-            template.process(model, fileWriter);
-        } catch (IOException | TemplateException e) {
-            throw new ApplicationException("Fill Model Error", e);
-        } finally {
-
-        }
-        return null;
-    }
 
     @Override
     public String fillModel(String proyectoId, String templateName, Object model, BasePathEnum path, String filePath) {

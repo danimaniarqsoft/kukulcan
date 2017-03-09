@@ -36,8 +36,6 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 public interface TemplateService {
 
-    String fillModel(String projectId, String templateName, Map<String, Object> model, BasePathEnum path,
-            String filePath);
     String fillModel(String projectId, String templateName, Object model, BasePathEnum path, String filePath);
 
 }
