@@ -146,7 +146,7 @@ public class FiwareOrionDataTest {
             rooms.add(room);
         }
         input.put("rooms", rooms);
-        templateService.fillModel("fiware-orion-data/room.ftl", input, BasePathEnum.SRC_MAIN_JAVA, "room.js");
+        templateService.fillModel("orion", "fiware-orion-data/room.ftl", input, BasePathEnum.SRC_MAIN_JAVA, "room.js");
     }
 
 }

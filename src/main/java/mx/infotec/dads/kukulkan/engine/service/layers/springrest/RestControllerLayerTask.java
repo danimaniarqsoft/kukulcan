@@ -27,7 +27,6 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToImportSta
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -36,14 +35,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
-import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
-import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
-import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
+import mx.infotec.dads.kukulkan.engine.service.layers.AbstractLayerTaskVisitor;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 import mx.infotec.dads.kukulkan.util.InflectorProcessor;
+import mx.infotec.dads.kukulkan.util.NameConventions;
 
 /**
  * Service Layer Task
@@ -52,7 +50,7 @@ import mx.infotec.dads.kukulkan.util.InflectorProcessor;
  *
  */
 @Service("restControllerLayerTask")
-public class RestControllerLayerTask implements LayerTask {
+public class RestControllerLayerTask extends AbstractLayerTaskVisitor {
 
     private ArchetypeType archetypeType = ArchetypeType.REST_SPRING_JPA;
 
@@ -61,48 +59,20 @@ public class RestControllerLayerTask implements LayerTask {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestControllerLayerTask.class);
 
-    @Override
-    public boolean doTask(GeneratorContext context) {
-        LOGGER.debug("Service Layer Task Executing");
-        Map<String, Object> model = new HashMap<>();
-        model.put("year", "2016");
-        model.put("author", context.getProjectConfiguration().getAuthor());
-        ProjectConfiguration pConfiguration = context.getProjectConfiguration();
-        Collection<DataModelGroup> dataModelGroupCollection = context.getDataModelContext().getDataModelGroup();
-        doForEachDataModelGroup(pConfiguration, dataModelGroupCollection, model);
-        return true;
-    }
-
-    public void doForEachDataModelGroup(ProjectConfiguration pConf, Collection<DataModelGroup> dmGroup,
-            Map<String, Object> model) {
-        for (DataModelGroup dataModelGroup : dmGroup) {
-            doForEachDataModelElement(pConf, dataModelGroup.getDataModelElements(), model, dataModelGroup.getName());
-        }
-    }
-
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
+        String basePackage = pConf.getPackaging() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
-            String basePackage = pConf.getPackaging() + dmgName;
-            model.put("package", formatToPackageStatement(basePackage, pConf.getWebLayerName()));
+            addCommonDataModelElements(pConf, model, basePackage, dmElement);
             model.put("importRepository", formatToImportStatement(basePackage, pConf.getDaoLayerName(),
-                    dmElement.getName() + RepositoryLayerTask.NAME_CONVENTION));
+                    dmElement.getName() + NameConventions.DAO));
             model.put("importService", formatToImportStatement(basePackage, pConf.getServiceLayerName(),
-                    dmElement.getName() + ServiceLayerTask.NAME_CONVENTION_SERVICE));
-            model.put("importModel",
-                    formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
-            model.put("propertyName", dmElement.getPropertyName());
+                    dmElement.getName() + NameConventions.SERVICE));
             model.put("propertyNamePlural", InflectorProcessor.getInstance().pluralize(dmElement.getPropertyName()));
-            model.put("name", dmElement.getName());
             model.put("urlName", dmElement.getPropertyName());
-            model.put("id", dmElement.getPrimaryKey().getType());
-            if (dmElement.getPrimaryKey().isComposed()) {
-                model.put("importPrimaryKey", formatToImportStatement(basePackage, pConf.getDomainLayerName(),
-                        dmElement.getPrimaryKey().getType()));
-            }
-            templateService.fillModel("rest-spring-jpa/restController.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+            templateService.fillModel(pConf.getId(), "rest-spring-jpa/restController.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getWebLayerName() + "/"
-                            + dmElement.getName() + "RestController.java");
+                            + dmElement.getName() + NameConventions.REST_CONTROLLER+".java");
 
         }
     }

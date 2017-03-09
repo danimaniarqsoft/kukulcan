@@ -21,23 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.templating.service;
+package mx.infotec.dads.kukulkan.util;
 
-import java.util.Map;
+public class NameConventions {
+    private NameConventions() {
+    }
 
-import mx.infotec.dads.kukulkan.util.BasePathEnum;
-
-/**
- * 
- * @author Daniel Cortes Pichardo
- * @since 1.0.0
- * @version 1.0.0
- */
-
-public interface TemplateService {
-
-    String fillModel(String projectId, String templateName, Map<String, Object> model, BasePathEnum path,
-            String filePath);
-    String fillModel(String projectId, String templateName, Object model, BasePathEnum path, String filePath);
+    public static final String REST_CONTROLLER = "RestController";
+    public static final String SERVICE = "Service";
+    public static final String SERVICE_IMPLEMENTS = "ServiceImpl";
+    public static final String DAO = "Repository";
 
 }

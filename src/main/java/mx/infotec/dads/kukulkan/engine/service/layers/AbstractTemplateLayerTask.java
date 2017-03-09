@@ -21,9 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
-
-import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
+package mx.infotec.dads.kukulkan.engine.service.layers;
 
 /**
  * Abstract Template ControllerLayerTask
@@ -31,6 +29,6 @@ import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
  * @author Daniel Cortes Pichardo
  *
  */
-public abstract class TemplateLayerTask implements LayerTask {
+public abstract class AbstractTemplateLayerTask implements LayerTask {
 
 }

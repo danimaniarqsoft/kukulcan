@@ -52,14 +52,17 @@ public class TemplateServiceImpl implements TemplateService {
     @Autowired
     private Configuration fmConfiguration;
 
+    private static String DEFAULT_OUTPUT_FOLDER = "/var/www/html/";
+
     @Override
-    public String fillModel(String templateName, Map<String, Object> model, BasePathEnum path, String filePath) {
+    public String fillModel(String proyectoId, String templateName, Map<String, Object> model, BasePathEnum path,
+            String filePath) {
         Template template;
         try {
             template = fmConfiguration.getTemplate(templateName);
             Writer consoleWriter = new OutputStreamWriter(System.out);
             template.process(model, consoleWriter);
-            File file = new File("kukulkan-gen/" + path.getPath() + "/" + filePath);
+            File file = new File(DEFAULT_OUTPUT_FOLDER + proyectoId + "/" + path.getPath() + "/" + filePath);
             if (!file.exists()) {
                 File parent = file.getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
@@ -78,13 +81,13 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
-    public String fillModel(String templateName, Object model, BasePathEnum path, String filePath) {
+    public String fillModel(String proyectoId, String templateName, Object model, BasePathEnum path, String filePath) {
         Template template;
         try {
             template = fmConfiguration.getTemplate(templateName);
             Writer consoleWriter = new OutputStreamWriter(System.out);
             template.process(model, consoleWriter);
-            File file = new File("kukulkan-gen/" + path.getPath() + "/" + filePath);
+            File file = new File(DEFAULT_OUTPUT_FOLDER + proyectoId + "/" + path.getPath() + "/" + filePath);
             if (!file.exists()) {
                 File parent = file.getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {

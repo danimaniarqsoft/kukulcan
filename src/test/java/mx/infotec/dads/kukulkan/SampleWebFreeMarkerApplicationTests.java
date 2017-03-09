@@ -34,7 +34,7 @@ public class SampleWebFreeMarkerApplicationTests {
         model.put("javaType", "Integer");
         model.put("propertyName", "name");
 
-        templateService.fillModel("model.ftl", model, BasePathEnum.SRC_MAIN_JAVA, "mx/com/hola.java");
+        templateService.fillModel("data", "model.ftl", model, BasePathEnum.SRC_MAIN_JAVA, "mx/com/hola.java");
     }
 
 }

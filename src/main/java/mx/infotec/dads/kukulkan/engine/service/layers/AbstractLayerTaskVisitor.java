@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
+package mx.infotec.dads.kukulkan.engine.service.layers;
 
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToImportStatement;
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
@@ -30,40 +30,21 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
-import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
-import mx.infotec.dads.kukulkan.templating.service.TemplateService;
-import mx.infotec.dads.kukulkan.util.ArchetypeType;
-import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 /**
- * Repository Layer Task
+ * Abstract Template ControllerLayerTask
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("exceptionLayerTask")
-public class ExceptionLayerTask implements LayerTask {
-
-    public static final String NAME_CONVENTION = "Repository";
-    private ArchetypeType archetypeType = ArchetypeType.PRIMEFACES_SPRING_MYBATIS;
-
-    @Autowired
-    private TemplateService templateService;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionLayerTask.class);
+public abstract class AbstractLayerTaskVisitor implements LayerTask {
 
     @Override
     public boolean doTask(GeneratorContext context) {
-        LOGGER.debug("Service Layer Task Executing");
         Map<String, Object> model = new HashMap<>();
         model.put("year", context.getProjectConfiguration().getYear());
         model.put("author", context.getProjectConfiguration().getAuthor());
@@ -80,25 +61,20 @@ public class ExceptionLayerTask implements LayerTask {
         }
     }
 
-    public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
-            Map<String, Object> model, String dmgName) {
-        String basePackage = pConf.getGroupId() + dmgName;
-        for (DataModelElement dmElement : dmElementCollection) {
-            model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
-            model.put("importModel",
-                    formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
-            model.put("propertyName", dmElement.getPropertyName());
-            model.put("name", dmElement.getName());
-            System.out.println(dmElement.getName());
-            model.put("id", dmElement.getPrimaryKey().getType());
-            templateService.fillModel(pConf.getId(), "rest-spring-jpa/exception.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
-                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDaoLayerName() + "/"
-                            + dmElement.getName() + "Repository.java");
-        }
-    }
+    public abstract void doForEachDataModelElement(ProjectConfiguration pConf,
+            Collection<DataModelElement> dmElementCollection, Map<String, Object> model, String dmgName);
 
-    @Override
-    public ArchetypeType getArchetypeType() {
-        return archetypeType;
+    public void addCommonDataModelElements(ProjectConfiguration pConf, Map<String, Object> model, String basePackage,
+            DataModelElement dmElement) {
+        model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
+        model.put("importModel", formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
+        model.put("propertyName", dmElement.getPropertyName());
+        model.put("name", dmElement.getName());
+        System.out.println(dmElement.getName());
+        model.put("id", dmElement.getPrimaryKey().getType());
+        if (dmElement.getPrimaryKey().isComposed()) {
+            model.put("importPrimaryKey", formatToImportStatement(basePackage, pConf.getDomainLayerName(),
+                    dmElement.getPrimaryKey().getType()));
+        }
     }
 }
