@@ -41,3 +41,40 @@ http://www.h2database.com/
 
 #### Spring Security and H2 Console
 https://dzone.com/articles/using-the-h2-database-console-in-spring-boot-with
+
+
+## Docker Kukulkan
+
+#### Building the docker image:
+
+```
+mvn package docker:build -Dmaven.test.skip=true
+```
+
+#### Creating the docker compose file
+
+
+```yml
+mongodb:
+  image: mongo:3.2
+  hostname: mongodb
+  container_name: mongodb
+  expose:
+      - "27017"
+  command: --nojournal
+kukulkan:
+  image: danimaniarqsoft/kukulkan
+  hostname: kukulkan
+  container_name: kukulkan
+  links:
+    - mongodb
+  ports:
+    - "8080:8080"
+  command: -dbhost mongodb
+```
+
+running the docker compose file
+
+```bash
+docker-compose up
+```
