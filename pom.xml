@@ -166,7 +166,13 @@
 				<version>0.4.11</version>
 				<configuration>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+						<imageTag>latest</imageTag>
+					</imageTags>
 					<dockerDirectory>src/main/docker</dockerDirectory>
+					<serverId>docker-hub</serverId>
+					<registryUrl>https://index.docker.io/v1/</registryUrl>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
