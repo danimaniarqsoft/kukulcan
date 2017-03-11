@@ -51,7 +51,7 @@ public class TemplateServiceImpl implements TemplateService {
     @Autowired
     private Configuration fmConfiguration;
 
-    private static String DEFAULT_OUTPUT_FOLDER = "/var/www/html/";
+    private static String DEFAULT_OUTPUT_FOLDER = "/var/www/html/kukulkan/";
 
     @Override
     public String fillModel(String proyectoId, String templateName, Object model, BasePathEnum path, String filePath) {

@@ -23,6 +23,8 @@
  */
 package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
 
+import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -59,6 +61,7 @@ public class RepositoryLayerTask extends AbstractLayerTaskVisitor {
         String basePackage = pConf.getPackaging() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
             addCommonDataModelElements(pConf, model, basePackage, dmElement);
+            model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
             templateService.fillModel(pConf.getId(), "rest-spring-jpa/repository.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDaoLayerName() + "/"
                             + dmElement.getName() + NameConventions.DAO + ".java");

@@ -63,6 +63,7 @@ public class ServiceLayerTask extends AbstractLayerTaskVisitor {
         String basePackage = pConf.getPackaging() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
             addCommonDataModelElements(pConf, model, basePackage, dmElement);
+            model.put("package", formatToPackageStatement(basePackage, pConf.getServiceLayerName()));
             model.put("packageImpl", formatToPackageStatement(basePackage, pConf.getServiceLayerName(), "impl"));
             model.put("importRepository", formatToImportStatement(basePackage, pConf.getDaoLayerName(),
                     dmElement.getName() + NameConventions.DAO));

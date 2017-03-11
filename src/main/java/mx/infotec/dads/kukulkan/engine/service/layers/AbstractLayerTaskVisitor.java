@@ -66,7 +66,6 @@ public abstract class AbstractLayerTaskVisitor implements LayerTask {
 
     public void addCommonDataModelElements(ProjectConfiguration pConf, Map<String, Object> model, String basePackage,
             DataModelElement dmElement) {
-        model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
         model.put("importModel", formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
         model.put("propertyName", dmElement.getPropertyName());
         model.put("name", dmElement.getName());

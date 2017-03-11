@@ -80,6 +80,15 @@ public class Application {
                 ds.setUrl("jdbc:mysql://localhost/calidad_aire?autoReconnect=true");
                 ds.setUsername("root");
                 repository.save(ds);
+                DataStore dsValuApp = new DataStore();
+                dsValuApp.setDataStoreType(dst);
+                dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
+                dsValuApp.setName("valuapp");
+                dsValuApp.setPassword("root");
+                dsValuApp.setTableTypes("TABLE,VIEW");
+                dsValuApp.setUrl("jdbc:mysql://localhost/valuapp?autoReconnect=true");
+                dsValuApp.setUsername("root");
+                repository.save(dsValuApp);
                 // RulesTypes
                 RuleType singularRuleType = new RuleType();
                 singularRuleType

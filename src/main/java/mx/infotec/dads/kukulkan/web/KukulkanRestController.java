@@ -113,7 +113,7 @@ public class KukulkanRestController {
     @RequestMapping(value = "/newContext", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<KukulkanContext> getNewContext() {
         ProjectConfiguration pConf = new ProjectConfiguration();
-        pConf.setId("gen");
+        pConf.setId("valuapp");
         pConf.setGroupId("");
         pConf.setVersion("1.0.0");
         pConf.setPackaging("");
@@ -123,6 +123,8 @@ public class KukulkanRestController {
         pConf.setServiceLayerName("service");
         pConf.setDaoLayerName("repository");
         pConf.setDomainLayerName("model");
+        pConf.setGroupId("mx.infotec.dads");
+        pConf.setPackaging("mx.infotec.dads.valuapp");
         KukulkanContext kc = new KukulkanContext(pConf, "");
         return new ResponseEntity<KukulkanContext>(kc, HttpStatus.OK);
     }
