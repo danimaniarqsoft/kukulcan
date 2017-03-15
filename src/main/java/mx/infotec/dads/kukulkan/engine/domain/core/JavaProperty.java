@@ -30,52 +30,58 @@ import java.util.Collection;
  * PropertyHolder Class that is used for hold the properties of a table
  * 
  * @author Daniel Cortes Pichardo
- * @param <T>
  *
  */
-public interface PropertyHolder<T> extends Comparable<T>{
+public class JavaProperty implements PropertyHolder<JavaProperty> {
 
-    /**
-     * Return the name of the property
-     * 
-     * @return propertyName
-     */
-    String getPropertyName();
+    private String propertyName;
+    private String propertyType;
+    private String qualifiedName;
+    private String columnName;
+    private boolean primaryKey;
 
-    /**
-     * Return the type of the property
-     * 
-     * @return propertyType
-     */
-    String getPropertyType();
-    
-    /**
-     * Return the name of the property
-     * 
-     * @return propertyName
-     */
-    String getColumnName();
+    public JavaProperty(String propertyName, String propertyType, String columnName, String qualifiedName,
+            boolean isPrimaryKey) {
+        this.propertyName = propertyName;
+        this.propertyType = propertyType;
+        this.qualifiedName = qualifiedName;
+        this.primaryKey = isPrimaryKey;
+        this.columnName = columnName;
+    }
 
-    /**
-     * Return the qualified name of the type of the Property, in order to create
-     * a import statement in the generation fase;
-     * 
-     * @return qualifiedName
-     */
-    String getQualifiedName();
+    @Override
+    public String getPropertyName() {
+        return this.propertyName;
+    }
 
-    /**
-     * Return if it is a primary key property
-     * 
-     * @return boolean
-     */
-    boolean isPrimaryKey();
+    @Override
+    public String getPropertyType() {
+        return this.propertyType;
+    }
 
-    /**
-     * Return associations if it exists
-     * 
-     * @return associations
-     */
-    Collection<PropertyHolder> getAssociations();
+    @Override
+    public String getQualifiedName() {
+        return this.qualifiedName;
+    }
+
+    @Override
+    public Collection<PropertyHolder> getAssociations() {
+        throw new RuntimeException("Method not implemented");
+    }
+
+    @Override
+    public boolean isPrimaryKey() {
+        return this.primaryKey;
+    }
+
+    @Override
+    public int compareTo(JavaProperty o) {
+        return qualifiedName.compareTo(o.getQualifiedName());
+    }
+
+    @Override
+    public String getColumnName() {
+        return this.columnName;
+    }
 
 }

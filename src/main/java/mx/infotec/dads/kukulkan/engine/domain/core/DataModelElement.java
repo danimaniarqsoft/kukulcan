@@ -25,6 +25,7 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * The DataModelElement represent a Table mapped into a specific technology
@@ -33,6 +34,17 @@ import java.util.List;
  *
  */
 public class DataModelElement {
+    
+    private DataModelElement(){
+        
+    }
+    
+    public static DataModelElement createOrderedDataModel(){
+        DataModelElement dme = new DataModelElement();
+        dme.setImports(new TreeSet<>());
+        dme.setProperties(new TreeSet<>());
+        return dme;
+    }
 
     /**
      * id of the dataModelElement, it is the primary key
@@ -47,7 +59,7 @@ public class DataModelElement {
     /**
      * imports statements of the elements
      */
-    protected List<String> imports;
+    protected Collection<String> imports;
 
     /**
      * Name of the dataModel, usually it is the name of the Schema formatted for
@@ -110,11 +122,11 @@ public class DataModelElement {
         this.urlName = urlName;
     }
 
-    public List<String> getImports() {
+    public Collection<String> getImports() {
         return imports;
     }
 
-    public void setImports(List<String> imports) {
+    public void setImports(Collection<String> imports) {
         this.imports = imports;
     }
 
@@ -124,5 +136,9 @@ public class DataModelElement {
 
     public void setPrimaryKey(PrimaryKey primaryKey) {
         this.primaryKey = primaryKey;
+    }
+
+    public void addProperty(PropertyHolder propertyHolder) {
+        properties.add(propertyHolder);
     }
 }

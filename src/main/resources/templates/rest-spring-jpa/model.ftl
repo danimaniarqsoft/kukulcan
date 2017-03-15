@@ -24,8 +24,9 @@
  */
 ${package}
 
-${imports}
-import java.io.Serializable;
+<#list imports as import>
+import ${import};
+</#list>
 
 /**
  * The ${className}
@@ -33,37 +34,46 @@ import java.io.Serializable;
  * @author ${author}
  *
  */
-@Entity("${tableName}")
+@Entity
+@Table(name="${tableName}")
 public class ${className} implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	<#list properties as property>
     /**
      * Este campo fue generado automaticamente por ${author} 
      * Este campo corresponde a la tabla ${tableName}
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
-    private ${propertyType} ${propertyName};
+    @Column(name="${property.columnName}")
+    private ${property.propertyType} ${property.propertyName};
+	</#list>
 
+	<#list properties as property>
 	 /**
      * Este método fue generado automaticamente por ${author} 
-     * Este método GETTER fue generado para la ${tableName}.${propertyName}
+     * Este método GETTER fue generado para la ${tableName}.${property.propertyName}
      *
      * @return el valor de area_conocimiento.id
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
-    public ${propertyType} get${propertyName?cap_first}() {
-        return ${propertyName};
+    public ${property.propertyType} get${property.propertyName?cap_first}() {
+        return ${property.propertyName};
     }
 
 	 /**
      * Este método fue generado automaticamente por ${author} 
-     * Este método GETTER fue generado para la tabla. ${tableName}.${propertyName}
+     * Este método GETTER fue generado para la tabla. ${tableName}.${property.propertyName}
      *
      * @return el valor de area_conocimiento.id
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
-    public void set${propertyName?cap_first}(${propertyType} ${propertyName}) {
-        this.${propertyName} = ${propertyName};
+    public void set${property.propertyName?cap_first}(${property.propertyType} ${property.propertyName}) {
+        this.${property.propertyName} = ${property.propertyName};
     }
+    </#list>
+
 }

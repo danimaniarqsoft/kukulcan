@@ -69,7 +69,6 @@ public abstract class AbstractLayerTaskVisitor implements LayerTask {
         model.put("importModel", formatToImportStatement(basePackage, pConf.getDomainLayerName(), dmElement.getName()));
         model.put("propertyName", dmElement.getPropertyName());
         model.put("name", dmElement.getName());
-        System.out.println(dmElement.getName());
         model.put("id", dmElement.getPrimaryKey().getType());
         if (dmElement.getPrimaryKey().isComposed()) {
             model.put("importPrimaryKey", formatToImportStatement(basePackage, pConf.getDomainLayerName(),

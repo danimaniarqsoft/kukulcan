@@ -24,10 +24,11 @@
 package mx.infotec.dads.kukulkan.util;
 
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
-
+import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.schema.Column;
@@ -35,6 +36,7 @@ import org.apache.metamodel.schema.Table;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
+import mx.infotec.dads.kukulkan.engine.domain.core.JavaProperty;
 import mx.infotec.dads.kukulkan.engine.domain.core.PrimaryKey;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
@@ -65,20 +67,38 @@ public class DataMapping {
         dmg.setDataModelElements(new ArrayList<>());
         Table[] tables = dataContext.getDefaultSchema().getTables();
         List<DataModelElement> dmeList = new ArrayList<>();
+        createDataModelElement(tablesToProcess, tables, dmeList);
+        dmg.setDataModelElements(dmeList);
+        return dmg;
+    }
+
+    private static void createDataModelElement(List<String> tablesToProcess, Table[] tables,
+            List<DataModelElement> dmeList) {
         for (Table table : tables) {
             if ((tablesToProcess.contains(table.getName()) || tablesToProcess.isEmpty())
                     && hasPrimaryKey(table.getPrimaryKeys())) {
-                DataModelElement dme = new DataModelElement();
+                DataModelElement dme = DataModelElement.createOrderedDataModel();
                 String singularName = InflectorProcessor.getInstance().singularize(table.getName());
                 dme.setTableName(table.getName());
                 dme.setName(SchemaPropertiesParser.parseToClassName(singularName));
                 dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(singularName));
                 dme.setPrimaryKey(extractPrimaryKey(singularName, table.getPrimaryKeys()));
+                extractProperties(dme, table);
                 dmeList.add(dme);
             }
         }
-        dmg.setDataModelElements(dmeList);
-        return dmg;
+    }
+
+    public static void extractProperties(DataModelElement dme, Table table) {
+        Column[] columns = table.getColumns();
+        for (Column column : columns) {
+            String propertyName = SchemaPropertiesParser.parseToPropertyName(table.getName());
+            String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
+            dme.getImports().add(column.getType().getJavaEquivalentClass().getCanonicalName());
+            String qualifiedLabel = column.getType().getJavaEquivalentClass().toString();
+            dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), qualifiedLabel,
+                    column.isPrimaryKey()));
+        }
     }
 
     public static boolean hasPrimaryKey(Column[] columns) {
