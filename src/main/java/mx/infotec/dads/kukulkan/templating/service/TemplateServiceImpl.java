@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import mx.infotec.dads.kukulkan.KukulkanConfigurationProperties;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
 
@@ -51,7 +52,8 @@ public class TemplateServiceImpl implements TemplateService {
     @Autowired
     private Configuration fmConfiguration;
 
-    private static String DEFAULT_OUTPUT_FOLDER = "/var/www/html/kukulkan/";
+    @Autowired
+    private KukulkanConfigurationProperties prop;
 
     @Override
     public String fillModel(String proyectoId, String templateName, Object model, BasePathEnum path, String filePath) {
@@ -60,7 +62,7 @@ public class TemplateServiceImpl implements TemplateService {
             template = fmConfiguration.getTemplate(templateName);
             Writer consoleWriter = new OutputStreamWriter(System.out);
             template.process(model, consoleWriter);
-            File file = new File(DEFAULT_OUTPUT_FOLDER + proyectoId + "/" + path.getPath() + "/" + filePath);
+            File file = new File(prop.getOutputdir() + proyectoId + "/" + path.getPath() + "/" + filePath);
             if (!file.exists()) {
                 File parent = file.getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {

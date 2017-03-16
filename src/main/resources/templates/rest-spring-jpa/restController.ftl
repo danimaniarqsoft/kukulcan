@@ -116,12 +116,12 @@ public class ${name}RestController {
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create${name}(@RequestBody ${name} ${propertyName}, UriComponentsBuilder ucBuilder) {
-        if (service.exists(${propertyName}.getId())) {
+        if (service.exists(${propertyName}.get${primaryKey.name?cap_first}())) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         } else {
             service.save(${propertyName});
             HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(${propertyName}.getId()).toUri());
+            headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(${propertyName}.get${primaryKey.name?cap_first}()).toUri());
             return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
         }
     }

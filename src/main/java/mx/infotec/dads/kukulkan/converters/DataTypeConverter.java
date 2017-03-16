@@ -23,20 +23,19 @@
  */
 package mx.infotec.dads.kukulkan.converters;
 
-import org.apache.metamodel.schema.ColumnType;
-
 /**
  * The DataTypeConverter class used for convert a datamodel type to java type
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-public interface DataTypeConverter {
+@FunctionalInterface
+public interface DataTypeConverter<T> {
     /**
      * Method for resolve a java type
      * 
      * @param columnType
      * @return
      */
-    String resolveJavaType(ColumnType columnType);
+    String resolveJavaType(T columnType);
 }

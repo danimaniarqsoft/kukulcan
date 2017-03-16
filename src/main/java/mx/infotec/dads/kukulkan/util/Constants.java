@@ -21,15 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.java;
+package mx.infotec.dads.kukulkan.util;
 
-/**
- * The JavaDataModelElement, represent a element that could be used for
- * templating
- * 
- * @author Daniel Cortes Pichardo
- *
- */
-public class JavaDataModelElement {
+public class Constants {
+
+    public static String DATA_STORE_TYPE_JDBC = "jdbc";
+
+    private Constants() {
+
+    }
 
 }

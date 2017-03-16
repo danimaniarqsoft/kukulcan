@@ -24,11 +24,10 @@
 package mx.infotec.dads.kukulkan.util;
 
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
-import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
 
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.schema.Column;
@@ -82,22 +81,27 @@ public class DataMapping {
                 dme.setTableName(table.getName());
                 dme.setName(SchemaPropertiesParser.parseToClassName(singularName));
                 dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(singularName));
-                dme.setPrimaryKey(extractPrimaryKey(singularName, table.getPrimaryKeys()));
+                configPrimaryKey(dme, singularName, table.getPrimaryKeys());
                 extractProperties(dme, table);
                 dmeList.add(dme);
             }
         }
     }
 
+    public static void configPrimaryKey(DataModelElement dme, String singularName, Column[] columns){
+        dme.setPrimaryKey(extractPrimaryKey(singularName, columns));
+        dme.getImports().add(dme.getPrimaryKey().getQualifiedLabel());
+    }
     public static void extractProperties(DataModelElement dme, Table table) {
         Column[] columns = table.getColumns();
         for (Column column : columns) {
-            String propertyName = SchemaPropertiesParser.parseToPropertyName(table.getName());
-            String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
-            dme.getImports().add(column.getType().getJavaEquivalentClass().getCanonicalName());
-            String qualifiedLabel = column.getType().getJavaEquivalentClass().toString();
-            dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), qualifiedLabel,
-                    column.isPrimaryKey()));
+            if (!column.isPrimaryKey()) {
+                String propertyName = SchemaPropertiesParser.parseToPropertyName(column.getName());
+                String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
+                dme.getImports().add(column.getType().getJavaEquivalentClass().getCanonicalName());
+                String qualifiedLabel = column.getType().getJavaEquivalentClass().toString();
+                dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), qualifiedLabel, false));
+            }
         }
     }
 
@@ -111,17 +115,18 @@ public class DataMapping {
 
     public static PrimaryKey extractPrimaryKey(String singularName, Column[] columns) {
         PrimaryKey pk = new PrimaryKey();
-        // Not primary key found
+        // Not found primary key
         if (columns.length == 0) {
             return null;
         }
         // Simple Primary key
         if (columns.length == 1) {
             pk.setType(columns[0].getType().getJavaEquivalentClass().getSimpleName());
+            pk.setQualifiedLabel(columns[0].getType().getJavaEquivalentClass().getCanonicalName());
             pk.setName(SchemaPropertiesParser.parseToPropertyName(columns[0].getName()));
             pk.setComposed(false);
         } else {
-            // Primary key
+            // Composed Primary key
             pk.setType(SchemaPropertiesParser.parseToClassName(singularName) + "PK");
             pk.setName(SchemaPropertiesParser.parseToPropertyName(singularName) + "PK");
             pk.setComposed(true);

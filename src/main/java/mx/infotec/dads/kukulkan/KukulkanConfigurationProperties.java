@@ -21,7 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.core;
+package mx.infotec.dads.kukulkan;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 
@@ -29,7 +33,17 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
  * @since 1.0.0
  * @version 1.0.0
  */
+@Configuration
+@EnableConfigurationProperties
+@ConfigurationProperties("kukulkan")
+public class KukulkanConfigurationProperties {
+    private String outputdir;
 
-public class DataModel {
+    public String getOutputdir() {
+        return outputdir;
+    }
 
+    public void setOutputdir(String outputdir) {
+        this.outputdir = outputdir;
+    }
 }

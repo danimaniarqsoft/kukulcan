@@ -39,7 +39,18 @@ import ${import};
 public class ${className} implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+    /**
+     * Este campo fue generado automaticamente por ${author} 
+     * Este campo corresponde a la llave primaria}
+     *
+     * @kukulkanGenerated ${aDateTime?iso_utc}
+     */
+    @Id
+    @Column(name="${primaryKey.name}")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private ${primaryKey.type} ${primaryKey.name};
 	<#list properties as property>
+	
     /**
      * Este campo fue generado automaticamente por ${author} 
      * Este campo corresponde a la tabla ${tableName}
@@ -49,13 +60,37 @@ public class ${className} implements Serializable {
     @Column(name="${property.columnName}")
     private ${property.propertyType} ${property.propertyName};
 	</#list>
-
-	<#list properties as property>
-	 /**
+	
+    /**
      * Este método fue generado automaticamente por ${author} 
-     * Este método GETTER fue generado para la ${tableName}.${property.propertyName}
+     * Este método GETTER fue generado para la ${tableName}.${primaryKey.name}
+     *
+     * @return el valor de ${primaryKey.name}
+     *
+     * @kukulkanGenerated ${aDateTime?iso_utc}
+     */
+    public ${primaryKey.type} get${primaryKey.name?cap_first}() {
+        return ${primaryKey.name};
+    }
+
+    /**
+     * Este método fue generado automaticamente por ${author} 
+     * Este método SETTER fue generado para la tabla. ${tableName}.${primaryKey.name}
      *
      * @return el valor de area_conocimiento.id
+     *
+     * @kukulkanGenerated ${aDateTime?iso_utc}
+     */
+    public void set${primaryKey.name?cap_first}(${primaryKey.type} ${primaryKey.name}) {
+        this.${primaryKey.name} = ${primaryKey.name};
+    }
+
+	<#list properties as property>
+    /**
+     * Este método fue generado automaticamente por ${author} 
+     * Este método GETTER fue generado para la ${tableName}.${property.columnName}
+     *
+     * @return el valor de ${property.propertyName}
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
@@ -63,11 +98,11 @@ public class ${className} implements Serializable {
         return ${property.propertyName};
     }
 
-	 /**
+    /**
      * Este método fue generado automaticamente por ${author} 
      * Este método GETTER fue generado para la tabla. ${tableName}.${property.propertyName}
      *
-     * @return el valor de area_conocimiento.id
+     * @return el valor de ${property.propertyName?cap_first}
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
@@ -75,5 +110,35 @@ public class ${className} implements Serializable {
         this.${property.propertyName} = ${property.propertyName};
     }
     </#list>
+
+    /**
+     * Este método fue generado automaticamente por ${author} 
+     *
+     * @return boolean
+     *
+     * @kukulkanGenerated ${aDateTime?iso_utc}
+     */    
+     
+    @Override
+    public boolean equals(Object otherObj) {
+        if ((otherObj == null) || !(otherObj instanceof ${className})) {
+            return false;
+        }
+        final ${className} other = (${className}) otherObj;
+        return Objects.equals(this.${primaryKey.name}, other.get${primaryKey.name?cap_first}());
+    }
+    
+    /**
+     * Este método fue generado automaticamente por ${author} 
+     *
+     * @return hashCode
+     *
+     * @kukulkanGenerated ${aDateTime?iso_utc}
+     */    
+     
+    @Override
+    public int hashCode() {
+        return Objects.hash(<#list properties as property>this.${property.propertyName}, </#list>this.${primaryKey.name});
+    }
 
 }

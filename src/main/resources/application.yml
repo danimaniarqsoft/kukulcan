@@ -1,0 +1,19 @@
+spring:
+  mandatory-file-encoding: UTF-8
+  jmx:
+    enabled: false
+  data:
+    mongodb:
+      host: mongodb
+      port: 27017
+server:
+  port: 8081
+kukulkan:
+  outputdir: /home/daniel/eclipse-wksp-components/
+logging:
+  level:
+    root: info
+    org.springframework.web: false
+    org.hibernate: false
+    org.hibernate.SQL: false
+    file: kukulkan.log

@@ -58,8 +58,10 @@ public class ServiceLayerTask extends AbstractLayerTaskVisitor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceLayerTask.class);
 
+    @Override
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
+        LOGGER.debug("doForEachDataModelElement");
         String basePackage = pConf.getPackaging() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
             addCommonDataModelElements(pConf, model, basePackage, dmElement);

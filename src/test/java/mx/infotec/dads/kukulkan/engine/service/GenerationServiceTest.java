@@ -86,10 +86,10 @@ public class GenerationServiceTest {
         }
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
-        pConf.setId("gen");
+        pConf.setId("test-kukulkan");
         pConf.setGroupId("mx.infotec.dads");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.infotec.dads.mapa");
+        pConf.setPackaging("mx.infotec.dads.valuapp");
         pConf.setYear("2017");
         pConf.setAuthor("KUKULKAN");
         pConf.setWebLayerName("rest");
@@ -98,7 +98,7 @@ public class GenerationServiceTest {
         pConf.setDomainLayerName("model");
         // Create DataStore
         List<DataStore> findAllDataStores = dataStoreService.findAll();
-        DataStore dataStore = findAllDataStores.get(0);
+        DataStore dataStore = findAllDataStores.get(1);
         // Create DataModel
         DataModelContext dmCtx = new JavaDataModelContext(dataStore);
         // Create DataContext

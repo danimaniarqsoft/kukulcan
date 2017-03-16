@@ -31,7 +31,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
@@ -46,7 +45,6 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("repositoryLayerTestTask")
 public class RepositoryLayerTestTask extends AbstractLayerTaskVisitor {
 
     private ArchetypeType archetypeType = ArchetypeType.REST_SPRING_JPA;
@@ -56,15 +54,16 @@ public class RepositoryLayerTestTask extends AbstractLayerTaskVisitor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryLayerTestTask.class);
 
+    @Override
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
         String basePackage = pConf.getPackaging() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
             addCommonDataModelElements(pConf, model, basePackage, dmElement);
             model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
-            templateService.fillModel(pConf.getId(), "rest-spring-jpa/repository.ftl", model, BasePathEnum.SRC_TEST_JAVA,
-                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDaoLayerName() + "/"
-                            + dmElement.getName() + "Repository.java");
+            templateService.fillModel(pConf.getId(), "rest-spring-jpa/repository.ftl", model,
+                    BasePathEnum.SRC_TEST_JAVA, basePackage.replace('.', '/') + "/" + dmgName + "/"
+                            + pConf.getDaoLayerName() + "/" + dmElement.getName() + "Repository.java");
         }
     }
 

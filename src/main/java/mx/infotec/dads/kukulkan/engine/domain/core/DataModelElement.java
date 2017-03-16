@@ -24,7 +24,6 @@
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.TreeSet;
 
 /**
@@ -34,17 +33,6 @@ import java.util.TreeSet;
  *
  */
 public class DataModelElement {
-    
-    private DataModelElement(){
-        
-    }
-    
-    public static DataModelElement createOrderedDataModel(){
-        DataModelElement dme = new DataModelElement();
-        dme.setImports(new TreeSet<>());
-        dme.setProperties(new TreeSet<>());
-        return dme;
-    }
 
     /**
      * id of the dataModelElement, it is the primary key
@@ -81,6 +69,10 @@ public class DataModelElement {
      * The columns mapped into the PropertyHolder class
      */
     protected Collection<PropertyHolder> properties;
+
+    private DataModelElement() {
+
+    }
 
     public String getName() {
         return name;
@@ -140,5 +132,12 @@ public class DataModelElement {
 
     public void addProperty(PropertyHolder propertyHolder) {
         properties.add(propertyHolder);
+    }
+
+    public static DataModelElement createOrderedDataModel() {
+        DataModelElement dme = new DataModelElement();
+        dme.setImports(new TreeSet<>());
+        dme.setProperties(new TreeSet<>());
+        return dme;
     }
 }

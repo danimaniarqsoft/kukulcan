@@ -57,6 +57,7 @@ public class ModelLayerTask extends AbstractLayerTaskVisitor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ModelLayerTask.class);
 
+    @Override
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
         String basePackage = pConf.getPackaging() + dmgName;
@@ -70,8 +71,10 @@ public class ModelLayerTask extends AbstractLayerTaskVisitor {
             }
             model.put("package", formatToPackageStatement(basePackage, pConf.getDomainLayerName()));
             model.put("properties", dmElement.getProperties());
+            model.put("primaryKey", dmElement.getPrimaryKey());
             dmElement.getImports().add("javax.persistence.*");
             dmElement.getImports().add("java.io.Serializable");
+            dmElement.getImports().add("java.util.Objects");
             model.put("imports", dmElement.getImports());
             templateService.fillModel(pConf.getId(), "rest-spring-jpa/model.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDomainLayerName() + "/"

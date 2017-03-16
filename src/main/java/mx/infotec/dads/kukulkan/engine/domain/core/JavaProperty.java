@@ -25,6 +25,8 @@ package mx.infotec.dads.kukulkan.engine.domain.core;
 
 import java.util.Collection;
 
+import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
+
 /**
  * 
  * PropertyHolder Class that is used for hold the properties of a table
@@ -66,7 +68,7 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
 
     @Override
     public Collection<PropertyHolder> getAssociations() {
-        throw new RuntimeException("Method not implemented");
+        throw new ApplicationException("Method not implemented");
     }
 
     @Override

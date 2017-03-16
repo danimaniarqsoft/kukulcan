@@ -25,7 +25,13 @@ package mx.infotec.dads.kukulkan.converters;
 
 import org.apache.metamodel.schema.ColumnType;
 
-public class JdbcConverter implements DataTypeConverter {
+/**
+ * DataTypeConverter for JDBC
+ * 
+ * @author Daniel Cortes Pichardo
+ *
+ */
+public class JdbcConverter implements DataTypeConverter<ColumnType> {
 
     @Override
     public String resolveJavaType(ColumnType columnType) {

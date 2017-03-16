@@ -52,7 +52,6 @@ public class DefaultLayerTaskFactory implements LayerTaskFactory {
     public List<LayerTask> getLayerTaskSet(ArchetypeType archetypeType) {
         switch (archetypeType) {
         case REST_SPRING_JPA:
-            List<LayerTask> tasks = new ArrayList<>();
             Map<String, LayerTask> taskMap = appContext.getBeansOfType(LayerTask.class);
             return DataMapping.createLaterTaskList(taskMap, ArchetypeType.REST_SPRING_JPA);
         default:

@@ -29,6 +29,8 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageSt
 import java.util.Collection;
 import java.util.Map;
 
+import javax.management.modelmbean.ModelMBeanOperationInfo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,7 @@ public class RestControllerLayerTask extends AbstractLayerTaskVisitor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestControllerLayerTask.class);
 
+    @Override
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
         String basePackage = pConf.getPackaging() + dmgName;
@@ -71,9 +74,11 @@ public class RestControllerLayerTask extends AbstractLayerTaskVisitor {
                     dmElement.getName() + NameConventions.SERVICE));
             model.put("propertyNamePlural", InflectorProcessor.getInstance().pluralize(dmElement.getPropertyName()));
             model.put("urlName", dmElement.getPropertyName());
-            templateService.fillModel(pConf.getId(), "rest-spring-jpa/restController.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+            model.put("primaryKey", dmElement.getPrimaryKey());
+            templateService.fillModel(pConf.getId(), "rest-spring-jpa/restController.ftl", model,
+                    BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getWebLayerName() + "/"
-                            + dmElement.getName() + NameConventions.REST_CONTROLLER+".java");
+                            + dmElement.getName() + NameConventions.REST_CONTROLLER + ".java");
 
         }
     }

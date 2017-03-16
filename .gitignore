@@ -6,7 +6,7 @@
 .DS_Store*
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+.factorypath
 # Package Files #
 *.jar
 *.war

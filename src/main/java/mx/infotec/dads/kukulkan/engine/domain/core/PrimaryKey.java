@@ -34,6 +34,7 @@ public class PrimaryKey {
 
     private String name;
     private String type;
+    private String qualifiedLabel;
     private boolean isComposed;
 
     public String getName() {
@@ -58,5 +59,13 @@ public class PrimaryKey {
 
     public void setComposed(boolean isComposed) {
         this.isComposed = isComposed;
+    }
+
+    public String getQualifiedLabel() {
+        return qualifiedLabel;
+    }
+
+    public void setQualifiedLabel(String qualifiedLabel) {
+        this.qualifiedLabel = qualifiedLabel;
     }
 }

@@ -34,7 +34,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
+import mx.infotec.dads.kukulkan.engine.domain.core.DataStoreType;
 import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
+import mx.infotec.dads.kukulkan.util.Constants;
 
 @Service
 public class DataStoreServiceImpl implements DataStoreService {
@@ -43,7 +45,7 @@ public class DataStoreServiceImpl implements DataStoreService {
 
     @Override
     public DataContext getDataContext(DataStore dataStore) {
-        if (dataStore.getDataStoreType().getName().equals("jdbc")) {
+        if (dataStore.getDataStoreType().getName().equals(Constants.DATA_STORE_TYPE_JDBC)) {
             DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
             properties.put("type", dataStore.getDataStoreType().getName());
             properties.put("url", dataStore.getUrl());
