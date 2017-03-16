@@ -79,7 +79,7 @@ public class Application {
                 dsValuApp.setDataStoreType(dst);
                 dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
                 dsValuApp.setName("zonacero");
-                dsValuApp.setPassword("r00t");
+                dsValuApp.setPassword("root");
                 dsValuApp.setTableTypes("TABLE,VIEW");
                 dsValuApp.setUrl("jdbc:mysql://localhost/zonacero?autoReconnect=true");
                 dsValuApp.setUsername("root");

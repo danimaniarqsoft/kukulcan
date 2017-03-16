@@ -8,7 +8,7 @@ spring:
       host: mongodb
       port: 27017
 server:
-  port: 8081
+  port: 8080
 kukulkan:
   outputdir: /var/www/html/kukulkan/
 logging:
