@@ -4,12 +4,13 @@ spring:
     enabled: false
   data:
     mongodb:
+      database: kukulkan
       host: mongodb
       port: 27017
 server:
   port: 8081
 kukulkan:
-  outputdir: /home/daniel/eclipse-wksp-components/
+  outputdir: /var/www/html/kukulkan/
 logging:
   level:
     root: info

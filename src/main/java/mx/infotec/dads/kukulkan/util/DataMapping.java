@@ -88,10 +88,13 @@ public class DataMapping {
         }
     }
 
-    public static void configPrimaryKey(DataModelElement dme, String singularName, Column[] columns){
+    public static void configPrimaryKey(DataModelElement dme, String singularName, Column[] columns) {
         dme.setPrimaryKey(extractPrimaryKey(singularName, columns));
-        dme.getImports().add(dme.getPrimaryKey().getQualifiedLabel());
+        if (!dme.getPrimaryKey().isComposed()) {
+            dme.getImports().add(dme.getPrimaryKey().getQualifiedLabel());
+        }
     }
+
     public static void extractProperties(DataModelElement dme, Table table) {
         Column[] columns = table.getColumns();
         for (Column column : columns) {

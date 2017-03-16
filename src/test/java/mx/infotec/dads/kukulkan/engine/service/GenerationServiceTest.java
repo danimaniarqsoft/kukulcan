@@ -98,7 +98,7 @@ public class GenerationServiceTest {
         pConf.setDomainLayerName("model");
         // Create DataStore
         List<DataStore> findAllDataStores = dataStoreService.findAll();
-        DataStore dataStore = findAllDataStores.get(1);
+        DataStore dataStore = findAllDataStores.get(0);
         // Create DataModel
         DataModelContext dmCtx = new JavaDataModelContext(dataStore);
         // Create DataContext

@@ -29,7 +29,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.cors.CorsConfiguration;
@@ -58,16 +57,8 @@ public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = null;
-        try {
-            ctx = SpringApplication.run(Application.class, args);
-        } catch (Exception e) {
-            LOGGER.error("The application cannot be initialized (Application.class)", e);
-        } finally {
-            if (ctx != null) {
-                ctx.close();
-            }
-        }
+        LOGGER.info("Running Kukulkan");
+        SpringApplication.run(Application.class, args);
     }
 
     @Bean
@@ -84,22 +75,13 @@ public class Application {
                 dst.setDescription("Data Store for JDBC connector");
                 dst.setName("jdbc");
                 dst = dsRepository.save(dst);
-                DataStore ds = new DataStore();
-                ds.setDataStoreType(dst);
-                ds.setDriverClass("com.mysql.jdbc.Driver");
-                ds.setName("calidad_aire");
-                ds.setPassword("root");
-                ds.setTableTypes("TABLE,VIEW");
-                ds.setUrl("jdbc:mysql://localhost/calidad_aire?autoReconnect=true");
-                ds.setUsername("root");
-                repository.save(ds);
                 DataStore dsValuApp = new DataStore();
                 dsValuApp.setDataStoreType(dst);
                 dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
-                dsValuApp.setName("valuapp");
-                dsValuApp.setPassword("root");
+                dsValuApp.setName("zonacero");
+                dsValuApp.setPassword("r00t");
                 dsValuApp.setTableTypes("TABLE,VIEW");
-                dsValuApp.setUrl("jdbc:mysql://localhost/valuapp?autoReconnect=true");
+                dsValuApp.setUrl("jdbc:mysql://localhost/zonacero?autoReconnect=true");
                 dsValuApp.setUsername("root");
                 repository.save(dsValuApp);
                 // RulesTypes
