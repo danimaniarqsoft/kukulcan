@@ -37,9 +37,6 @@ public class KukulkanContext implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public KukulkanContext() {
-    }
-
     public KukulkanContext(ProjectConfiguration pc, String dataStore) {
         this.pc = pc;
         this.dataStore = dataStore;

@@ -23,13 +23,16 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
+import java.io.Serializable;
+
 /**
  * ProrjectConfiguration Class
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-public class ProjectConfiguration {
+public class ProjectConfiguration implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String id;
     private String groupId;
