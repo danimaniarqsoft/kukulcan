@@ -30,6 +30,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.Writer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,7 @@ import freemarker.template.TemplateException;
 import mx.infotec.dads.kukulkan.KukulkanConfigurationProperties;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
+import mx.infotec.dads.kukulkan.web.DataContextController;
 
 /**
  * 
@@ -49,6 +52,8 @@ import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
 
 @Service
 public class TemplateServiceImpl implements TemplateService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TemplateServiceImpl.class);
 
     @Autowired
     private Configuration fmConfiguration;
@@ -61,7 +66,6 @@ public class TemplateServiceImpl implements TemplateService {
         Template template;
         try (PrintStream out = System.out; Writer consoleWriter = new OutputStreamWriter(out);) {
             template = fmConfiguration.getTemplate(templateName);
-            template.process(model, consoleWriter);
             File file = new File(prop.getOutputdir() + proyectoId + "/" + path.getPath() + "/" + filePath);
             if (!file.exists()) {
                 File parent = file.getParentFile();
@@ -71,6 +75,9 @@ public class TemplateServiceImpl implements TemplateService {
                 file.createNewFile();
             }
             Writer fileWriter = new FileWriter(file);
+            if (LOGGER.isDebugEnabled()) {
+                template.process(model, consoleWriter);
+            }
             template.process(model, fileWriter);
         } catch (IOException | TemplateException e) {
             throw new ApplicationException("Fill Model Error", e);
