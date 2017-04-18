@@ -64,7 +64,7 @@ public class TemplateServiceImpl implements TemplateService {
     @Override
     public String fillModel(String proyectoId, String templateName, Object model, BasePathEnum path, String filePath) {
         Template template;
-        try (PrintStream out = System.out; Writer consoleWriter = new OutputStreamWriter(out);) {
+        try {
             template = fmConfiguration.getTemplate(templateName);
             File file = new File(prop.getOutputdir() + proyectoId + "/" + path.getPath() + "/" + filePath);
             if (!file.exists()) {
@@ -75,9 +75,6 @@ public class TemplateServiceImpl implements TemplateService {
                 file.createNewFile();
             }
             Writer fileWriter = new FileWriter(file);
-            if (LOGGER.isDebugEnabled()) {
-                template.process(model, consoleWriter);
-            }
             template.process(model, fileWriter);
         } catch (IOException | TemplateException e) {
             throw new ApplicationException("Fill Model Error", e);
