@@ -3,6 +3,8 @@ package mx.infotec.dads.kukulkan.web;
 import org.apache.metamodel.factory.DataContextFactoryRegistryImpl;
 import org.apache.metamodel.factory.DataContextPropertiesImpl;
 import org.apache.metamodel.schema.Table;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
@@ -18,27 +20,27 @@ import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
 @RequestMapping(value = "/dataContext")
 public class DataContextController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataContextController.class);
+
     @Autowired
     private DataStoreRepository repository;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Table getDataContext(@RequestParam MultiValueMap<String, String> params) throws Exception {
+    public Table getDataContext(@RequestParam MultiValueMap<String, String> params) {
+        LOGGER.debug("params {}", params);
         try {
             DataStore dataStore = repository.findAll().get(0);
             DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
             properties.put("type", dataStore.getDataStoreType().getName());
-            System.out.println(dataStore.getDataStoreType().getName());
             properties.put("url", dataStore.getUrl());
-            System.out.println(dataStore.getUrl());
             properties.put("driver-class", dataStore.getDriverClass());
             properties.put("username", dataStore.getUsername());
             properties.put("password", dataStore.getPassword());
-            return DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties).getDefaultSchema().getTable(0);     
+            return DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties).getDefaultSchema()
+                    .getTable(0);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
+            LOGGER.error("DataContextError", e);
         }
-
-       
+        return null;
     }
 }

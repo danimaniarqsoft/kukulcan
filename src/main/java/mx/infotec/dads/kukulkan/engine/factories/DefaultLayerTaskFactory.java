@@ -23,7 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.engine.factories;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +53,9 @@ public class DefaultLayerTaskFactory implements LayerTaskFactory {
         case REST_SPRING_JPA:
             Map<String, LayerTask> taskMap = appContext.getBeansOfType(LayerTask.class);
             return DataMapping.createLaterTaskList(taskMap, ArchetypeType.REST_SPRING_JPA);
+        case PRIMEFACES_SPRING_MYBATIS:
+            Map<String, LayerTask> taskMapFSM = appContext.getBeansOfType(LayerTask.class);
+            return DataMapping.createLaterTaskList(taskMapFSM, ArchetypeType.PRIMEFACES_SPRING_MYBATIS);
         default:
             throw new ApplicationException("Operation Not Supported" + archetypeType.toString());
         }

@@ -38,12 +38,15 @@ import org.slf4j.LoggerFactory;
 public class FileUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
-    public static void close(Closeable e) {
-        if (e != null) {
+    private FileUtil() {
+    }
+
+    public static void close(Closeable resource) {
+        if (resource != null) {
             try {
-                e.close();
-            } catch (IOException e1) {
-                LOGGER.error("The resource actually exist: ", e);
+                resource.close();
+            } catch (IOException ioException) {
+                LOGGER.error("The resource actually exist: ", ioException);
             }
         }
     }

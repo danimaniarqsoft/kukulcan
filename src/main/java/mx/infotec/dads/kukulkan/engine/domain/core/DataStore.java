@@ -112,7 +112,7 @@ public class DataStore extends AbstractDocument {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return getId() == null ? 0 : getId().hashCode();
     }
 
 }

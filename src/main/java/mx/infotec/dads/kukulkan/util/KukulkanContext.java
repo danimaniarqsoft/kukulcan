@@ -37,16 +37,18 @@ public class KukulkanContext implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public KukulkanContext(){
-        
+    private ProjectConfiguration pc;
+
+    private String dataStore;
+
+    public KukulkanContext() {
+        // Default Constructor
     }
+
     public KukulkanContext(ProjectConfiguration pc, String dataStore) {
         this.pc = pc;
         this.dataStore = dataStore;
     }
-
-    private ProjectConfiguration pc;
-    private String dataStore;
 
     public ProjectConfiguration getPc() {
         return pc;

@@ -59,12 +59,13 @@ public class DataStoreTypeRestController {
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<DataStoreType>> getAllDataStoreTypes() {
+        LOGGER.debug("Getting all DataStoresTypes");
         List<DataStoreType> dataStoreList = repository.findAll();
         if (dataStoreList.isEmpty()) {
             // Se podría regresar HttpStatus.NOT_FOUND
-            return new ResponseEntity<List<DataStoreType>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<DataStoreType>>(dataStoreList, HttpStatus.OK);
+            return new ResponseEntity<>(dataStoreList, HttpStatus.OK);
         }
     }
 }

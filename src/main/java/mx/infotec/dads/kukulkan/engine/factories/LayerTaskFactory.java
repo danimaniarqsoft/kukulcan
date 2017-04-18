@@ -34,6 +34,7 @@ import mx.infotec.dads.kukulkan.util.ArchetypeType;
  * @author Daniel Cortes Pichardo
  *
  */
+@FunctionalInterface
 public interface LayerTaskFactory {
 
     /**

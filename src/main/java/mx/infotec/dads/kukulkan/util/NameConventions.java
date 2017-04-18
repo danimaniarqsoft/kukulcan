@@ -23,13 +23,19 @@
  */
 package mx.infotec.dads.kukulkan.util;
 
+/**
+ * NameConventions, it is a constant container which define common naming
+ * conventions.
+ * 
+ * @author Daniel Cortes Pichardo
+ */
 public class NameConventions {
-    private NameConventions() {
-    }
 
     public static final String REST_CONTROLLER = "RestController";
     public static final String SERVICE = "Service";
     public static final String SERVICE_IMPLEMENTS = "ServiceImpl";
     public static final String DAO = "Repository";
 
+    private NameConventions() {
+    }
 }

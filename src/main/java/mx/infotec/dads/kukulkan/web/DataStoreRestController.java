@@ -42,8 +42,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
-import mx.infotec.dads.kukulkan.engine.domain.core.DataStoreType;
 import mx.infotec.dads.kukulkan.engine.service.DataStoreService;
+import mx.infotec.dads.kukulkan.util.EntitiesFactory;
 
 /**
  * 
@@ -69,9 +69,9 @@ public class DataStoreRestController {
         List<DataStore> dataStoreList = service.findAll();
         if (dataStoreList.isEmpty()) {
             // Se podría regresar HttpStatus.NOT_FOUND
-            return new ResponseEntity<List<DataStore>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<DataStore>>(dataStoreList, HttpStatus.OK);
+            return new ResponseEntity<>(dataStoreList, HttpStatus.OK);
         }
     }
 
@@ -85,9 +85,9 @@ public class DataStoreRestController {
         Page<DataStore> dataStorePage = service.findAllByPage(pagable);
         if (dataStorePage.getTotalElements() == 0) {
             // Se podría regresar HttpStatus.NOT_FOUND
-            return new ResponseEntity<Page<DataStore>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<Page<DataStore>>(dataStorePage, HttpStatus.OK);
+            return new ResponseEntity<>(dataStorePage, HttpStatus.OK);
         }
     }
 
@@ -101,9 +101,9 @@ public class DataStoreRestController {
     public ResponseEntity<DataStore> getDataStore(@PathVariable("id") String id) {
         DataStore dataStore = service.findById(id);
         if (dataStore == null) {
-            return new ResponseEntity<DataStore>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<DataStore>(dataStore, HttpStatus.OK);
+        return new ResponseEntity<>(dataStore, HttpStatus.OK);
     }
 
     /**
@@ -115,14 +115,14 @@ public class DataStoreRestController {
      */
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createDataStore(@RequestBody DataStore dataStore, UriComponentsBuilder ucBuilder) {
-        // if (service.exists(dataStore.getId())) {
-        // return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        // } else {
-        service.save(dataStore);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(dataStore.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-        // }
+        if (service.exists(dataStore.getId())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } else {
+            service.save(dataStore);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(dataStore.getId()).toUri());
+            return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        }
     }
 
     /**
@@ -138,10 +138,10 @@ public class DataStoreRestController {
         DataStore currentDataStore = service.findById(id);
         if (currentDataStore == null) {
             LOGGER.debug("DataStore con id " + id + " no se encuentra");
-            return new ResponseEntity<DataStore>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         service.save(dataStore);
-        return new ResponseEntity<DataStore>(dataStore, HttpStatus.OK);
+        return new ResponseEntity<>(dataStore, HttpStatus.OK);
     }
 
     /**
@@ -156,10 +156,10 @@ public class DataStoreRestController {
         DataStore dataStore = service.findById(id);
         if (dataStore == null) {
             LOGGER.debug("No es posible borrar. El DataStore con id" + id + " no se encuentra");
-            return new ResponseEntity<DataStore>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         service.delete(id);
-        return new ResponseEntity<DataStore>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -170,18 +170,11 @@ public class DataStoreRestController {
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<DataStore> deleteAllDataStore() {
         service.deleteAll();
-        return new ResponseEntity<DataStore>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
+
     @RequestMapping(value = "/newDataStore", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DataStore> getNewDataStore() {
-        DataStore ds = new DataStore();
-        ds.setDataStoreType(new DataStoreType());
-        ds.setDriverClass("");
-        ds.setName("");
-        ds.setPassword("");
-        ds.setTableTypes("");
-        ds.setUsername("");
-        return new ResponseEntity<DataStore>(ds, HttpStatus.OK);
+        return new ResponseEntity<>(EntitiesFactory.createDataStore(), HttpStatus.OK);
     }
 }

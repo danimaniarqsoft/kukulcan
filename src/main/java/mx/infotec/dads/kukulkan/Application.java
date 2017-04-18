@@ -37,12 +37,12 @@ import org.springframework.web.filter.CorsFilter;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStoreType;
-import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
 import mx.infotec.dads.kukulkan.engine.domain.core.RuleType;
 import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
 import mx.infotec.dads.kukulkan.engine.repository.DataStoreTypeRepository;
 import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
 import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
+import mx.infotec.dads.kukulkan.util.EntitiesFactory;
 
 /**
  * 
@@ -56,57 +56,22 @@ import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
 public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
-    public static void main(String[] args) {
-        LOGGER.info("Running Kukulkan");
-        SpringApplication.run(Application.class, args);
-    }
-
     @Bean
     CommandLineRunner init(final DataStoreRepository repository, final DataStoreTypeRepository dsRepository,
             final RuleRepository ruleRepository, final RuleTypeRepository ruleTypeRepository) {
-        return new CommandLineRunner() {
-            @Override
-            public void run(String... arg0) throws Exception {
-                repository.deleteAll();
-                dsRepository.deleteAll();
-                ruleRepository.deleteAll();
-                ruleTypeRepository.deleteAll();
-                DataStoreType dst = new DataStoreType();
-                dst.setDescription("Data Store for JDBC connector");
-                dst.setName("jdbc");
-                dst = dsRepository.save(dst);
-                DataStore dsValuApp = new DataStore();
-                dsValuApp.setDataStoreType(dst);
-                dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
-                dsValuApp.setName("valuapp");
-                dsValuApp.setPassword("root");
-                dsValuApp.setTableTypes("TABLE,VIEW");
-                dsValuApp.setUrl("jdbc:mysql://localhost/valuapp?autoReconnect=true");
-                dsValuApp.setUsername("root");
-                repository.save(dsValuApp);
-                // RulesTypes
-                RuleType singularRuleType = new RuleType();
-                singularRuleType
-                        .setDescription("regla que aplica para palabras convertir palabras de plural a singular");
-                singularRuleType.setName("singular");
-                RuleType plurarlRuleType = new RuleType();
-                plurarlRuleType
-                        .setDescription("regla que aplica para palabras convertir palabras de singular a plural");
-                plurarlRuleType.setName("plural");
-                singularRuleType = ruleTypeRepository.save(singularRuleType);
-                ruleTypeRepository.save(plurarlRuleType);
-                // Rules Repositories
-                Rule r1 = new Rule();
-                r1.setExpression("os$");
-                r1.setReplacement("o");
-                r1.setRuleType(singularRuleType);
-                Rule r2 = new Rule();
-                r2.setExpression("es$");
-                r2.setReplacement("");
-                r2.setRuleType(singularRuleType);
-                ruleRepository.save(r1);
-                ruleRepository.save(r2);
-            }
+        return commandLineRunner -> {
+            repository.deleteAll();
+            dsRepository.deleteAll();
+            ruleRepository.deleteAll();
+            ruleTypeRepository.deleteAll();
+            DataStoreType dst = EntitiesFactory.createDefaultDataStoreType();
+            dst = dsRepository.save(dst);
+            DataStore dsValuApp = EntitiesFactory.createDefaultDataStore(dst);
+            repository.save(dsValuApp);
+            RuleType singularRuleType = ruleTypeRepository.save(EntitiesFactory.createDefaultSingularRuleType());
+            ruleTypeRepository.save(EntitiesFactory.createDefaultPluralRuleType());
+            ruleRepository.save(EntitiesFactory.createOsRule(singularRuleType));
+            ruleRepository.save(EntitiesFactory.createEsRule(singularRuleType));
         };
     }
 
@@ -131,4 +96,8 @@ public class Application {
         return bean;
     }
 
+    public static void main(String[] args) {
+        LOGGER.info("Running Kukulkan...");
+        SpringApplication.run(Application.class, args);
+    }
 }

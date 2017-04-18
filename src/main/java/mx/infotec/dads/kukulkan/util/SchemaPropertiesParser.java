@@ -42,16 +42,20 @@ public class SchemaPropertiesParser {
     }
 
     public static String parseToPropertyName(String columnName) {
+        LOGGER.debug("Parsing the column {}", columnName);
         String propertyName = columnName.toLowerCase();
         return trimUnderscore(propertyName);
     }
 
     public static String parseToClassName(String columnName) {
+        LOGGER.debug("Parsing the column {}", columnName);
         return parseToUpperCaseFirstChar(parseToPropertyName(columnName));
     }
 
     public static String parseToUpperCaseFirstChar(String element) {
-        return element.replaceFirst(element.charAt(0) + "", (element.charAt(0) + "").toUpperCase());
+        LOGGER.debug("Parsing element {}", element);
+        return element.replaceFirst(Character.toString(element.charAt(0)),
+                Character.toString(element.charAt(0)).toUpperCase());
     }
 
     /**
@@ -62,12 +66,13 @@ public class SchemaPropertiesParser {
      * @return
      */
     public static String trimUnderscore(String columnName) {
+        LOGGER.debug("Trim the value {}", columnName);
         int underscoreIndex = columnName.indexOf("_");
         if (underscoreIndex > -1 && underscoreIndex < columnName.length() - 1) {
             String leftUnderscore = columnName.substring(0, underscoreIndex);
             String rightUnderscore = columnName.substring(underscoreIndex + 1, columnName.length());
-            rightUnderscore = rightUnderscore.replaceFirst(rightUnderscore.charAt(0) + "",
-                    (rightUnderscore.charAt(0) + "").toUpperCase());
+            rightUnderscore = rightUnderscore.replaceFirst(Character.toString(rightUnderscore.charAt(0)),
+                    (Character.toString(rightUnderscore.charAt(0))).toUpperCase());
             return trimUnderscore(leftUnderscore + rightUnderscore);
         } else {
             return columnName;

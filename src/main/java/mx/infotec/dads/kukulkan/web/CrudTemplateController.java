@@ -49,7 +49,7 @@ public class CrudTemplateController {
      * @throws Exception
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Valor> getDataContext() throws Exception {
+    public List<Valor> getDataContext() {
         return Valor.getDefault();
     }
 

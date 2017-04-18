@@ -32,8 +32,6 @@ package mx.infotec.dads.kukulkan.util;
  */
 public class JavaFileNameParser {
 
-//    private static final Logger LOGGER = LoggerFactory.getLogger(JavaFileNameParser.class);
-
     private JavaFileNameParser() {
 
     }
@@ -45,8 +43,8 @@ public class JavaFileNameParser {
      * @return String javaFileName con formato camelcase
      */
     public static String parseToPropertyName(String javaFileName) {
-        return javaFileName.replaceFirst(javaFileName.charAt(0) + "", (javaFileName.charAt(0) + "").toLowerCase())
-                .replaceAll(".java", "");
+        return javaFileName.replaceFirst(Character.toString(javaFileName.charAt(0)),
+                (Character.toString(javaFileName.charAt(0))).toLowerCase()).replaceAll(".java", "");
     }
 
     /**

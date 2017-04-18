@@ -60,6 +60,7 @@ public class ModelLayerTask extends AbstractLayerTaskVisitor {
     @Override
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
+        LOGGER.debug("doForEachDataModelElement method {}", dmgName);
         String basePackage = pConf.getPackaging() + dmgName;
         for (DataModelElement dmElement : dmElementCollection) {
             model.put("id", dmElement.getPrimaryKey().getType());

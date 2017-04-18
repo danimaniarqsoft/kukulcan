@@ -50,16 +50,4 @@ public class DataStoreType extends AbstractDocument {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (getId() == null || obj == null || !(this.getClass().equals(obj.getClass()))) {
-            return false;
-        }
-        AbstractDocument that = (AbstractDocument) obj;
-        return getId().equals(that.getId());
-    }
 }

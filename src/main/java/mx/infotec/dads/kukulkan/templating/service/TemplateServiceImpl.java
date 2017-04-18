@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.Writer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +59,8 @@ public class TemplateServiceImpl implements TemplateService {
     @Override
     public String fillModel(String proyectoId, String templateName, Object model, BasePathEnum path, String filePath) {
         Template template;
-        try {
+        try (PrintStream out = System.out; Writer consoleWriter = new OutputStreamWriter(out);) {
             template = fmConfiguration.getTemplate(templateName);
-            Writer consoleWriter = new OutputStreamWriter(System.out);
             template.process(model, consoleWriter);
             File file = new File(prop.getOutputdir() + proyectoId + "/" + path.getPath() + "/" + filePath);
             if (!file.exists()) {
@@ -74,8 +74,6 @@ public class TemplateServiceImpl implements TemplateService {
             template.process(model, fileWriter);
         } catch (IOException | TemplateException e) {
             throw new ApplicationException("Fill Model Error", e);
-        } finally {
-
         }
         return null;
     }

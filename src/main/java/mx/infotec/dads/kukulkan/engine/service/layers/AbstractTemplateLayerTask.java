@@ -29,6 +29,6 @@ package mx.infotec.dads.kukulkan.engine.service.layers;
  * @author Daniel Cortes Pichardo
  *
  */
-public abstract class AbstractTemplateLayerTask implements LayerTask {
+public interface AbstractTemplateLayerTask extends LayerTask {
 
 }

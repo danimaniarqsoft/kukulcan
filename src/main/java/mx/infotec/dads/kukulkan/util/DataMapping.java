@@ -109,11 +109,7 @@ public class DataMapping {
     }
 
     public static boolean hasPrimaryKey(Column[] columns) {
-        if (columns.length == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return columns.length == 0 ? false : true;
     }
 
     public static PrimaryKey extractPrimaryKey(String singularName, Column[] columns) {

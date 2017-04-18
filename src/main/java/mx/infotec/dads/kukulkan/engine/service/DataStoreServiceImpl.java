@@ -34,7 +34,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
-import mx.infotec.dads.kukulkan.engine.domain.core.DataStoreType;
 import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
 import mx.infotec.dads.kukulkan.util.Constants;
 
@@ -52,8 +51,7 @@ public class DataStoreServiceImpl implements DataStoreService {
             properties.put("driver-class", dataStore.getDriverClass());
             properties.put("username", dataStore.getUsername());
             properties.put("password", dataStore.getPassword());
-            DataContext dataContext = DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
-            return dataContext;
+            return DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
         } else {
             return null;
         }

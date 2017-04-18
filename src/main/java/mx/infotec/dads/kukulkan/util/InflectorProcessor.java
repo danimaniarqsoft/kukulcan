@@ -96,13 +96,13 @@ public class InflectorProcessor {
         }
     }
 
-    private LinkedList<Rule> plurals = new LinkedList<Rule>();
-    private LinkedList<Rule> singulars = new LinkedList<Rule>();
+    private LinkedList<Rule> plurals = new LinkedList<>();
+    private LinkedList<Rule> singulars = new LinkedList<>();
     /**
      * The lowercase words that are to be excluded and not processed. This map
      * can be modified by the users via {@link #getUncountables()}.
      */
-    private final Set<String> uncountables = new HashSet<String>();
+    private final Set<String> uncountables = new HashSet<>();
 
     public InflectorProcessor() {
         initialize();

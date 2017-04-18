@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -13,11 +15,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * GlobalExceptionHandling
+ * 
+ * @author Daniel Cortes Pichardo
+ * @since essence 1.1
+ * @version 1.1
+ */
 @ControllerAdvice
 public class GlobalExceptionHandlingControllerAdvice {
-
-    public GlobalExceptionHandlingControllerAdvice() {
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandlingControllerAdvice.class);
 
     /**
      * Convert a predefined exception to an HTTP Status code
@@ -26,6 +33,7 @@ public class GlobalExceptionHandlingControllerAdvice {
     // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
     public void conflict() {
+        // Nothing to do.
     }
 
     /**
@@ -36,6 +44,7 @@ public class GlobalExceptionHandlingControllerAdvice {
      */
     @ExceptionHandler({ SQLException.class, DataAccessException.class })
     public String databaseError(Exception exception) {
+        LOGGER.error("SQLException or DataAccessException", exception);
         // Nothing to do. Return value 'databaseError' used as logical view name
         // of an error page, passed to view-resolver(s) in usual way.
         return "databaseError";
@@ -55,13 +64,7 @@ public class GlobalExceptionHandlingControllerAdvice {
      * @throws Exception
      */
     @ExceptionHandler(ApplicationException.class)
-    public ModelAndView handleError(HttpServletRequest req, Exception exception) throws Exception {
-
-        // Rethrow annotated exceptions or they will be processed here instead.
-        // if (AnnotationUtils.findAnnotation(exception.getClass(),
-        // ResponseStatus.class) != null)
-        // throw exception;
-
+    public ModelAndView handleError(HttpServletRequest req, Exception exception) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", exception);
         mav.addObject("url", req.getRequestURL());

@@ -45,17 +45,17 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaDataModelContext;
-import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.factories.LayerTaskFactory;
-import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
-import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
 import mx.infotec.dads.kukulkan.engine.service.DataStoreService;
 import mx.infotec.dads.kukulkan.engine.service.GenerationService;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
+import mx.infotec.dads.kukulkan.util.EntitiesFactory;
 import mx.infotec.dads.kukulkan.util.KukulkanContext;
 
 /**
+ * KukuklanRestController is the main controller in charge of generate the
+ * application base on a DataStore.
  * 
  * @author Daniel Cortes Pichardo
  */
@@ -67,17 +67,11 @@ public class KukulkanRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(KukulkanRestController.class);
 
     @Autowired
-    private DataStoreService service;
-    @Autowired
     private GenerationService generationService;
     @Autowired
     private DataStoreService dataStoreService;
     @Autowired
-    private RuleRepository ruleRepository;
-    @Autowired
     private LayerTaskFactory layerTaskFactory;
-    @Autowired
-    private RuleTypeRepository ruleTypeRepository;
 
     /**
      * CREATE
@@ -89,10 +83,13 @@ public class KukulkanRestController {
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> generateApplication(@RequestBody KukulkanContext ctx, UriComponentsBuilder ucBuilder) {
         // Create DataStore
+        LOGGER.debug("Creating DataStore object");
         DataStore dataStore = dataStoreService.findById(ctx.getDataStore());
         // Create DataModel
+        LOGGER.debug("Creating DataModel object");
         DataModelContext dmCtx = new JavaDataModelContext(dataStore);
         // Create DataContext
+        LOGGER.debug("Creating DataContext object");
         DataContext dataContext = dataStoreService.getDataContext(dataStore);
         dmCtx.setDataContext(dataContext);
         // Tables to process
@@ -102,30 +99,18 @@ public class KukulkanRestController {
                 tablesToProcess);
         dmCtx.setDataModelGroup(dmgList);
         // Create GeneratorContext
+        LOGGER.debug("Creating GeneratorContext object");
         GeneratorContext genCtx = new GeneratorContext(dmCtx, ctx.getPc());
         // Process Activities
+        LOGGER.debug("Executing generation service");
         generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.REST_SPRING_JPA));
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/{id}").buildAndExpand("generated").toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/newContext", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<KukulkanContext> getNewContext() {
-        ProjectConfiguration pConf = new ProjectConfiguration();
-        pConf.setId("valuapp");
-        pConf.setGroupId("");
-        pConf.setVersion("1.0.0");
-        pConf.setPackaging("");
-        pConf.setYear("2017");
-        pConf.setAuthor("KUKULKAN");
-        pConf.setWebLayerName("rest");
-        pConf.setServiceLayerName("service");
-        pConf.setDaoLayerName("repository");
-        pConf.setDomainLayerName("model");
-        pConf.setGroupId("mx.infotec.dads");
-        pConf.setPackaging("mx.infotec.dads.valuapp");
-        KukulkanContext kc = new KukulkanContext(pConf, "");
-        return new ResponseEntity<KukulkanContext>(kc, HttpStatus.OK);
+        return new ResponseEntity<>(EntitiesFactory.createDefaultKukulkanContext(), HttpStatus.OK);
     }
 }

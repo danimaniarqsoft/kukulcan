@@ -34,6 +34,7 @@ import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
  * @author Daniel Cortes Pichardo
  *
  */
+@FunctionalInterface
 public interface GenerationService {
     /**
      * init the process of Code Generation

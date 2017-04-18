@@ -30,11 +30,15 @@ package mx.infotec.dads.kukulkan.templating.domain;
  *
  */
 public class Room {
+    
     private String id;
     private String entityType;
     private int order;
     private String category;
     private String name;
+    private int count;
+    private int temperatureValue;
+    private int pressureValue;
 
     public int getOrder() {
         return order;
@@ -59,10 +63,6 @@ public class Room {
     public void setName(String name) {
         this.name = name;
     }
-
-    private int count;
-    private int temperatureValue;
-    private int pressureValue;
 
     public String getId() {
         return id;

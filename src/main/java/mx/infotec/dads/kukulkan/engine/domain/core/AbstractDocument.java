@@ -33,7 +33,7 @@ import org.springframework.data.annotation.Id;
  * @version 1.0.0
  */
 
-public class AbstractDocument {
+public abstract class AbstractDocument {
     @Id
     private String id;
 
