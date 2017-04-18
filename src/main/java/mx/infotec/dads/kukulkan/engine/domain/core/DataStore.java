@@ -23,7 +23,6 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
@@ -109,6 +108,11 @@ public class DataStore extends AbstractDocument {
         }
         AbstractDocument that = (AbstractDocument) obj;
         return getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
 }

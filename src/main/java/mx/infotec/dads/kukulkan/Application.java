@@ -78,10 +78,10 @@ public class Application {
                 DataStore dsValuApp = new DataStore();
                 dsValuApp.setDataStoreType(dst);
                 dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
-                dsValuApp.setName("zonacero");
+                dsValuApp.setName("valuapp");
                 dsValuApp.setPassword("root");
                 dsValuApp.setTableTypes("TABLE,VIEW");
-                dsValuApp.setUrl("jdbc:mysql://localhost/zonacero?autoReconnect=true");
+                dsValuApp.setUrl("jdbc:mysql://localhost/valuapp?autoReconnect=true");
                 dsValuApp.setUsername("root");
                 repository.save(dsValuApp);
                 // RulesTypes

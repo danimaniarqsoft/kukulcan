@@ -23,6 +23,19 @@
  */
 package mx.infotec.dads.kukulkan.converters;
 
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.ARRAY;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.BIGINT;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.BINARY;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.BIT;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.BLOB;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.BOOLEAN;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.CHAR;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.CLOB;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.DATE;
+import static mx.infotec.dads.kukulkan.util.DataBaseTypes.DECIMAL;
+
+import java.util.HashMap;
+
 import org.apache.metamodel.schema.ColumnType;
 
 /**
@@ -33,31 +46,24 @@ import org.apache.metamodel.schema.ColumnType;
  */
 public class JdbcConverter implements DataTypeConverter<ColumnType> {
 
+    private final HashMap<String, String> javaTypesHashMap = new HashMap<>();
+
+    public JdbcConverter() {
+        javaTypesHashMap.put(ARRAY, "java.sql.Array");
+        javaTypesHashMap.put(BIGINT, "Long");
+        javaTypesHashMap.put(BINARY, "byte[]");
+        javaTypesHashMap.put(BIT, "Boolean");
+        javaTypesHashMap.put(BLOB, "java.sql.Blob");
+        javaTypesHashMap.put(BOOLEAN, "Boolean");
+        javaTypesHashMap.put(CHAR, "String");
+        javaTypesHashMap.put(CLOB, "java.sql.Clob");
+        javaTypesHashMap.put(DATE, "java.sql.Date");
+        javaTypesHashMap.put(DECIMAL, "Long");
+    }
+
     @Override
     public String resolveJavaType(ColumnType columnType) {
-
-        if (ColumnType.ARRAY.equals(columnType)) {
-            return "java.sql.Array";
-        } else if (ColumnType.BIGINT.equals(columnType)) {
-            return "Long";
-        } else if (ColumnType.BINARY.equals(columnType)) {
-            return "byte[]";
-        } else if (ColumnType.BIT.equals(columnType)) {
-            return "Boolean";
-        } else if (ColumnType.BLOB.equals(columnType)) {
-            return "java.sql.Blob";
-        } else if (ColumnType.BOOLEAN.equals(columnType)) {
-            return "Boolean";
-        } else if (ColumnType.CHAR.equals(columnType)) {
-            return "String";
-        } else if (ColumnType.CLOB.equals(columnType)) {
-            return "java.sql.Clob";
-        } else if (ColumnType.DATE.equals(columnType)) {
-            return "java.sql.Date";
-        } else if (ColumnType.DECIMAL.equals(columnType)) {
-            return "Long";
-        }
-        return null;
+        return javaTypesHashMap.get(columnType.getName());
     }
 
 }
