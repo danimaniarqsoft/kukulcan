@@ -23,25 +23,32 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
-import org.springframework.data.annotation.Id;
-
 /**
- * Supported dataSourceConnectionType
+ * AbstractDescription
  * 
  * @author Daniel Cortes Pichardo
- *
+ * @since essence 1.1
+ * @version 1.1
  */
+public abstract class AbstractDescription {
 
-public class DataStoreType extends AbstractDescription {
-    @Id
-    private String id;
+    private String name;
+    private String description;
 
-    /**
-     * Returns the identifier of the document.
-     * 
-     * @return the id
-     */
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

@@ -31,14 +31,12 @@
 		<!-- Sonar properties -->
 		<sonar.host.url>http://localhost:9000/</sonar.host.url>
 		<sonar.exclusions>org/binarytherapy/generated/**/*,
-			**/GuiceBindComposer.java</sonar.exclusions>
+			**/GuiceBindComposer.java,**/Application.java,**/Application.java,**/InflectorProcessor.java</sonar.exclusions>
 		<sonar.dynamic>reuseReports</sonar.dynamic>
 	</properties>
 
 	<dependencies>
-
 		<!-- Web Layer -->
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

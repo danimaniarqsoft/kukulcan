@@ -60,12 +60,13 @@ public class RepositoryLayerTask extends AbstractLayerTaskVisitor {
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
         String basePackage = pConf.getPackaging() + dmgName;
+        LOGGER.debug("Base package {}", basePackage);
         for (DataModelElement dmElement : dmElementCollection) {
             addCommonDataModelElements(pConf, model, basePackage, dmElement);
             model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
-            templateService.fillModel(pConf.getId(), "rest-spring-jpa/repository.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
-                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDaoLayerName() + "/"
-                            + dmElement.getName() + NameConventions.DAO + ".java");
+            templateService.fillModel(pConf.getId(), "rest-spring-jpa/repository.ftl", model,
+                    BasePathEnum.SRC_MAIN_JAVA, basePackage.replace('.', '/') + "/" + dmgName + "/"
+                            + pConf.getDaoLayerName() + "/" + dmElement.getName() + NameConventions.DAO + ".java");
         }
     }
 

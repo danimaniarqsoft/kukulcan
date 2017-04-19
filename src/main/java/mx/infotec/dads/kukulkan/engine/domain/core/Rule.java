@@ -23,16 +23,20 @@
  */
 package mx.infotec.dads.kukulkan.engine.domain.core;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
- * The Inflector Class
+ * The Rule Class
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-public class Rule {
+public class Rule implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     private String id;

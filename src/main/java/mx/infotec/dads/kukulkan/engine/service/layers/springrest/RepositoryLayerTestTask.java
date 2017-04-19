@@ -28,8 +28,6 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageSt
 import java.util.Collection;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
@@ -51,8 +49,6 @@ public class RepositoryLayerTestTask extends AbstractLayerTaskVisitor {
 
     @Autowired
     private TemplateService templateService;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryLayerTestTask.class);
 
     @Override
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,

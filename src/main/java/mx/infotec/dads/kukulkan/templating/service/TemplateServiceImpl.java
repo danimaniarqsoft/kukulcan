@@ -26,8 +26,6 @@ package mx.infotec.dads.kukulkan.templating.service;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.Writer;
 
 import org.slf4j.Logger;
@@ -41,7 +39,6 @@ import freemarker.template.TemplateException;
 import mx.infotec.dads.kukulkan.KukulkanConfigurationProperties;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 import mx.infotec.dads.kukulkan.util.exceptions.ApplicationException;
-import mx.infotec.dads.kukulkan.web.DataContextController;
 
 /**
  * 
@@ -67,6 +64,7 @@ public class TemplateServiceImpl implements TemplateService {
         try {
             template = fmConfiguration.getTemplate(templateName);
             File file = new File(prop.getOutputdir() + proyectoId + "/" + path.getPath() + "/" + filePath);
+            LOGGER.info("Generating in: {}", file.getAbsolutePath());
             if (!file.exists()) {
                 File parent = file.getParentFile();
                 if (!parent.exists() && !parent.mkdirs()) {
