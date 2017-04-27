@@ -35,6 +35,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.RuleType;
  * @author Daniel Cortes Pichardo
  */
 public class EntitiesFactory {
+    private static final String TABLE_VIEW = "TABLE,VIEW";
 
     private EntitiesFactory() {
 
@@ -74,7 +75,7 @@ public class EntitiesFactory {
         dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
         dsValuApp.setName("valuapp");
         dsValuApp.setPassword("root");
-        dsValuApp.setTableTypes("TABLE,VIEW");
+        dsValuApp.setTableTypes(TABLE_VIEW);
         dsValuApp.setUrl("jdbc:mysql://localhost/valuapp?autoReconnect=true");
         dsValuApp.setUsername("root");
         return dsValuApp;
@@ -86,7 +87,7 @@ public class EntitiesFactory {
         dsValuApp.setDriverClass("org.h2.Driver");
         dsValuApp.setName("h2-mem-db");
         dsValuApp.setPassword("");
-        dsValuApp.setTableTypes("TABLE,VIEW");
+        dsValuApp.setTableTypes(TABLE_VIEW);
         dsValuApp.setUrl("jdbc:h2:mem:developmentdb");
         dsValuApp.setUsername("sa");
         return dsValuApp;
@@ -98,7 +99,7 @@ public class EntitiesFactory {
         dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
         dsValuApp.setName("test");
         dsValuApp.setPassword("root");
-        dsValuApp.setTableTypes("TABLE,VIEW");
+        dsValuApp.setTableTypes(TABLE_VIEW);
         dsValuApp.setUrl("jdbc:mysql://localhost/test?autoReconnect=true");
         dsValuApp.setUsername("root");
         return dsValuApp;
