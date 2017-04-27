@@ -57,17 +57,19 @@ public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
     @Bean
-    CommandLineRunner init(final DataStoreRepository repository, final DataStoreTypeRepository dsRepository,
+    CommandLineRunner init(final DataStoreRepository dsRepository, final DataStoreTypeRepository dsTypeRepository,
             final RuleRepository ruleRepository, final RuleTypeRepository ruleTypeRepository) {
         return commandLineRunner -> {
-            repository.deleteAll();
             dsRepository.deleteAll();
+            dsTypeRepository.deleteAll();
             ruleRepository.deleteAll();
             ruleTypeRepository.deleteAll();
             DataStoreType dst = EntitiesFactory.createDefaultDataStoreType();
-            dst = dsRepository.save(dst);
+            dst = dsTypeRepository.save(dst);
             DataStore dsValuApp = EntitiesFactory.createDefaultDataStore(dst);
-            repository.save(dsValuApp);
+            dsRepository.save(dsValuApp);
+            DataStore testDs = EntitiesFactory.createTestDataStore(dst);
+            dsRepository.save(testDs);
             RuleType singularRuleType = ruleTypeRepository.save(EntitiesFactory.createDefaultSingularRuleType());
             ruleTypeRepository.save(EntitiesFactory.createDefaultPluralRuleType());
             ruleRepository.save(EntitiesFactory.createOsRule(singularRuleType));

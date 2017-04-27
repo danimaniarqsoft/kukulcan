@@ -80,6 +80,30 @@ public class EntitiesFactory {
         return dsValuApp;
     }
 
+    public static DataStore createTestDataStore(DataStoreType dst) {
+        DataStore dsValuApp = new DataStore();
+        dsValuApp.setDataStoreType(dst);
+        dsValuApp.setDriverClass("org.h2.Driver");
+        dsValuApp.setName("h2-mem-db");
+        dsValuApp.setPassword("");
+        dsValuApp.setTableTypes("TABLE,VIEW");
+        dsValuApp.setUrl("jdbc:h2:mem:developmentdb");
+        dsValuApp.setUsername("sa");
+        return dsValuApp;
+    }
+
+    public static DataStore createMysqlTestDataStore(DataStoreType dst) {
+        DataStore dsValuApp = new DataStore();
+        dsValuApp.setDataStoreType(dst);
+        dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
+        dsValuApp.setName("test");
+        dsValuApp.setPassword("root");
+        dsValuApp.setTableTypes("TABLE,VIEW");
+        dsValuApp.setUrl("jdbc:mysql://localhost/test?autoReconnect=true");
+        dsValuApp.setUsername("root");
+        return dsValuApp;
+    }
+
     public static DataStoreType createDefaultDataStoreType() {
         DataStoreType dst = new DataStoreType();
         dst.setDescription("Data Store for JDBC connector");
