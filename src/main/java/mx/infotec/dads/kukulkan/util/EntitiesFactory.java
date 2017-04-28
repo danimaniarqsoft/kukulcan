@@ -54,7 +54,7 @@ public class EntitiesFactory {
 
     public static KukulkanContext createDefaultKukulkanContext() {
         ProjectConfiguration pConf = new ProjectConfiguration();
-        pConf.setId("valuapp");
+        pConf.setId("conacyt");
         pConf.setGroupId("");
         pConf.setVersion("1.0.0");
         pConf.setPackaging("");
@@ -65,7 +65,7 @@ public class EntitiesFactory {
         pConf.setDaoLayerName("repository");
         pConf.setDomainLayerName("model");
         pConf.setGroupId("mx.infotec.dads");
-        pConf.setPackaging("mx.infotec.dads.valuapp");
+        pConf.setPackaging("mx.infotec.dads.conacyt");
         return new KukulkanContext(pConf, "");
     }
 
@@ -85,23 +85,23 @@ public class EntitiesFactory {
         DataStore dsValuApp = new DataStore();
         dsValuApp.setDataStoreType(dst);
         dsValuApp.setDriverClass("org.h2.Driver");
-        dsValuApp.setName("h2-mem-db");
+        dsValuApp.setName("h2-db-test");
         dsValuApp.setPassword("");
         dsValuApp.setTableTypes(TABLE_VIEW);
-        dsValuApp.setUrl("jdbc:h2:mem:developmentdb");
-        dsValuApp.setUsername("sa");
+        dsValuApp.setUrl("jdbc:h2:~/test");
+        dsValuApp.setUsername("");
         return dsValuApp;
     }
 
     public static DataStore createMysqlTestDataStore(DataStoreType dst) {
         DataStore dsValuApp = new DataStore();
         dsValuApp.setDataStoreType(dst);
-        dsValuApp.setDriverClass("com.mysql.jdbc.Driver");
+        dsValuApp.setDriverClass("org.h2.Driver");
         dsValuApp.setName("test");
-        dsValuApp.setPassword("root");
+        dsValuApp.setPassword("");
         dsValuApp.setTableTypes(TABLE_VIEW);
-        dsValuApp.setUrl("jdbc:mysql://localhost/test?autoReconnect=true");
-        dsValuApp.setUsername("root");
+        dsValuApp.setUrl("jdbc:h2:~/test");
+        dsValuApp.setUsername("");
         return dsValuApp;
     }
 

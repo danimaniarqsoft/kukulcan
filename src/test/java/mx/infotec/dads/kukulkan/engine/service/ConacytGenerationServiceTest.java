@@ -28,8 +28,11 @@ import java.util.List;
 
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.schema.Schema;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -51,6 +54,7 @@ import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
 import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
+import mx.infotec.dads.kukulkan.util.H2FileDatabaseConfiguration;
 import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 
 /**
@@ -63,6 +67,7 @@ import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @DirtiesContext
 public class ConacytGenerationServiceTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(H2FileDatabaseConfiguration.class);
 
     @Autowired
     private GenerationService generationService;
@@ -76,6 +81,16 @@ public class ConacytGenerationServiceTest {
     private LayerTaskFactory layerTaskFactory;
     @Autowired
     private RuleTypeRepository ruleTypeRepository;
+
+    @BeforeClass
+    public static void runOnceBeforeClass() {
+        System.out.println("@BeforeClass - runOnceBeforeClass");
+        if (H2FileDatabaseConfiguration.run()) {
+            LOGGER.info("Success!");
+        } else {
+            LOGGER.error("Error, database initializer");
+        }
+    }
 
     @Test
     public void generationService() throws Exception {
@@ -102,7 +117,7 @@ public class ConacytGenerationServiceTest {
         pConf.setDomainLayerName("model");
         // Create DataStore
         DataStore dsExample = new DataStore();
-        dsExample.setName("h2-mem-db");
+        dsExample.setName("h2-db-test");
         Example<DataStore> dataStoreFilter = Example.of(dsExample);
         List<DataStore> findAllDataStores = dataStoreRepository.findAll(dataStoreFilter);
         DataStore dataStore = findAllDataStores.get(0);
@@ -112,7 +127,7 @@ public class ConacytGenerationServiceTest {
         DataContext dataContext = dataStoreService.getDataContext(dataStore);
         Schema[] schemas = dataContext.getSchemas();
         for (Schema schema : schemas) {
-            System.out.println("schemas "+schema.getName());
+            System.out.println("schemas " + schema.getName());
             String[] tableNames = schema.getTableNames();
             for (String string : tableNames) {
                 System.out.println(string);

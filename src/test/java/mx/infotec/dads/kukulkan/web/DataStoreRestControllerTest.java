@@ -47,13 +47,14 @@ import org.springframework.web.context.WebApplicationContext;
  * @author Daniel Cortes Pichardo
  */
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-////@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-//@WebAppConfiguration
-//@ContextConfiguration
+// @RunWith(SpringJUnit4ClassRunner.class)
+//// @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+// @WebAppConfiguration
+// @ContextConfiguration
 public class DataStoreRestControllerTest {
 
-//    private static final Logger LOGGER = LoggerFactory.getLogger(DataStoreRestControllerTest.class);
+    // private static final Logger LOGGER =
+    // LoggerFactory.getLogger(DataStoreRestControllerTest.class);
     @Autowired
     private WebApplicationContext wac;
     private MockMvc mockMvc;
@@ -74,9 +75,8 @@ public class DataStoreRestControllerTest {
 
     @Test
     public void test() throws Exception {
-        mockMvc.perform(get("/dataStore").accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/dataStore").accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.first", is(1)));
     }
 }
