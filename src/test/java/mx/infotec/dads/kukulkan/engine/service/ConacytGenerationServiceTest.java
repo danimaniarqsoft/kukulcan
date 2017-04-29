@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.metamodel.DataContext;
-import org.apache.metamodel.schema.Schema;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -84,16 +83,12 @@ public class ConacytGenerationServiceTest {
 
     @BeforeClass
     public static void runOnceBeforeClass() {
-        System.out.println("@BeforeClass - runOnceBeforeClass");
-        if (H2FileDatabaseConfiguration.run()) {
-            LOGGER.info("Success!");
-        } else {
-            LOGGER.error("Error, database initializer");
-        }
+        H2FileDatabaseConfiguration.run();
     }
 
     @Test
     public void generationService() throws Exception {
+        LOGGER.info("Running kukulkan Test...");
         Rule rule = new Rule();
         RuleType ruleType = ruleTypeRepository.findAll().get(0);
         ruleType.setName("singular");
@@ -125,14 +120,6 @@ public class ConacytGenerationServiceTest {
         DataModelContext dmCtx = new JavaDataModelContext(dataStore);
         // Create DataContext
         DataContext dataContext = dataStoreService.getDataContext(dataStore);
-        Schema[] schemas = dataContext.getSchemas();
-        for (Schema schema : schemas) {
-            System.out.println("schemas " + schema.getName());
-            String[] tableNames = schema.getTableNames();
-            for (String string : tableNames) {
-                System.out.println(string);
-            }
-        }
         dmCtx.setDataContext(dataContext);
         // Tables to process
         List<String> tablesToProcess = new ArrayList<>();

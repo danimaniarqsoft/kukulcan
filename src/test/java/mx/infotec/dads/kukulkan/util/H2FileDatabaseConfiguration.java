@@ -1,5 +1,6 @@
 package mx.infotec.dads.kukulkan.util;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,8 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.h2.tools.DeleteDbFiles;
+import org.h2.tools.RunScript;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 
 // H2 Database Example
 
@@ -21,14 +24,21 @@ public class H2FileDatabaseConfiguration {
     private static final String DB_CONNECTION = "jdbc:h2:~/test";
     private static final String DB_USER = "";
     private static final String DB_PASSWORD = "";
+    private static final String DB_SCHEMA = "schema.sql";
 
     public static boolean run() {
         try {
             // delete the H2 database named 'test' in the user home directory
             DeleteDbFiles.execute("~", "test", true);
-            insertWithStatement();
+            String schemaPath = new ClassPathResource(DB_SCHEMA).getFile().getAbsolutePath();
+            RunScript.execute(DB_CONNECTION, DB_USER, DB_PASSWORD, schemaPath, null, false);
+//            insertWithStatement();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("SQLException: ", e);
+            return false;
+        } catch (IOException e) {
+            LOGGER.error("IOException: ", e);
+            return false;
         }
         return true;
     }
