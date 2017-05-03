@@ -44,7 +44,11 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
     private boolean nullable;
     private boolean primaryKey;
 
-    public JavaProperty(String propertyName, String propertyType, String columnName, String columnType,
+    private JavaProperty() {
+
+    }
+
+    private JavaProperty(String propertyName, String propertyType, String columnName, String columnType,
             String qualifiedName, boolean nullable, boolean isPrimaryKey) {
         this.propertyName = propertyName;
         this.propertyType = propertyType;
@@ -53,6 +57,10 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
         this.qualifiedName = qualifiedName;
         this.nullable = nullable;
         this.primaryKey = isPrimaryKey;
+    }
+
+    public static JavaPropertyBuilder builder() {
+        return new JavaPropertyBuilder();
     }
 
     @Override
@@ -123,6 +131,79 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
         } else if (!propertyName.equals(other.propertyName))
             return false;
         return true;
+    }
+
+    protected void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
+    }
+
+    protected void setPropertyType(String propertyType) {
+        this.propertyType = propertyType;
+    }
+
+    protected void setQualifiedName(String qualifiedName) {
+        this.qualifiedName = qualifiedName;
+    }
+
+    protected void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    protected void setColumnType(String columnType) {
+        this.columnType = columnType;
+    }
+
+    protected void setNullable(boolean nullable) {
+        this.nullable = nullable;
+    }
+
+    protected void setPrimaryKey(boolean primaryKey) {
+        this.primaryKey = primaryKey;
+    }
+
+    public static class JavaPropertyBuilder {
+
+        private JavaProperty javaProperty = new JavaProperty();
+
+        public JavaPropertyBuilder withPropertyName(String propertyName) {
+            this.javaProperty.setPropertyName(propertyName);
+            return this;
+        }
+
+        public JavaPropertyBuilder withPropertyType(String propertyType) {
+            this.javaProperty.setPropertyType(propertyType);
+            return this;
+        }
+
+        public JavaPropertyBuilder withQualifiedName(String qualifiedName) {
+            this.javaProperty.setQualifiedName(qualifiedName);
+            return this;
+        }
+
+        public JavaPropertyBuilder withColumnName(String columnName) {
+            this.javaProperty.setColumnName(columnName);
+            return this;
+        }
+
+        public JavaPropertyBuilder withColumnType(String columnType) {
+            this.javaProperty.setColumnType(columnType);
+            return this;
+        }
+
+        public JavaPropertyBuilder isNullable(boolean nullable) {
+            this.javaProperty.setNullable(nullable);
+            return this;
+        }
+
+        public JavaPropertyBuilder isPrimaryKey(boolean isPrimaryKey) {
+            this.javaProperty.setPrimaryKey(isPrimaryKey);
+            return this;
+        }
+
+        public JavaProperty build() {
+            return this.javaProperty;
+        }
+
     }
 
 }
