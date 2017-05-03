@@ -104,7 +104,6 @@ public class DataMapping {
                 String qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();
                 dme.getImports().add(qualifiedName);
                 dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), qualifiedName, false));
-                System.out.println(qualifiedName);
             }
         }
     }

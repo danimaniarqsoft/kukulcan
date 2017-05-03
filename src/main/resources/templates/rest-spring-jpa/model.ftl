@@ -75,6 +75,9 @@ public class ${className} implements Serializable {
     @Column(name="${property.columnName}")
     <#if property.qualifiedName == "java.util.Date">
     @Temporal(TemporalType.DATE)
+    <#elseif property.qualifiedName == "java.sql.Blob">
+    @Basic(fetch=FetchType.LAZY)
+    @Lob
     </#if> 
     private ${property.propertyType} ${property.propertyName};
 	</#list>
