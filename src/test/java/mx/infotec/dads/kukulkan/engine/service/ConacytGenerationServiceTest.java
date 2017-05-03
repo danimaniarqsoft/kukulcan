@@ -108,10 +108,10 @@ public class ConacytGenerationServiceTest {
         pConf.setYear("2017");
         pConf.setAuthor("KUKULKAN");
         pConf.setWebLayerName("web");
-        pConf.setServiceLayerName("service");
+        pConf.setServiceLayerName("bm");
         pConf.setDaoLayerName("repository");
         pConf.setDomainLayerName("model");
-        pConf.setGlobalGenerationType(GenerationType.AUTO);
+        pConf.setGlobalGenerationType(GenerationType.SEQUENCE);
         // Create DataStore
         DataStore dsExample = new DataStore();
         dsExample.setName("h2-db-test");

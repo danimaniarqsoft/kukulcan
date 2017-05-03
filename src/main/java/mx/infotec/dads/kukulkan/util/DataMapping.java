@@ -102,13 +102,14 @@ public class DataMapping {
                 String propertyName = SchemaPropertiesParser.parseToPropertyName(column.getName());
                 String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
                 String qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();
+                System.out.println(propertyName + "-" + column.getColumnSize() + "-" + column.isNullable());
                 if ("Blob".equals(propertyType) || "Clob".equals(propertyType)) {
                     propertyType = "byte[]";
                 } else {
                     dme.getImports().add(qualifiedName);
                 }
                 dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), column.getNativeType(),
-                        qualifiedName, false));
+                        qualifiedName, column.isNullable(), false));
             }
         }
     }
@@ -139,7 +140,7 @@ public class DataMapping {
                 String propertyType = columnElement.getType().getJavaEquivalentClass().getSimpleName();
                 String qualifiedLabel = columnElement.getType().getJavaEquivalentClass().toString();
                 pk.addProperty(new JavaProperty(propertyName, propertyType, columnElement.getName(),
-                        columnElement.getNativeType(), qualifiedLabel, true));
+                        columnElement.getNativeType(), qualifiedLabel, columnElement.isNullable(), true));
             }
         }
         return pk;

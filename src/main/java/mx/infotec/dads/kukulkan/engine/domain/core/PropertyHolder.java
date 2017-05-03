@@ -77,6 +77,13 @@ public interface PropertyHolder<T> extends Comparable<T>{
      * @return boolean
      */
     boolean isPrimaryKey();
+    
+    /**
+     * Return true if it is nullable
+     * 
+     * @return boolean
+     */
+    boolean isNullable();
 
     /**
      * Return associations if it exists

@@ -35,13 +35,13 @@ import ${import};
  *
  */
 @Entity
-@Table(name="${tableName}")
+@Table(name = "${tableName}")
 public class ${className} implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Este campo fue generado automaticamente por ${author} 
-     * Este campo corresponde a la llave primaria}
+     * Este campo corresponde a la llave primaria ${primaryKey.name}
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
@@ -50,18 +50,18 @@ public class ${className} implements Serializable {
     <#else>
     @Id
     	<#if primaryKey.generationType.name() == "SEQUENCE">
-    @SequenceGenerator(name="${tableName}_SEQ", sequenceName="${tableName}_SEQ", allocationSize=100)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="${tableName}_SEQ")
+    @SequenceGenerator(name = "SEQ_${tableName}", sequenceName = "SEQ_${tableName}", allocationSize=100)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_${tableName}")
     	<#elseif primaryKey.generationType.name() == "IDENTITY">
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     	<#elseif primaryKey.generationType.name() == "TABLE">
-    @TableGenerator(name="${tableName}_GEN", table="SEQUENCE_TABLE", pkColumnName="SEQ_${tableName}",
-    valueColumnName="${tableName}_COUNT", pkColumnValue="${tableName}_SEQ")
-    @GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GEN")
+    @TableGenerator(name = "${tableName}_GEN", table = "SEQUENCE_TABLE", pkColumnName = "SEQ_${tableName}",
+    valueColumnName = "${tableName}_COUNT", pkColumnValue = "SEQ_${tableName}")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "TABLE_GEN")
     	<#elseif primaryKey.generationType.name() == "AUTO">
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     	</#if>
-    @Column(name="${primaryKey.name}")
+    @Column(name = "${primaryKey.name}")
     </#if>
     private ${primaryKey.type} ${primaryKey.name};
 	<#list properties as property>
@@ -72,7 +72,7 @@ public class ${className} implements Serializable {
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
-    @Column(name="${property.columnName}")
+    @Column(name = "${property.columnName}"<#if property.nullable==false> ,nullable = false</#if>)
     <#if property.qualifiedName == "java.util.Date">
     	<#if property.columnType == "DATE">
     @Temporal(TemporalType.DATE)
@@ -82,7 +82,7 @@ public class ${className} implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     	</#if>
     <#elseif property.qualifiedName == "java.sql.Blob" || property.qualifiedName == "java.sql.Clob">
-    @Basic(fetch=FetchType.LAZY)
+    @Basic(fetch = FetchType.LAZY)
     @Lob
     </#if> 
     private ${property.propertyType} ${property.propertyName};

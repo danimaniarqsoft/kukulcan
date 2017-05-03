@@ -41,15 +41,17 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
     private String qualifiedName;
     private String columnName;
     private String columnType;
+    private boolean nullable;
     private boolean primaryKey;
 
-    public JavaProperty(String propertyName, String propertyType, String columnName, String columnType, String qualifiedName,
-            boolean isPrimaryKey) {
+    public JavaProperty(String propertyName, String propertyType, String columnName, String columnType,
+            String qualifiedName, boolean nullable, boolean isPrimaryKey) {
         this.propertyName = propertyName;
         this.propertyType = propertyType;
         this.columnName = columnName;
         this.columnType = columnType;
         this.qualifiedName = qualifiedName;
+        this.nullable = nullable;
         this.primaryKey = isPrimaryKey;
     }
 
@@ -92,7 +94,12 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
     public String getColumnType() {
         return this.columnType;
     }
-    
+
+    @Override
+    public boolean isNullable() {
+        return nullable;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -117,6 +124,5 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
             return false;
         return true;
     }
-
 
 }
