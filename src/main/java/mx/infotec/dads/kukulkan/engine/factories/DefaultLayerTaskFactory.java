@@ -56,6 +56,9 @@ public class DefaultLayerTaskFactory implements LayerTaskFactory {
         case PRIMEFACES_SPRING_MYBATIS:
             Map<String, LayerTask> taskMapFSM = appContext.getBeansOfType(LayerTask.class);
             return DataMapping.createLaterTaskList(taskMapFSM, ArchetypeType.PRIMEFACES_SPRING_MYBATIS);
+        case CONACYT:
+            Map<String, LayerTask> taskMapCONACYT= appContext.getBeansOfType(LayerTask.class);
+            return DataMapping.createLaterTaskList(taskMapCONACYT, ArchetypeType.CONACYT);
         default:
             throw new ApplicationException("Operation Not Supported" + archetypeType.toString());
         }

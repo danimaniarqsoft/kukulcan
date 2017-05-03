@@ -56,11 +56,11 @@ CREATE TABLE IF NOT EXISTS usuario (
   credencial_no_expirada BIT NOT NULL DEFAULT true,
   habilitado 			BIT NOT NULL DEFAULT true,
   contador_intentos_fallidos INT(11) NOT NULL DEFAULT true,
-  instante_de_bloqueo 	TIMESTAMP NULL DEFAULT NULL,
   pregunta_secreta 		VARCHAR(200) NOT NULL,
   respuesta_secreta 	VARCHAR(200) NOT NULL,
   id_de_seguridad 		VARCHAR(50) NULL DEFAULT NULL,
-  ventana_para_id_seguridad TIMESTAMP NULL DEFAULT NULL,
+  instante_de_bloqueo 	TIME NULL DEFAULT NULL,
+  ventana_para_id_seguridad DATE NULL DEFAULT NULL,
   fecha_ultimo_acceso 	TIMESTAMP NULL DEFAULT NULL,
   fecha_ultimo_cambio_clave TIMESTAMP NULL DEFAULT NULL,
   constraint pk_usuario primary key (id)

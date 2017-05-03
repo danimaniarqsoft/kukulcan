@@ -103,7 +103,8 @@ public class DataMapping {
                 String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
                 String qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();
                 dme.getImports().add(qualifiedName);
-                dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), qualifiedName, false));
+                dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), column.getNativeType(),
+                        qualifiedName, false));
             }
         }
     }
@@ -133,8 +134,8 @@ public class DataMapping {
                 String propertyName = SchemaPropertiesParser.parseToPropertyName(columnElement.getName());
                 String propertyType = columnElement.getType().getJavaEquivalentClass().getSimpleName();
                 String qualifiedLabel = columnElement.getType().getJavaEquivalentClass().toString();
-                pk.addProperty(
-                        new JavaProperty(propertyName, propertyType, columnElement.getName(), qualifiedLabel, true));
+                pk.addProperty(new JavaProperty(propertyName, propertyType, columnElement.getName(),
+                        columnElement.getNativeType(), qualifiedLabel, true));
             }
         }
         return pk;

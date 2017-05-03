@@ -1,7 +1,7 @@
 /*
  *  
  * The MIT License (MIT)
- * Copyright (c) 2016 Daniel Cortes Pichardo
+ * Copyright (c) ${year} ${author}
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,68 +21,77 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.domain.core;
+${package}
 
-import java.util.Collection;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+${importModel}
+<#if importPrimaryKey??>
+${importPrimaryKey}
+</#if>
 
 /**
+ * ${name}Service
  * 
- * PropertyHolder Class that is used for hold the properties of a table
- * 
- * @author Daniel Cortes Pichardo
- * @param <T>
+ * @author ${author}
  *
  */
-public interface PropertyHolder<T> extends Comparable<T>{
+public interface ${name}Service {
 
     /**
-     * Return the name of the property
+     * regresa una lista con todos los elementos ${name}
      * 
-     * @return propertyName
+     * @return List<${name}>
      */
-    String getPropertyName();
+    List<${name}> findAll();
 
     /**
-     * Return the type of the property
+     * regresa una lista de elementos ${name} por página
      * 
-     * @return propertyType
+     * @param pagable
+     * @return
      */
-    String getPropertyType();
-    
-    /**
-     * Return the name of the property
-     * 
-     * @return propertyName
-     */
-    String getColumnName();
-    
-    /**
-     * Return the columnType of the table
-     * 
-     * @return columnType
-     */
-    String getColumnType();
+    Page<${name}> findAllByPage(Pageable pagable);
 
     /**
-     * Return the qualified name of the type of the Property, in order to create
-     * a import statement in the generation fase;
+     * Consulta un ${name} por su llave primaria
      * 
-     * @return qualifiedName
+     * @param id
+     * @return ${name}
      */
-    String getQualifiedName();
+    ${name} findById(${id} id);
 
     /**
-     * Return if it is a primary key property
+     * Guarda o actualiza un ${name}
      * 
+     * @param ${propertyName}
      * @return boolean
      */
-    boolean isPrimaryKey();
+    ${name} save(${name} ${propertyName});
 
     /**
-     * Return associations if it exists
+     * Regresa true o false si existe un ${name} almacenado
      * 
-     * @return associations
+     * @param id
+     * @return boolean
      */
-    Collection<PropertyHolder> getAssociations();
+    boolean exists(${id} id);
 
+    /**
+     * Borrar un ${name} por su llave primaria
+     * 
+     * @param id
+     */
+    void delete(${id} id);
+
+    /**
+     * Borrar todos los elementos ${name} almacenados
+     * 
+     * @param id
+     */
+    void deleteAll();
 }

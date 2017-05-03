@@ -74,7 +74,13 @@ public class ${className} implements Serializable {
      */
     @Column(name="${property.columnName}")
     <#if property.qualifiedName == "java.util.Date">
+    	<#if property.columnType == "DATE">
     @Temporal(TemporalType.DATE)
+    	<#elseif property.columnType == "TIME">
+    @Temporal(TemporalType.TIME)
+    	<#elseif property.columnType == "TIMESTAMP">
+    @Temporal(TemporalType.TIMESTAMP)
+    	</#if>
     <#elseif property.qualifiedName == "java.sql.Blob">
     @Basic(fetch=FetchType.LAZY)
     @Lob

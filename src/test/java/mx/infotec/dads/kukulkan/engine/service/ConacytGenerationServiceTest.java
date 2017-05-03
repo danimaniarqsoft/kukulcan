@@ -102,16 +102,16 @@ public class ConacytGenerationServiceTest {
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("test-kukulkan");
-        pConf.setGroupId("mx.infotec.dads");
+        pConf.setGroupId("mx.conacyt");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.infotec.dads.kukulkan");
+        pConf.setPackaging("mx.conacyt.efidt");
         pConf.setYear("2017");
         pConf.setAuthor("KUKULKAN");
-        pConf.setWebLayerName("rest");
+        pConf.setWebLayerName("web");
         pConf.setServiceLayerName("service");
         pConf.setDaoLayerName("repository");
         pConf.setDomainLayerName("model");
-        pConf.setGlobalGenerationType(GenerationType.AUTO);
+        pConf.setGlobalGenerationType(GenerationType.SEQUENCE);
         // Create DataStore
         DataStore dsExample = new DataStore();
         dsExample.setName("h2-db-test");
@@ -132,6 +132,6 @@ public class ConacytGenerationServiceTest {
         // Create GeneratorContext
         GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);
         // Process Activities
-        generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.REST_SPRING_JPA));
+        generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.CONACYT));
     }
 }

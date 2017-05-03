@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.engine.service.layers.springrest;
+package mx.infotec.dads.kukulkan.engine.service.layers.conacyt;
 
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToImportStatement;
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
@@ -47,10 +47,10 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("modelLayerTask")
+@Service("conacytModelLayerTask")
 public class ModelLayerTask extends AbstractLayerTaskVisitor {
 
-    private ArchetypeType archetypeType = ArchetypeType.REST_SPRING_JPA;
+    private ArchetypeType archetypeType = ArchetypeType.CONACYT;
 
     @Autowired
     private TemplateService templateService;
