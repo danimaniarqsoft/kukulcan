@@ -28,8 +28,6 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageSt
 import java.util.Collection;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +35,7 @@ import org.springframework.stereotype.Service;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
-import mx.infotec.dads.kukulkan.engine.service.layers.AbstractLayerTaskVisitor;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
-import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 import mx.infotec.dads.kukulkan.util.NameConventions;
 
@@ -50,12 +46,7 @@ import mx.infotec.dads.kukulkan.util.NameConventions;
  *
  */
 @Service("repositoryLayerTask")
-public class RepositoryLayerTask extends AbstractLayerTaskVisitor {
-
-    @PostConstruct
-    public void initIt() {
-        this.archetypeType = ArchetypeType.REST_SPRING_JPA;
-    }
+public class RepositoryLayerTask extends SpringRestLayerTaskVisitor {
 
     @Autowired
     private TemplateService templateService;

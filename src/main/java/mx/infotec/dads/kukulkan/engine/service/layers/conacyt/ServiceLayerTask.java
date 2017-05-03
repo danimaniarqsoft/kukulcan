@@ -51,12 +51,7 @@ import mx.infotec.dads.kukulkan.util.NameConventions;
  *
  */
 @Service("conacytServiceLayerTask")
-public class ServiceLayerTask extends AbstractLayerTaskVisitor {
-
-    @PostConstruct
-    public void initIt() {
-        this.archetypeType = ArchetypeType.CONACYT;
-    }
+public class ServiceLayerTask extends ConacytLayerTaskVisitor {
 
     @Autowired
     private TemplateService templateService;

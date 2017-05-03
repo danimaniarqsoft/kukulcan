@@ -28,15 +28,11 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageSt
 import java.util.Collection;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
-import mx.infotec.dads.kukulkan.engine.service.layers.AbstractLayerTaskVisitor;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
-import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 
 /**
@@ -45,13 +41,8 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
  * @author Daniel Cortes Pichardo
  *
  */
-public class RepositoryLayerTestTask extends AbstractLayerTaskVisitor {
-
-    @PostConstruct
-    public void initIt() {
-        this.archetypeType = ArchetypeType.REST_SPRING_JPA;
-    }
-
+public class RepositoryLayerTestTask extends SpringRestLayerTaskVisitor {
+    
     @Autowired
     private TemplateService templateService;
 
@@ -67,5 +58,5 @@ public class RepositoryLayerTestTask extends AbstractLayerTaskVisitor {
                             + pConf.getDaoLayerName() + "/" + dmElement.getName() + "Repository.java");
         }
     }
-    
+
 }

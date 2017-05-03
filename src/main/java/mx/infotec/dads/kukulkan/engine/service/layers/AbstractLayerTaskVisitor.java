@@ -33,7 +33,6 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
-import mx.infotec.dads.kukulkan.util.ArchetypeType;
 
 /**
  * Abstract Template ControllerLayerTask
@@ -42,13 +41,6 @@ import mx.infotec.dads.kukulkan.util.ArchetypeType;
  *
  */
 public abstract class AbstractLayerTaskVisitor implements LayerTask {
-
-    protected ArchetypeType archetypeType;
-
-    @Override
-    public ArchetypeType getArchetypeType() {
-        return archetypeType;
-    }
 
     @Override
     public boolean doTask(GeneratorContext context) {

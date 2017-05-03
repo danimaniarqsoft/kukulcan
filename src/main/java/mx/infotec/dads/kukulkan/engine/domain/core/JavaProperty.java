@@ -48,17 +48,6 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
 
     }
 
-    private JavaProperty(String propertyName, String propertyType, String columnName, String columnType,
-            String qualifiedName, boolean nullable, boolean isPrimaryKey) {
-        this.propertyName = propertyName;
-        this.propertyType = propertyType;
-        this.columnName = columnName;
-        this.columnType = columnType;
-        this.qualifiedName = qualifiedName;
-        this.nullable = nullable;
-        this.primaryKey = isPrimaryKey;
-    }
-
     public static JavaPropertyBuilder builder() {
         return new JavaPropertyBuilder();
     }
