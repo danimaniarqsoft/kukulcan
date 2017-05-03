@@ -101,10 +101,10 @@ public class DataMapping {
             if (!column.isPrimaryKey()) {
                 String propertyName = SchemaPropertiesParser.parseToPropertyName(column.getName());
                 String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
-                String qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();                    
-                if(propertyType.equals("Blob") || propertyType.equals("Clob")){
+                String qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();
+                if ("Blob".equals(propertyType) || "Clob".equals(propertyType)) {
                     propertyType = "byte[]";
-                }else{
+                } else {
                     dme.getImports().add(qualifiedName);
                 }
                 dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), column.getNativeType(),
