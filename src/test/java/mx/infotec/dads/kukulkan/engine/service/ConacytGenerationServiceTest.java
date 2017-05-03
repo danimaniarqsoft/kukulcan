@@ -111,7 +111,7 @@ public class ConacytGenerationServiceTest {
         pConf.setServiceLayerName("service");
         pConf.setDaoLayerName("repository");
         pConf.setDomainLayerName("model");
-        pConf.setGlobalGenerationType(GenerationType.SEQUENCE);
+        pConf.setGlobalGenerationType(GenerationType.AUTO);
         // Create DataStore
         DataStore dsExample = new DataStore();
         dsExample.setName("h2-db-test");

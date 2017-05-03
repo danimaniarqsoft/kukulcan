@@ -83,6 +83,8 @@ CREATE TABLE IF NOT EXISTS usuario_detalle (
   nombre                VARCHAR(150) NOT NULL,
   mime_type             VARCHAR(20) NOT NULL,
   contenido             longblob NOT NULL,
+  blob                  blob NOT NULL,
+  clob                  clob NOT NULL,
   sha256sum             VARCHAR(64) NOT NULL,
   constraint pk_imagen primary key (imagen_id)
 );
