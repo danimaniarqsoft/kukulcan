@@ -28,6 +28,8 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageSt
 import java.util.Collection;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
@@ -45,7 +47,10 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
  */
 public class RepositoryLayerTestTask extends AbstractLayerTaskVisitor {
 
-    private ArchetypeType archetypeType = ArchetypeType.REST_SPRING_JPA;
+    @PostConstruct
+    public void initIt() {
+        this.archetypeType = ArchetypeType.REST_SPRING_JPA;
+    }
 
     @Autowired
     private TemplateService templateService;
@@ -62,9 +67,5 @@ public class RepositoryLayerTestTask extends AbstractLayerTaskVisitor {
                             + pConf.getDaoLayerName() + "/" + dmElement.getName() + "Repository.java");
         }
     }
-
-    @Override
-    public ArchetypeType getArchetypeType() {
-        return archetypeType;
-    }
+    
 }

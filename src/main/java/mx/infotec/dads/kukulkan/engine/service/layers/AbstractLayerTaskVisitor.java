@@ -24,7 +24,6 @@
 package mx.infotec.dads.kukulkan.engine.service.layers;
 
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToImportStatement;
-import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,6 +33,7 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.GeneratorContext;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
+import mx.infotec.dads.kukulkan.util.ArchetypeType;
 
 /**
  * Abstract Template ControllerLayerTask
@@ -42,6 +42,13 @@ import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
  *
  */
 public abstract class AbstractLayerTaskVisitor implements LayerTask {
+
+    protected ArchetypeType archetypeType;
+
+    @Override
+    public ArchetypeType getArchetypeType() {
+        return archetypeType;
+    }
 
     @Override
     public boolean doTask(GeneratorContext context) {

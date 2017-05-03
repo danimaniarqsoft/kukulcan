@@ -29,6 +29,8 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageSt
 import java.util.Collection;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,10 @@ import mx.infotec.dads.kukulkan.util.NameConventions;
 @Service("conacytRestControllerLayerTask")
 public class RestControllerLayerTask extends AbstractLayerTaskVisitor {
 
-    private ArchetypeType archetypeType = ArchetypeType.CONACYT;
+    @PostConstruct
+    public void initIt() {
+        this.archetypeType = ArchetypeType.CONACYT;
+    }
 
     @Autowired
     private TemplateService templateService;
@@ -74,16 +79,11 @@ public class RestControllerLayerTask extends AbstractLayerTaskVisitor {
             model.put("propertyNamePlural", InflectorProcessor.getInstance().pluralize(dmElement.getPropertyName()));
             model.put("urlName", dmElement.getPropertyName());
             model.put("primaryKey", dmElement.getPrimaryKey());
-            templateService.fillModel(pConf.getId(), "conacyt/restController.ftl", model,
-                    BasePathEnum.SRC_MAIN_JAVA,
+            templateService.fillModel(pConf.getId(), "conacyt/restController.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getWebLayerName() + "/"
                             + dmElement.getName() + NameConventions.REST_CONTROLLER + ".java");
 
         }
     }
 
-    @Override
-    public ArchetypeType getArchetypeType() {
-        return archetypeType;
-    }
 }

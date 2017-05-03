@@ -29,6 +29,8 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageSt
 import java.util.Collection;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,10 @@ import mx.infotec.dads.kukulkan.util.NameConventions;
 @Service("conacytServiceLayerTask")
 public class ServiceLayerTask extends AbstractLayerTaskVisitor {
 
-    private ArchetypeType archetypeType = ArchetypeType.CONACYT;
+    @PostConstruct
+    public void initIt() {
+        this.archetypeType = ArchetypeType.CONACYT;
+    }
 
     @Autowired
     private TemplateService templateService;
@@ -74,15 +79,10 @@ public class ServiceLayerTask extends AbstractLayerTaskVisitor {
             templateService.fillModel(pConf.getId(), "conacyt/service.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getServiceLayerName() + "/"
                             + dmElement.getName() + NameConventions.SERVICE + ".java");
-            templateService.fillModel(pConf.getId(), "conacyt/serviceImpl.ftl", model,
-                    BasePathEnum.SRC_MAIN_JAVA,
+            templateService.fillModel(pConf.getId(), "conacyt/serviceImpl.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
                     basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getServiceLayerName() + "/impl/"
                             + dmElement.getName() + NameConventions.SERVICE_IMPLEMENTS + ".java");
         }
     }
 
-    @Override
-    public ArchetypeType getArchetypeType() {
-        return archetypeType;
-    }
 }

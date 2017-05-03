@@ -29,6 +29,8 @@ import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageSt
 import java.util.Collection;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,10 @@ import mx.infotec.dads.kukulkan.util.BasePathEnum;
 @Service("conacytModelLayerTask")
 public class ModelLayerTask extends AbstractLayerTaskVisitor {
 
-    private ArchetypeType archetypeType = ArchetypeType.CONACYT;
+    @PostConstruct
+    public void initIt() {
+        this.archetypeType = ArchetypeType.CONACYT;
+    }
 
     @Autowired
     private TemplateService templateService;
@@ -104,8 +109,4 @@ public class ModelLayerTask extends AbstractLayerTaskVisitor {
         }
     }
 
-    @Override
-    public ArchetypeType getArchetypeType() {
-        return archetypeType;
-    }
 }
