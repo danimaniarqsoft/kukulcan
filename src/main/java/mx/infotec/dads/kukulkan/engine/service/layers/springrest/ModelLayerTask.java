@@ -66,21 +66,41 @@ public class ModelLayerTask extends AbstractLayerTaskVisitor {
             model.put("id", dmElement.getPrimaryKey().getType());
             model.put("tableName", dmElement.getTableName());
             model.put("className", dmElement.getName());
-            if (dmElement.getPrimaryKey().isComposed()) {
-                model.put("importPrimaryKey", formatToImportStatement(basePackage, pConf.getDomainLayerName(),
-                        dmElement.getPrimaryKey().getType()));
-            }
+            importPrimaryKey(pConf, model, basePackage, dmElement);
             model.put("package", formatToPackageStatement(basePackage, pConf.getDomainLayerName()));
             model.put("properties", dmElement.getProperties());
+            dmElement.getPrimaryKey().setGenerationType(pConf.getGlobalGenerationType());
             model.put("primaryKey", dmElement.getPrimaryKey());
             dmElement.getImports().add("javax.persistence.*");
             dmElement.getImports().add("java.io.Serializable");
             dmElement.getImports().add("java.util.Objects");
             model.put("imports", dmElement.getImports());
-            templateService.fillModel(pConf.getId(), "rest-spring-jpa/model.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
-                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDomainLayerName() + "/"
-                            + dmElement.getName() + ".java");
+            fillModel(pConf, model, dmgName, basePackage, dmElement);
+            fillPrimaryKey(pConf, model, dmgName, basePackage, dmElement);
+        }
+    }
 
+    private void fillModel(ProjectConfiguration pConf, Map<String, Object> model, String dmgName, String basePackage,
+            DataModelElement dmElement) {
+        templateService.fillModel(pConf.getId(), "rest-spring-jpa/model.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+                basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDomainLayerName() + "/"
+                        + dmElement.getName() + ".java");
+    }
+
+    private void fillPrimaryKey(ProjectConfiguration pConf, Map<String, Object> model, String dmgName,
+            String basePackage, DataModelElement dmElement) {
+        if (dmElement.getPrimaryKey().isComposed()) {
+            templateService.fillModel(pConf.getId(), "rest-spring-jpa/primaryKey.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDomainLayerName() + "/"
+                            + dmElement.getPrimaryKey().getType() + ".java");
+        }
+    }
+
+    private static void importPrimaryKey(ProjectConfiguration pConf, Map<String, Object> model, String basePackage,
+            DataModelElement dmElement) {
+        if (dmElement.getPrimaryKey().isComposed()) {
+            model.put("importPrimaryKey", formatToImportStatement(basePackage, pConf.getDomainLayerName(),
+                    dmElement.getPrimaryKey().getType()));
         }
     }
 

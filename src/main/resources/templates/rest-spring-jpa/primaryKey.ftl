@@ -24,8 +24,9 @@
  */
 ${package}
 
-${imports}
-import java.io.Serializable;
+<#list imports as import>
+import ${import};
+</#list>
 
 /**
  * The ${className}
@@ -33,87 +34,68 @@ import java.io.Serializable;
  * @author ${author}
  *
  */
- @Embeddable
-public class DispositivoPK implements Serializable {
-    // default serial version id, required for serializable classes.
+@Embeddable
+public class ${primaryKey.type} implements Serializable {
+    // Default serial version id, required for serializable classes.
     private static final long serialVersionUID = 1L;
-
-    private int id;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "fecha_alta")
-    private java.util.Date fechaAlta;
-
-    public DispositivoPK() {
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public java.util.Date getFechaAlta() {
-        return this.fechaAlta;
-    }
-
-    public void setFechaAlta(java.util.Date fechaAlta) {
-        this.fechaAlta = fechaAlta;
-    }
-
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (!(other instanceof DispositivoPK)) {
-            return false;
-        }
-        DispositivoPK castOther = (DispositivoPK) other;
-        return (this.id == castOther.id) && this.fechaAlta.equals(castOther.fechaAlta);
-    }
-
-    public int hashCode() {
-        final int prime = 31;
-        int hash = 17;
-        hash = hash * prime + this.id;
-        hash = hash * prime + this.fechaAlta.hashCode();
-
-        return hash;
-    }
-}
-@Entity("${tableName}")
-public class ${className} implements Serializable {
+	<#list primaryKey.properties as property>
+	
     /**
      * Este campo fue generado automaticamente por ${author} 
      * Este campo corresponde a la tabla ${tableName}
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
-    private ${propertyType} ${propertyName};
-
-	 /**
+    @Column(name="${property.columnName}")
+    private ${property.propertyType} ${property.propertyName};
+	</#list>
+	
+	<#list primaryKey.properties as property>
+    /**
      * Este método fue generado automaticamente por ${author} 
-     * Este método GETTER fue generado para la ${tableName}.${propertyName}
+     * Este método GETTER fue generado para la ${tableName}.${property.columnName}
      *
-     * @return el valor de area_conocimiento.id
+     * @return el valor de ${property.propertyName}
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
-    public ${propertyType} get${propertyName?cap_first}() {
-        return ${propertyName};
+    public ${property.propertyType} get${property.propertyName?cap_first}() {
+        return ${property.propertyName};
     }
 
-	 /**
+    /**
      * Este método fue generado automaticamente por ${author} 
-     * Este método GETTER fue generado para la tabla. ${tableName}.${propertyName}
+     * Este método GETTER fue generado para la tabla. ${tableName}.${property.propertyName}
      *
-     * @return el valor de area_conocimiento.id
+     * @return el valor de ${property.propertyName?cap_first}
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
-    public void set${propertyName?cap_first}(${propertyType} ${propertyName}) {
-        this.${propertyName} = ${propertyName};
+    public void set${property.propertyName?cap_first}(${property.propertyType} ${property.propertyName}) {
+        this.${property.propertyName} = ${property.propertyName};
+    }
+    </#list>
+    
+    @Override	
+	public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof ${primaryKey.type})) {
+            return false;
+        }
+        ${primaryKey.type} castOther = (${primaryKey.type}) other;
+        return <#list primaryKey.properties as property><#if property?counter==1>(this.${property.propertyName} == castOther.${property.propertyName})<#else>
+                && this.${property.propertyName}.equals(castOther.${property.propertyName})</#if></#list>; 
+    }
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        <#list primaryKey.properties as property>
+        result = prime * result + ((${property.propertyName} == null) ? 0 : ${property.propertyName}.hashCode());
+        </#list>
+        return result;
     }
 }

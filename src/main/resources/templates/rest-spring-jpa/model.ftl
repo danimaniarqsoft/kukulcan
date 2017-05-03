@@ -45,9 +45,24 @@ public class ${className} implements Serializable {
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
+    <#if primaryKey.composed == true>
+    @EmbeddedId
+    <#else>
     @Id
-    @Column(name="${primaryKey.name}")
+    	<#if primaryKey.generationType.name() == "SEQUENCE">
+    @SequenceGenerator(name="${tableName}_SEQ", sequenceName="${tableName}_SEQ", allocationSize=100)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="${tableName}_SEQ")
+    	<#elseif primaryKey.generationType.name() == "IDENTITY">
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    	<#elseif primaryKey.generationType.name() == "TABLE">
+    @TableGenerator(name="${tableName}_GEN", table="SEQUENCE_TABLE", pkColumnName="SEQ_${tableName}",
+    valueColumnName="${tableName}_COUNT", pkColumnValue="${tableName}_SEQ")
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GEN")
+    	<#elseif primaryKey.generationType.name() == "AUTO">
     @GeneratedValue(strategy=GenerationType.AUTO)
+    	</#if>
+    @Column(name="${primaryKey.name}")
+    </#if>
     private ${primaryKey.type} ${primaryKey.name};
 	<#list properties as property>
 	
@@ -58,6 +73,9 @@ public class ${className} implements Serializable {
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
     @Column(name="${property.columnName}")
+    <#if property.qualifiedName == "java.util.Date">
+    @Temporal(TemporalType.DATE)
+    </#if> 
     private ${property.propertyType} ${property.propertyName};
 	</#list>
 	

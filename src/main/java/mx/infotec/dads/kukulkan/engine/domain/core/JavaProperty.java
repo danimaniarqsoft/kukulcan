@@ -46,9 +46,9 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
             boolean isPrimaryKey) {
         this.propertyName = propertyName;
         this.propertyType = propertyType;
+        this.columnName = columnName;
         this.qualifiedName = qualifiedName;
         this.primaryKey = isPrimaryKey;
-        this.columnName = columnName;
     }
 
     @Override
@@ -78,12 +78,37 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
 
     @Override
     public int compareTo(JavaProperty o) {
-        return qualifiedName.compareTo(o.getQualifiedName());
+        return propertyName.compareTo(o.getPropertyName());
     }
 
     @Override
     public String getColumnName() {
         return this.columnName;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((propertyName == null) ? 0 : propertyName.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        JavaProperty other = (JavaProperty) obj;
+        if (propertyName == null) {
+            if (other.propertyName != null)
+                return false;
+        } else if (!propertyName.equals(other.propertyName))
+            return false;
+        return true;
     }
 
 }

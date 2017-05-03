@@ -68,6 +68,11 @@ public class DataModelElement {
     /**
      * The columns mapped into the PropertyHolder class
      */
+    protected String qualifiedName;
+    
+    /**
+     * The columns mapped into the PropertyHolder class
+     */
     protected Collection<PropertyHolder> properties;
 
     private DataModelElement() {
@@ -139,5 +144,13 @@ public class DataModelElement {
         dme.setImports(new TreeSet<>());
         dme.setProperties(new TreeSet<>());
         return dme;
+    }
+
+    public String getQualifiedName() {
+        return qualifiedName;
+    }
+
+    public void setQualifiedName(String qualifiedName) {
+        this.qualifiedName = qualifiedName;
     }
 }

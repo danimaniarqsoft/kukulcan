@@ -81,15 +81,15 @@ public class DataMapping {
                 dme.setTableName(table.getName());
                 dme.setName(SchemaPropertiesParser.parseToClassName(singularName));
                 dme.setPropertyName(SchemaPropertiesParser.parseToPropertyName(singularName));
-                configPrimaryKey(dme, singularName, table.getPrimaryKeys());
+                extractPrimaryKey(dme, singularName, table.getPrimaryKeys());
                 extractProperties(dme, table);
                 dmeList.add(dme);
             }
         }
     }
 
-    public static void configPrimaryKey(DataModelElement dme, String singularName, Column[] columns) {
-        dme.setPrimaryKey(extractPrimaryKey(singularName, columns));
+    public static void extractPrimaryKey(DataModelElement dme, String singularName, Column[] columns) {
+        dme.setPrimaryKey(mapPrimaryKeyElements(singularName, columns));
         if (!dme.getPrimaryKey().isComposed()) {
             dme.getImports().add(dme.getPrimaryKey().getQualifiedLabel());
         }
@@ -101,9 +101,10 @@ public class DataMapping {
             if (!column.isPrimaryKey()) {
                 String propertyName = SchemaPropertiesParser.parseToPropertyName(column.getName());
                 String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
-                dme.getImports().add(column.getType().getJavaEquivalentClass().getCanonicalName());
-                String qualifiedLabel = column.getType().getJavaEquivalentClass().toString();
-                dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), qualifiedLabel, false));
+                String qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();
+                dme.getImports().add(qualifiedName);
+                dme.addProperty(new JavaProperty(propertyName, propertyType, column.getName(), qualifiedName, false));
+                System.out.println(qualifiedName);
             }
         }
     }
@@ -112,8 +113,8 @@ public class DataMapping {
         return columns.length == 0 ? false : true;
     }
 
-    public static PrimaryKey extractPrimaryKey(String singularName, Column[] columns) {
-        PrimaryKey pk = new PrimaryKey();
+    public static PrimaryKey mapPrimaryKeyElements(String singularName, Column[] columns) {
+        PrimaryKey pk = PrimaryKey.createOrderedDataModel();
         // Not found primary key
         if (columns.length == 0) {
             return null;
@@ -121,16 +122,22 @@ public class DataMapping {
         // Simple Primary key
         if (columns.length == 1) {
             pk.setType(columns[0].getType().getJavaEquivalentClass().getSimpleName());
-            pk.setQualifiedLabel(columns[0].getType().getJavaEquivalentClass().getCanonicalName());
             pk.setName(SchemaPropertiesParser.parseToPropertyName(columns[0].getName()));
+            pk.setQualifiedLabel(columns[0].getType().getJavaEquivalentClass().getCanonicalName());
             pk.setComposed(false);
         } else {
             // Composed Primary key
             pk.setType(SchemaPropertiesParser.parseToClassName(singularName) + "PK");
             pk.setName(SchemaPropertiesParser.parseToPropertyName(singularName) + "PK");
             pk.setComposed(true);
+            for (Column columnElement : columns) {
+                String propertyName = SchemaPropertiesParser.parseToPropertyName(columnElement.getName());
+                String propertyType = columnElement.getType().getJavaEquivalentClass().getSimpleName();
+                String qualifiedLabel = columnElement.getType().getJavaEquivalentClass().toString();
+                pk.addProperty(
+                        new JavaProperty(propertyName, propertyType, columnElement.getName(), qualifiedLabel, true));
+            }
         }
-
         return pk;
     }
 
@@ -142,9 +149,9 @@ public class DataMapping {
      * @return
      */
     public static List<DataModelGroup> createSingleDataModelGroupList(DataContext dataContext,
-            List<String> tablesToProces) {
+            List<String> tablesToProcess) {
         List<DataModelGroup> dataModelGroupList = new ArrayList<>();
-        dataModelGroupList.add(createDataModelGroup(dataContext, tablesToProces));
+        dataModelGroupList.add(createDataModelGroup(dataContext, tablesToProcess));
         return dataModelGroupList;
     }
 

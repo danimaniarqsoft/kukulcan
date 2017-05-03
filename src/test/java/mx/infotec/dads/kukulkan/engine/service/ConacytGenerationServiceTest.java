@@ -53,6 +53,7 @@ import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
 import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
+import mx.infotec.dads.kukulkan.util.GenerationType;
 import mx.infotec.dads.kukulkan.util.H2FileDatabaseConfiguration;
 import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 
@@ -110,6 +111,7 @@ public class ConacytGenerationServiceTest {
         pConf.setServiceLayerName("service");
         pConf.setDaoLayerName("repository");
         pConf.setDomainLayerName("model");
+        pConf.setGlobalGenerationType(GenerationType.AUTO);
         // Create DataStore
         DataStore dsExample = new DataStore();
         dsExample.setName("h2-db-test");
