@@ -70,6 +70,8 @@ public class Application {
             dsRepository.save(dsValuApp);
             DataStore testDs = EntitiesFactory.createTestDataStore(dst);
             dsRepository.save(testDs);
+            DataStore dsConacyt = EntitiesFactory.createConacytDataStore(dst);
+            dsRepository.save(dsConacyt);
             RuleType singularRuleType = ruleTypeRepository.save(EntitiesFactory.createDefaultSingularRuleType());
             ruleTypeRepository.save(EntitiesFactory.createDefaultPluralRuleType());
             ruleRepository.save(EntitiesFactory.createOsRule(singularRuleType));

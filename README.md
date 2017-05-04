@@ -42,6 +42,12 @@ http://www.h2database.com/
 #### Spring Security and H2 Console
 https://dzone.com/articles/using-the-h2-database-console-in-spring-boot-with
 
+#### Install Oracle Jar
+
+```bash
+mvn install:install-file -Dfile=./ojdbc6-11.2.0.3.jar -DgroupId=oracle -DartifactId=ojdbc6 -Dversion=11.2.0.3 -Dpackaging=jar
+```
+
 
 ## Docker Kukulkan
 

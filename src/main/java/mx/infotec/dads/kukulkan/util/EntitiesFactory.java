@@ -80,6 +80,18 @@ public class EntitiesFactory {
         dsValuApp.setUsername("root");
         return dsValuApp;
     }
+    
+    public static DataStore createConacytDataStore(DataStoreType dst) {
+        DataStore dsValuApp = new DataStore();
+        dsValuApp.setDataStoreType(dst);
+        dsValuApp.setDriverClass("oracle.jdbc.driver.OracleDriver");
+        dsValuApp.setName("conacyt");
+        dsValuApp.setPassword("ApEfiDEV17");
+        dsValuApp.setTableTypes(TABLE_VIEW);
+        dsValuApp.setUrl("jdbc:oracle:thin:@172.22.13.130:1538/MIICDEV");
+        dsValuApp.setUsername("APPL_EFIDT");
+        return dsValuApp;
+    }
 
     public static DataStore createTestDataStore(DataStoreType dst) {
         DataStore dsValuApp = new DataStore();
