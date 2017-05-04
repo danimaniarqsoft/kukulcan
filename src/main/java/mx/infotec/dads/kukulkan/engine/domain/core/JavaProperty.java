@@ -41,6 +41,7 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
     private String qualifiedName;
     private String columnName;
     private String columnType;
+    private boolean indexed;
     private boolean nullable;
     private boolean primaryKey;
 
@@ -95,6 +96,15 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
     @Override
     public boolean isNullable() {
         return nullable;
+    }
+
+    public void setIndexed(boolean indexed) {
+        this.indexed = indexed;
+    }
+
+    @Override
+    public boolean isIndexed() {
+        return this.indexed;
     }
 
     @Override
@@ -186,6 +196,11 @@ public class JavaProperty implements PropertyHolder<JavaProperty> {
 
         public JavaPropertyBuilder isPrimaryKey(boolean isPrimaryKey) {
             this.javaProperty.setPrimaryKey(isPrimaryKey);
+            return this;
+        }
+
+        public JavaPropertyBuilder isIndexed(boolean indexed) {
+            this.javaProperty.setIndexed(indexed);
             return this;
         }
 

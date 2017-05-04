@@ -61,7 +61,7 @@ public class ${className} implements Serializable {
     	<#elseif primaryKey.generationType.name() == "AUTO">
     @GeneratedValue(strategy = GenerationType.AUTO)
     	</#if>
-    @Column(name = "${primaryKey.name}")
+    @Column(name = "${primaryKey.name}", unique = true, nullable = false)
     </#if>
     private ${primaryKey.type} ${primaryKey.name};
 	<#list properties as property>
@@ -72,7 +72,7 @@ public class ${className} implements Serializable {
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
      */
-    @Column(name = "${property.columnName}"<#if property.nullable==false> ,nullable = false</#if>)
+    @Column(name = "${property.columnName}"<#if property.indexed==true>, unique=true</#if><#if property.nullable==false>, nullable = false</#if>)
     <#if property.qualifiedName == "java.util.Date">
     	<#if property.columnType == "DATE">
     @Temporal(TemporalType.DATE)

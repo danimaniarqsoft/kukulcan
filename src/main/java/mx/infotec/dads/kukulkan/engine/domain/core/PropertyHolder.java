@@ -33,7 +33,7 @@ import java.util.Collection;
  * @param <T>
  *
  */
-public interface PropertyHolder<T> extends Comparable<T>{
+public interface PropertyHolder<T> extends Comparable<T> {
 
     /**
      * Return the name of the property
@@ -48,14 +48,14 @@ public interface PropertyHolder<T> extends Comparable<T>{
      * @return propertyType
      */
     String getPropertyType();
-    
+
     /**
      * Return the name of the property
      * 
      * @return propertyName
      */
     String getColumnName();
-    
+
     /**
      * Return the columnType of the table
      * 
@@ -77,13 +77,20 @@ public interface PropertyHolder<T> extends Comparable<T>{
      * @return boolean
      */
     boolean isPrimaryKey();
-    
+
     /**
      * Return true if it is nullable
      * 
      * @return boolean
      */
     boolean isNullable();
+
+    /**
+     * Return true if it is index
+     * 
+     * @return boolean
+     */
+    boolean isIndexed();
 
     /**
      * Return associations if it exists

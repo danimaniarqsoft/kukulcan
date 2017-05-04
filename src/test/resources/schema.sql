@@ -65,6 +65,8 @@ CREATE TABLE IF NOT EXISTS usuario (
   fecha_ultimo_cambio_clave TIMESTAMP NULL DEFAULT NULL,
   constraint pk_usuario primary key (id)
 );
+CREATE INDEX IDXCORREO ON usuario(correo);
+
 /*==============================================================*/
 /*Table: usuario_detalle                                        */
 /*==============================================================*/

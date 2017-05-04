@@ -115,7 +115,7 @@ public class DataMapping {
                         .withQualifiedName(qualifiedName)
                         .isNullable(column.isNullable())
                         .isPrimaryKey(false)
-                        .build());
+                        .isIndexed(column.isIndexed()).build());
             }
         }
     }
@@ -153,7 +153,7 @@ public class DataMapping {
                         .withQualifiedName(qualifiedLabel)
                         .isNullable(columnElement.isNullable())
                         .isPrimaryKey(true)
-                        .build());
+                        .isIndexed(columnElement.isIndexed()).build());
             }
         }
         return pk;
