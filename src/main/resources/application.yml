@@ -10,7 +10,7 @@ spring:
 server:
   port: 8080
 kukulkan:
-  outputdir: /home/daniel/eclipse-wksp-components/
+  outputdir: /home/daniel/git/
 logging:
   level:
     root: info
