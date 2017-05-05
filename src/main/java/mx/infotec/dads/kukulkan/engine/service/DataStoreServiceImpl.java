@@ -37,8 +37,20 @@ import mx.infotec.dads.kukulkan.engine.domain.core.DataStore;
 import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
 import mx.infotec.dads.kukulkan.util.Constants;
 
+/**
+ * DataStoreServiceImpl
+ * 
+ * @author Daniel Cortes Pichardo
+ *
+ */
 @Service
 public class DataStoreServiceImpl implements DataStoreService {
+
+    private static final String DATA_STORE_TYPE = "type";
+    private static final String DATA_STORE_URL = "url";
+    private static final String DATA_STORE_DRIVER_CLASS = "driver-class";
+    private static final String DATA_STORE_USERNAME = "username";
+    private static final String DATA_STORE_PASSWORD = "password";
     @Autowired
     private DataStoreRepository repository;
 
@@ -46,11 +58,11 @@ public class DataStoreServiceImpl implements DataStoreService {
     public DataContext getDataContext(DataStore dataStore) {
         if (dataStore.getDataStoreType().getName().equals(Constants.DATA_STORE_TYPE_JDBC)) {
             DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
-            properties.put("type", dataStore.getDataStoreType().getName());
-            properties.put("url", dataStore.getUrl());
-            properties.put("driver-class", dataStore.getDriverClass());
-            properties.put("username", dataStore.getUsername());
-            properties.put("password", dataStore.getPassword());
+            properties.put(DATA_STORE_TYPE, dataStore.getDataStoreType().getName());
+            properties.put(DATA_STORE_URL, dataStore.getUrl());
+            properties.put(DATA_STORE_DRIVER_CLASS, dataStore.getDriverClass());
+            properties.put(DATA_STORE_USERNAME, dataStore.getUsername());
+            properties.put(DATA_STORE_PASSWORD, dataStore.getPassword());
             return DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
         } else {
             return null;

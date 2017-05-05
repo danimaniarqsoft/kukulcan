@@ -26,18 +26,26 @@ package mx.infotec.dads.kukulkan.util;
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.metamodel.DataContext;
 import org.apache.metamodel.schema.Column;
+import org.apache.metamodel.schema.ColumnType;
 import org.apache.metamodel.schema.Table;
+import org.springframework.boot.autoconfigure.session.SessionProperties.Jdbc;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
+
+import com.sun.enterprise.module.bootstrap.Main;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaProperty;
+import mx.infotec.dads.kukulkan.engine.domain.core.JavaProperty.JavaPropertyBuilder;
 import mx.infotec.dads.kukulkan.engine.domain.core.PrimaryKey;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
+import mx.infotec.dads.kukulkan.engine.domain.core.PropertyHolder;
 import mx.infotec.dads.kukulkan.engine.service.layers.LayerTask;
 
 /**
@@ -96,29 +104,50 @@ public class DataMapping {
     }
 
     public static void extractProperties(DataModelElement dme, Table table) {
-        String propertyType = null;
-        String qualifiedName = null;
         Column[] columns = table.getColumns();
         for (Column column : columns) {
             if (!column.isPrimaryKey()) {
-                String propertyName = SchemaPropertiesParser.parseToPropertyName(column.getName());
-                if (column.isIndexed() && column.getType().isNumber()) {
-                    propertyType = "Long";
-                    qualifiedName = "java.lang.Long";
-                } else {
-                    propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
-                    qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();
-                }
-                if ("Blob".equals(propertyType) || "Clob".equals(propertyType)) {
-                    propertyType = "byte[]";
-                } else {
-                    dme.getImports().add(qualifiedName);
-                }
-                dme.addProperty(JavaProperty.builder().withPropertyName(propertyName).withPropertyType(propertyType)
-                        .withColumnName(column.getName()).withColumnType(column.getNativeType())
-                        .withQualifiedName(qualifiedName).isNullable(column.isNullable()).isPrimaryKey(false)
-                        .isIndexed(column.isIndexed()).build());
+                PropertyHolder<JavaProperty> javaProperty = JavaProperty.builder()
+                        .withPropertyName(SchemaPropertiesParser.parseToPropertyName(column.getName()))
+                        .withPropertyType(extractPropertyType(column))
+                        .withColumnName(column.getName())
+                        .withColumnType(column.getNativeType())
+                        .withQualifiedName(extractQualifiedType(column))
+                        .isNullable(column.isNullable())
+                        .isPrimaryKey(false)
+                        .isIndexed(column.isIndexed()).build();
+                dme.addProperty(javaProperty);
+                addImports(dme.getImports(), column.getType());
             }
+        }
+    }
+
+    private static boolean addImports(Collection<String> imports, ColumnType columnType) {
+        String javaType = columnType.getJavaEquivalentClass().getCanonicalName();
+        if (columnType.equals(ColumnType.BLOB) || columnType.equals(ColumnType.CLOB)
+                || columnType.equals(ColumnType.NCLOB) || javaType.contains(".lang.") || javaType.contains(".Blob.")) {
+            return false;
+        }
+        imports.add(javaType);
+        return true;
+    }
+
+    private static String extractPropertyType(Column column) {
+        String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
+        if (column.isIndexed() && column.getType().isNumber()) {
+            return "Long";
+        } else if ("Blob".equals(propertyType) || "Clob".equals(propertyType)) {
+            return "byte[]";
+        } else {
+            return propertyType;
+        }
+    }
+
+    private static String extractQualifiedType(Column column) {
+        if (column.isIndexed() && column.getType().isNumber()) {
+            return "java.lang.Long";
+        } else {
+            return column.getType().getJavaEquivalentClass().getCanonicalName();
         }
     }
 
@@ -186,5 +215,12 @@ public class DataMapping {
         model.put("propertyName", dmElement.getPropertyName());
         model.put("name", dmElement.getName());
         model.put("id", "Long");
+    }
+
+    public static void main(String[] args) {
+
+        String cad = "java.lang.Long";
+        System.out.println(cad.contains(".lang."));
+
     }
 }
