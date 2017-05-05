@@ -91,6 +91,10 @@ public class DataMapping {
     public static void extractPrimaryKey(DataModelElement dme, String singularName, Column[] columns) {
         dme.setPrimaryKey(mapPrimaryKeyElements(singularName, columns));
         if (!dme.getPrimaryKey().isComposed()) {
+            if(dme.getPrimaryKey().getQualifiedLabel().equals("java.lang.Double")){
+                dme.getPrimaryKey().setQualifiedLabel("java.lang.Long");
+                dme.getPrimaryKey().setType("Double");
+            }
             dme.getImports().add(dme.getPrimaryKey().getQualifiedLabel());
         }
     }
@@ -107,14 +111,9 @@ public class DataMapping {
                 } else {
                     dme.getImports().add(qualifiedName);
                 }
-                dme.addProperty(JavaProperty.builder()
-                        .withPropertyName(propertyName)
-                        .withPropertyType(propertyType)
-                        .withColumnName(column.getName())
-                        .withColumnType(column.getNativeType())
-                        .withQualifiedName(qualifiedName)
-                        .isNullable(column.isNullable())
-                        .isPrimaryKey(false)
+                dme.addProperty(JavaProperty.builder().withPropertyName(propertyName).withPropertyType(propertyType)
+                        .withColumnName(column.getName()).withColumnType(column.getNativeType())
+                        .withQualifiedName(qualifiedName).isNullable(column.isNullable()).isPrimaryKey(false)
                         .isIndexed(column.isIndexed()).build());
             }
         }
@@ -145,14 +144,9 @@ public class DataMapping {
                 String propertyName = SchemaPropertiesParser.parseToPropertyName(columnElement.getName());
                 String propertyType = columnElement.getType().getJavaEquivalentClass().getSimpleName();
                 String qualifiedLabel = columnElement.getType().getJavaEquivalentClass().toString();
-                pk.addProperty(JavaProperty.builder()
-                        .withPropertyName(propertyName)
-                        .withPropertyType(propertyType)
-                        .withColumnName(columnElement.getName())
-                        .withColumnType(columnElement.getNativeType())
-                        .withQualifiedName(qualifiedLabel)
-                        .isNullable(columnElement.isNullable())
-                        .isPrimaryKey(true)
+                pk.addProperty(JavaProperty.builder().withPropertyName(propertyName).withPropertyType(propertyType)
+                        .withColumnName(columnElement.getName()).withColumnType(columnElement.getNativeType())
+                        .withQualifiedName(qualifiedLabel).isNullable(columnElement.isNullable()).isPrimaryKey(true)
                         .isIndexed(columnElement.isIndexed()).build());
             }
         }
