@@ -93,7 +93,7 @@ public class DataMapping {
         if (!dme.getPrimaryKey().isComposed()) {
             if(dme.getPrimaryKey().getQualifiedLabel().equals("java.lang.Double")){
                 dme.getPrimaryKey().setQualifiedLabel("java.lang.Long");
-                dme.getPrimaryKey().setType("Double");
+                dme.getPrimaryKey().setType("Long");
             }
             dme.getImports().add(dme.getPrimaryKey().getQualifiedLabel());
         }

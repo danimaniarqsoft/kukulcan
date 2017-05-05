@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS perfil (
 /*Table: usuario                                                */
 /*==============================================================*/
 CREATE TABLE IF NOT EXISTS usuario (
-  id    				NUMBER DEFAULT nextval('usuario_id_seq'),
+  id    				NUMBER(10) DEFAULT nextval('usuario_id_seq'),
   username 				VARCHAR(50) NOT NULL,
   password 				VARCHAR(128) NOT NULL,
   correo 				VARCHAR(254) NOT NULL,
