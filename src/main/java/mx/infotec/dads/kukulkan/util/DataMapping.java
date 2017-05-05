@@ -91,21 +91,24 @@ public class DataMapping {
     public static void extractPrimaryKey(DataModelElement dme, String singularName, Column[] columns) {
         dme.setPrimaryKey(mapPrimaryKeyElements(singularName, columns));
         if (!dme.getPrimaryKey().isComposed()) {
-            if(dme.getPrimaryKey().getQualifiedLabel().equals("java.lang.Double")){
-                dme.getPrimaryKey().setQualifiedLabel("java.lang.Long");
-                dme.getPrimaryKey().setType("Long");
-            }
             dme.getImports().add(dme.getPrimaryKey().getQualifiedLabel());
         }
     }
 
     public static void extractProperties(DataModelElement dme, Table table) {
+        String propertyType = null;
+        String qualifiedName = null;
         Column[] columns = table.getColumns();
         for (Column column : columns) {
             if (!column.isPrimaryKey()) {
                 String propertyName = SchemaPropertiesParser.parseToPropertyName(column.getName());
-                String propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
-                String qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();
+                if (column.isIndexed() && column.getType().isNumber()) {
+                    propertyType = "Long";
+                    qualifiedName = "java.lang.Long";
+                } else {
+                    propertyType = column.getType().getJavaEquivalentClass().getSimpleName();
+                    qualifiedName = column.getType().getJavaEquivalentClass().getCanonicalName();
+                }
                 if ("Blob".equals(propertyType) || "Clob".equals(propertyType)) {
                     propertyType = "byte[]";
                 } else {
@@ -131,9 +134,9 @@ public class DataMapping {
         }
         // Simple Primary key
         if (columns.length == 1) {
-            pk.setType(columns[0].getType().getJavaEquivalentClass().getSimpleName());
+            pk.setType("Long");
             pk.setName(SchemaPropertiesParser.parseToPropertyName(columns[0].getName()));
-            pk.setQualifiedLabel(columns[0].getType().getJavaEquivalentClass().getCanonicalName());
+            pk.setQualifiedLabel("java.lang.Long");
             pk.setComposed(false);
         } else {
             // Composed Primary key
