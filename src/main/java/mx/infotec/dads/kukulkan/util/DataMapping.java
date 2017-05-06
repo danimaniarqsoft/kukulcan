@@ -34,15 +34,10 @@ import org.apache.metamodel.DataContext;
 import org.apache.metamodel.schema.Column;
 import org.apache.metamodel.schema.ColumnType;
 import org.apache.metamodel.schema.Table;
-import org.springframework.boot.autoconfigure.session.SessionProperties.Jdbc;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
-
-import com.sun.enterprise.module.bootstrap.Main;
 
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaProperty;
-import mx.infotec.dads.kukulkan.engine.domain.core.JavaProperty.JavaPropertyBuilder;
 import mx.infotec.dads.kukulkan.engine.domain.core.PrimaryKey;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.domain.core.PropertyHolder;
