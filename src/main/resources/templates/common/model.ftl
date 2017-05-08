@@ -88,7 +88,7 @@ public class ${className} implements Serializable {
     private ${property.propertyType} ${property.propertyName};
 	</#list>
 	
-	/**
+    /**
      * Este constructor fue generado automáticamente por ${author}
      * 
      */
