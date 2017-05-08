@@ -92,7 +92,7 @@ public class ${className} implements Serializable {
      * Este constructor fue generado automáticamente por ${author}
      * 
      */
-    public Usuario() {
+    public ${className}() {
 
     }
     
