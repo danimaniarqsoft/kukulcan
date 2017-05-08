@@ -67,6 +67,7 @@ public class ModelLayerTask extends SpringRestLayerTaskVisitor {
             model.put("properties", dmElement.getProperties());
             dmElement.getPrimaryKey().setGenerationType(pConf.getGlobalGenerationType());
             model.put("primaryKey", dmElement.getPrimaryKey());
+            model.put("mandatoryProperties", dmElement.getMandatoryProperties());
             dmElement.getImports().add("javax.persistence.*");
             dmElement.getImports().add("java.io.Serializable");
             dmElement.getImports().add("java.util.Objects");

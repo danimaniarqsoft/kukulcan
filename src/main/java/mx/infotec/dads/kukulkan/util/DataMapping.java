@@ -38,6 +38,7 @@ import org.apache.metamodel.schema.Table;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelGroup;
 import mx.infotec.dads.kukulkan.engine.domain.core.JavaProperty;
+import mx.infotec.dads.kukulkan.engine.domain.core.MandatoryProperty;
 import mx.infotec.dads.kukulkan.engine.domain.core.PrimaryKey;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.domain.core.PropertyHolder;
@@ -100,11 +101,15 @@ public class DataMapping {
 
     public static void extractProperties(DataModelElement dme, Table table) {
         Column[] columns = table.getColumns();
+        String propertyName = null;
+        String propertyType = null;
         for (Column column : columns) {
             if (!column.isPrimaryKey()) {
+                propertyName = SchemaPropertiesParser.parseToPropertyName(column.getName());
+                propertyType = extractPropertyType(column);
                 PropertyHolder<JavaProperty> javaProperty = JavaProperty.builder()
-                        .withPropertyName(SchemaPropertiesParser.parseToPropertyName(column.getName()))
-                        .withPropertyType(extractPropertyType(column))
+                        .withPropertyName(propertyName)
+                        .withPropertyType(propertyType)
                         .withColumnName(column.getName())
                         .withColumnType(column.getNativeType())
                         .withQualifiedName(extractQualifiedType(column))
@@ -113,6 +118,7 @@ public class DataMapping {
                         .isIndexed(column.isIndexed()).build();
                 dme.addProperty(javaProperty);
                 addImports(dme.getImports(), column.getType());
+                dme.getMandatoryProperties().add(new MandatoryProperty(propertyType, propertyName));                   
                 if(!column.isNullable()){
                 dme.setHasNotNullElements(true);
                 }

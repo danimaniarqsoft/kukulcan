@@ -88,13 +88,25 @@ public class ${className} implements Serializable {
     private ${property.propertyType} ${property.propertyName};
 	</#list>
 	
-    /**
+	/**
      * Este constructor fue generado automáticamente por ${author}
      * 
      */
     public ${className}() {
 
     }
+	<#if mandatoryProperties?has_content>
+	/**
+     * Este constructor fue generado automáticamente por ${author}
+     * 
+     */
+    public ${className}(<#list mandatoryProperties[0..*1] as property>${property.type} ${property.name}</#list><#list mandatoryProperties[1..] as property>, ${property.type} ${property.name}</#list>) {
+    <#list mandatoryProperties as property>
+        this.${property.name} = ${property.name};
+    </#list>
+    }
+        
+	</#if>
     
     /**
      * Este método fue generado automaticamente por ${author} 

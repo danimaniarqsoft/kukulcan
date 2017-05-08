@@ -69,6 +69,7 @@ public class ModelLayerTask extends ConacytLayerTaskVisitor {
             model.put("primaryKey", dmElement.getPrimaryKey());
             dmElement.getImports().add("javax.persistence.*");
             dmElement.getImports().add("java.io.Serializable");
+            model.put("mandatoryProperties", dmElement.getMandatoryProperties());
             //dmElement.getImports().add("java.util.Objects");
             model.put("imports", dmElement.getImports());
             model.put("hasNotNullElements", dmElement.isHasNotNullElements());

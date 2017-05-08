@@ -75,6 +75,11 @@ public class DataModelElement {
      */
     protected Collection<PropertyHolder> properties;
     
+    /**
+     * The columns mapped into the PropertyHolder class
+     */
+    private Collection<MandatoryProperty> mandatoryProperties ;
+    
     protected boolean hasNotNullElements;
 
     private DataModelElement() {
@@ -145,6 +150,7 @@ public class DataModelElement {
         DataModelElement dme = new DataModelElement();
         dme.setImports(new TreeSet<>());
         dme.setProperties(new TreeSet<>());
+        dme.setMandatoryProperties(new TreeSet<>());
         return dme;
     }
 
@@ -162,5 +168,13 @@ public class DataModelElement {
 
     public void setHasNotNullElements(boolean hasNotNullElements) {
         this.hasNotNullElements = hasNotNullElements;
+    }
+
+    public Collection<MandatoryProperty> getMandatoryProperties() {
+        return mandatoryProperties;
+    }
+
+    public void setMandatoryProperties(Collection<MandatoryProperty> mandatoryProperties) {
+        this.mandatoryProperties = mandatoryProperties;
     }
 }
