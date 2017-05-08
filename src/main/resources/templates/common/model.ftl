@@ -89,6 +89,14 @@ public class ${className} implements Serializable {
 	</#list>
 	
     /**
+     * Este constructor fue generado automáticamente por ${author}
+     * 
+     */
+    public Usuario() {
+
+    }
+    
+    /**
      * Este método fue generado automaticamente por ${author} 
      * Este método GETTER fue generado para la ${tableName}.${primaryKey.name}
      *
@@ -139,33 +147,22 @@ public class ${className} implements Serializable {
     </#list>
 
     /**
-     * Este método fue generado automaticamente por ${author} 
+     * Este método fue generado automaticamente por ${author}
      *
-     * @return boolean
-     *
-     * @kukulkanGenerated ${aDateTime?iso_utc}
-     */    
-     
-    @Override
-    public boolean equals(Object otherObj) {
-        if ((otherObj == null) || !(otherObj instanceof ${className})) {
-            return false;
-        }
-        final ${className} other = (${className}) otherObj;
-        return Objects.equals(this.${primaryKey.name}, other.get${primaryKey.name?cap_first}());
-    }
-    
-    /**
-     * Este método fue generado automaticamente por ${author} 
-     *
-     * @return hashCode
+     * @return el valor de representado por la entidad ${className}
      *
      * @kukulkanGenerated ${aDateTime?iso_utc}
-     */    
-     
+     */
     @Override
-    public int hashCode() {
-        return Objects.hash(<#list properties as property>this.${property.propertyName}, </#list>this.${primaryKey.name});
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        <#list properties as property>
+        sb.append(", ${property.propertyName}=").append(${property.propertyName});
+        </#list>
+        sb.append("]");
+        return sb.toString();
     }
-
 }

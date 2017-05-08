@@ -113,6 +113,9 @@ public class DataMapping {
                         .isIndexed(column.isIndexed()).build();
                 dme.addProperty(javaProperty);
                 addImports(dme.getImports(), column.getType());
+                if(!column.isNullable()){
+                dme.setHasNotNullElements(true);
+                }
             }
         }
     }

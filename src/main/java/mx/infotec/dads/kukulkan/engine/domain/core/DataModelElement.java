@@ -74,6 +74,8 @@ public class DataModelElement {
      * The columns mapped into the PropertyHolder class
      */
     protected Collection<PropertyHolder> properties;
+    
+    protected boolean hasNotNullElements;
 
     private DataModelElement() {
 
@@ -152,5 +154,13 @@ public class DataModelElement {
 
     public void setQualifiedName(String qualifiedName) {
         this.qualifiedName = qualifiedName;
+    }
+
+    public boolean isHasNotNullElements() {
+        return hasNotNullElements;
+    }
+
+    public void setHasNotNullElements(boolean hasNotNullElements) {
+        this.hasNotNullElements = hasNotNullElements;
     }
 }

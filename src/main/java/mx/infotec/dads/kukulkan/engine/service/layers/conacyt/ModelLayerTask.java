@@ -71,6 +71,7 @@ public class ModelLayerTask extends ConacytLayerTaskVisitor {
             dmElement.getImports().add("java.io.Serializable");
             dmElement.getImports().add("java.util.Objects");
             model.put("imports", dmElement.getImports());
+            model.put("hasNotNullElements", dmElement.isHasNotNullElements());
             fillModel(pConf, model, dmgName, basePackage, dmElement);
             fillPrimaryKey(pConf, model, dmgName, basePackage, dmElement);
         }
