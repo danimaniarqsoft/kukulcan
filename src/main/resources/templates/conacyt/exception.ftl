@@ -24,46 +24,51 @@
  */
 ${package}
 
-${imports}
-import java.io.Serializable;
-
 /**
- * The ${className}
+ * The General Exception
  * 
  * @author ${author}
  *
  */
-@Entity("${tableName}")
-public class ${className} implements Serializable {
-    /**
-     * Este campo fue generado automaticamente por ${author} 
-     * Este campo corresponde a la tabla ${tableName}
-     *
-     * @kukulkanGenerated ${aDateTime?iso_utc}
-     */
-    private ${propertyType} ${propertyName};
+public class ${appName} extends Exception {
 
-	 /**
-     * Este método fue generado automaticamente por ${author} 
-     * Este método GETTER fue generado para la ${tableName}.${propertyName}
-     *
-     * @return el valor de area_conocimiento.id
-     *
-     * @kukulkanGenerated ${aDateTime?iso_utc}
-     */
-    public ${propertyType} get${propertyName?cap_first}() {
-        return ${propertyName};
+    private int codigo;
+    private String descripcion;
+    private Boolean exito;
+
+    public ${appName}() {
+
     }
 
-	 /**
-     * Este método fue generado automaticamente por ${author} 
-     * Este método GETTER fue generado para la tabla. ${tableName}.${propertyName}
-     *
-     * @return el valor de area_conocimiento.id
-     *
-     * @kukulkanGenerated ${aDateTime?iso_utc}
-     */
-    public void set${propertyName?cap_first}(${propertyType} ${propertyName}) {
-        this.${propertyName} = ${propertyName};
+    public ${appName}(int codigo, String descripcion, boolean exito) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.exito = exito;
     }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Boolean getExito() {
+        return exito;
+    }
+
+    public void setExito(Boolean exito) {
+        this.exito = exito;
+    }
+
 }
+

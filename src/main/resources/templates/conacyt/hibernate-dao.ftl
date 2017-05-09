@@ -1,7 +1,7 @@
 /*
  *  
  * The MIT License (MIT)
- * Copyright (c) 2016 Daniel Cortes Pichardo
+ * Copyright (c) ${year} ${author}
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.util;
+${package}
+
+import org.springframework.stereotype.Service;
 
 /**
- * ArchetypeType
+ * ${name}HbDAO
  * 
- * @author Daniel Cortes Pichardo
+ * @author ${author}
  *
  */
-public enum ArchetypeType {
-    REST_SPRING_JPA, PRIMEFACES_SPRING_MYBATIS, CONACYT, NULL
+@Service
+public interface ${name}HbDAO {
+
 }
+

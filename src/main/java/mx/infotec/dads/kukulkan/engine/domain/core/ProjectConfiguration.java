@@ -42,11 +42,15 @@ public class ProjectConfiguration implements Serializable {
     private String packaging;
     private String author;
     private String year;
+    private String appName;
 
     private String webLayerName;
     private String serviceLayerName;
     private String daoLayerName;
     private String domainLayerName;
+    private String dtoLayerName;
+    private String exceptionLayerName;
+    private String conacytDaoLayerName;
 
     // Global Generation Types Strategy
     private GenerationType globalGenerationType;
@@ -137,6 +141,38 @@ public class ProjectConfiguration implements Serializable {
 
     public void setGlobalGenerationType(GenerationType globalGenerationType) {
         this.globalGenerationType = globalGenerationType;
+    }
+
+    public String getDtoLayerName() {
+        return dtoLayerName;
+    }
+
+    public void setDtoLayerName(String dtoLayerName) {
+        this.dtoLayerName = dtoLayerName;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public String getExceptionLayerName() {
+        return exceptionLayerName;
+    }
+
+    public void setExceptionLayerName(String exceptionLayerName) {
+        this.exceptionLayerName = exceptionLayerName;
+    }
+
+    public String getConacytDaoLayerName() {
+        return conacytDaoLayerName;
+    }
+
+    public void setConacytDaoLayerName(String conacytDaoLayerName) {
+        this.conacytDaoLayerName = conacytDaoLayerName;
     }
 
 }

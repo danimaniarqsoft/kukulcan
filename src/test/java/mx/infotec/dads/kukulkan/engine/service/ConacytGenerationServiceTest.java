@@ -102,6 +102,7 @@ public class ConacytGenerationServiceTest {
         // Create ProjectConfiguration
         ProjectConfiguration pConf = new ProjectConfiguration();
         pConf.setId("test-kukulkan");
+        pConf.setAppName("Conacyt");
         pConf.setGroupId("mx.conacyt");
         pConf.setVersion("1.0.0");
         pConf.setPackaging("mx.conacyt.efidt");
@@ -110,7 +111,11 @@ public class ConacytGenerationServiceTest {
         pConf.setWebLayerName("web");
         pConf.setServiceLayerName("bm");
         pConf.setDaoLayerName("repository");
+        pConf.setConacytDaoLayerName("dao");
         pConf.setDomainLayerName("model");
+        pConf.setDtoLayerName("dto");
+        pConf.setExceptionLayerName("exception");
+        pConf.setAppName("conacyt");
         pConf.setGlobalGenerationType(GenerationType.SEQUENCE);
         // Create DataStore
         DataStore dsExample = new DataStore();

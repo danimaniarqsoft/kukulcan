@@ -36,36 +36,46 @@ import org.springframework.stereotype.Service;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
-import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 import mx.infotec.dads.kukulkan.util.NameConventions;
 
 /**
- * Repository Layer Task
+ * Service Layer Task
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("conacytRepositoryLayerTask")
-public class RepositoryLayerTask extends ConacytLayerTaskVisitor {
+@Service("conacytDtoLayerTask")
+public class DtoLayerTask extends ConacytLayerTaskVisitor {
 
     @Autowired
     private TemplateService templateService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryLayerTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DtoLayerTask.class);
 
     @Override
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
+        LOGGER.debug("doForEachDataModelElement method {}", dmgName);
         String basePackage = pConf.getPackaging() + dmgName;
-        LOGGER.debug("Base package {}", basePackage);
         for (DataModelElement dmElement : dmElementCollection) {
-            addCommonDataModelElements(pConf, model, basePackage, dmElement);
-            model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
-            templateService.fillModel(pConf.getId(), "conacyt/repository.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
-                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDaoLayerName() + "/"
-                            + dmElement.getName() + NameConventions.DAO + ".java");
+            model.put("className", dmElement.getName() + NameConventions.DTO);
+            model.put("tableName", dmElement.getTableName());
+            model.put("package", formatToPackageStatement(basePackage, pConf.getDtoLayerName()));
+            model.put("properties", dmElement.getProperties());
+            dmElement.getImports().add("java.io.Serializable");
+            dmElement.getImports().remove("java.lang.Long");
+            model.put("mandatoryProperties", dmElement.getMandatoryProperties());
+            model.put("imports", dmElement.getImports());
+            fillModel(pConf, model, dmgName, basePackage, dmElement);
         }
+    }
+
+    private void fillModel(ProjectConfiguration pConf, Map<String, Object> model, String dmgName, String basePackage,
+            DataModelElement dmElement) {
+        templateService.fillModel(pConf.getId(), "conacyt/dto.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+                basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDtoLayerName() + "/"
+                        + dmElement.getName() + NameConventions.DTO + ".java");
     }
 
 }

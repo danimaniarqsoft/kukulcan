@@ -35,6 +35,10 @@ public class NameConventions {
     public static final String SERVICE = "Service";
     public static final String SERVICE_IMPLEMENTS = "ServiceImpl";
     public static final String DAO = "Repository";
+    public static final String DTO = "DTO";
+    public static final String EXCEPTION = "Exception";
+    public static final String CONACYT_DAO = "HbDAO";
+    public static final String CONACYT_DAO_IMPLEMENTS = "HbDAOImpl";
 
     private NameConventions() {
     }
