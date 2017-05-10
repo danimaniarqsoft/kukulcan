@@ -45,10 +45,12 @@ import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.engine.domain.core.Rule;
 import mx.infotec.dads.kukulkan.engine.domain.core.RuleType;
 import mx.infotec.dads.kukulkan.engine.factories.LayerTaskFactory;
+import mx.infotec.dads.kukulkan.engine.repository.DataStoreRepository;
 import mx.infotec.dads.kukulkan.engine.repository.RuleRepository;
 import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
+import mx.infotec.dads.kukulkan.util.GenerationType;
 import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 
 /**
@@ -66,6 +68,8 @@ public class GenerationServiceTest {
     private GenerationService generationService;
     @Autowired
     private DataStoreService dataStoreService;
+    @Autowired
+    private DataStoreRepository dataStoreRepository;
     @Autowired
     private RuleRepository ruleRepository;
     @Autowired
@@ -96,8 +100,13 @@ public class GenerationServiceTest {
         pConf.setServiceLayerName("service");
         pConf.setDaoLayerName("repository");
         pConf.setDomainLayerName("model");
+        pConf.setGlobalGenerationType(GenerationType.SEQUENCE);
         // Create DataStore
-        List<DataStore> findAllDataStores = dataStoreService.findAll();
+        // Create DataStore
+        DataStore dsExample = new DataStore();
+        dsExample.setName("h2-db-test");
+        Example<DataStore> dataStoreFilter = Example.of(dsExample);
+        List<DataStore> findAllDataStores = dataStoreRepository.findAll(dataStoreFilter);
         DataStore dataStore = findAllDataStores.get(0);
         // Create DataModel
         DataModelContext dmCtx = new JavaDataModelContext(dataStore);
