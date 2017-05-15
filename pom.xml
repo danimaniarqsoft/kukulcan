@@ -20,7 +20,7 @@
 	<properties>
 		<!-- Versión de mysql-connector-java -->
 		<mysql.connector.java.version>5.1.39</mysql.connector.java.version>
-		<metamodel.version>4.5.5</metamodel.version>
+		<metamodel.version>4.6.0</metamodel.version>
 		<wro4j.version>1.8.0</wro4j.version>
 		<guava.version>18.0</guava.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
