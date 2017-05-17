@@ -1,7 +1,7 @@
 /*
  *  
  * The MIT License (MIT)
- * Copyright (c) 2016 Daniel Cortes Pichardo
+ * Copyright (c) ${year} ${author}
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package mx.infotec.dads.kukulkan.util;
+${packageImpl}
+
+${importDao}
+import mx.gob.conacyt.fosec.system.dao.impl.GenericHibernateDAOImpl;
 
 /**
- * ArchetypeType
+ * ${name}Repository
  * 
- * @author Daniel Cortes Pichardo
+ * @author ${author}
  *
  */
-public enum ArchetypeType {
-    REST_SPRING_JPA, PRIMEFACES_SPRING_MYBATIS, CONACYT, NULL
+public class ${name}HbDAOImpl extends GenericHibernateDAOImpl implements ${name}HbDAO {
+
 }

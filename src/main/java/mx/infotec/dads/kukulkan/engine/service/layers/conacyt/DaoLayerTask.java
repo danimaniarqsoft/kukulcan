@@ -23,6 +23,7 @@
  */
 package mx.infotec.dads.kukulkan.engine.service.layers.conacyt;
 
+import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToImportStatement;
 import static mx.infotec.dads.kukulkan.util.JavaFileNameParser.formatToPackageStatement;
 
 import java.util.Collection;
@@ -36,35 +37,40 @@ import org.springframework.stereotype.Service;
 import mx.infotec.dads.kukulkan.engine.domain.core.DataModelElement;
 import mx.infotec.dads.kukulkan.engine.domain.core.ProjectConfiguration;
 import mx.infotec.dads.kukulkan.templating.service.TemplateService;
-import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.BasePathEnum;
 import mx.infotec.dads.kukulkan.util.NameConventions;
 
 /**
- * Repository Layer Task
+ * Dao Layer Task
  * 
  * @author Daniel Cortes Pichardo
  *
  */
-@Service("conacytRepositoryLayerTask")
-public class RepositoryLayerTask extends ConacytLayerTaskVisitor {
+@Service("conacytDaoLayerTask")
+public class DaoLayerTask extends ConacytLayerTaskVisitor {
 
     @Autowired
     private TemplateService templateService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryLayerTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DaoLayerTask.class);
 
     @Override
     public void doForEachDataModelElement(ProjectConfiguration pConf, Collection<DataModelElement> dmElementCollection,
             Map<String, Object> model, String dmgName) {
+        LOGGER.debug("doForEachDataModelElement");
         String basePackage = pConf.getPackaging() + dmgName;
-        LOGGER.debug("Base package {}", basePackage);
         for (DataModelElement dmElement : dmElementCollection) {
-            addCommonDataModelElements(pConf, model, basePackage, dmElement);
-            model.put("package", formatToPackageStatement(basePackage, pConf.getDaoLayerName()));
-            templateService.fillModel(pConf.getId(), "conacyt/repository.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
-                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getDaoLayerName() + "/"
-                            + dmElement.getName() + NameConventions.DAO + ".java");
+            model.put("package", formatToPackageStatement(basePackage, pConf.getConacytDaoLayerName()));
+            model.put("packageImpl", formatToPackageStatement(basePackage, pConf.getConacytDaoLayerName(), "impl"));
+            model.put("name", dmElement.getName());
+            model.put("importDao", formatToImportStatement(basePackage, pConf.getConacytDaoLayerName(),
+                    dmElement.getName() + NameConventions.CONACYT_DAO));
+            templateService.fillModel(pConf.getId(), "conacyt/hibernate-dao.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getConacytDaoLayerName() + "/"
+                            + dmElement.getName() + NameConventions.CONACYT_DAO + ".java");
+            templateService.fillModel(pConf.getId(), "conacyt/hibernate-dao-impl.ftl", model, BasePathEnum.SRC_MAIN_JAVA,
+                    basePackage.replace('.', '/') + "/" + dmgName + "/" + pConf.getConacytDaoLayerName() + "/impl/"
+                            + dmElement.getName() + NameConventions.CONACYT_DAO_IMPLEMENTS + ".java");
         }
     }
 
