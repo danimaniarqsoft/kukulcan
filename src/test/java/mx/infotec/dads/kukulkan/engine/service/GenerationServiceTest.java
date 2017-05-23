@@ -93,7 +93,7 @@ public class GenerationServiceTest {
         pConf.setId("test-kukulkan");
         pConf.setGroupId("mx.infotec.dads");
         pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.infotec.dads.valuapp");
+        pConf.setPackaging("mx.infotec.dads.rsr");
         pConf.setYear("2017");
         pConf.setAuthor("KUKULKAN");
         pConf.setWebLayerName("rest");
