@@ -26,6 +26,7 @@ package mx.infotec.dads.kukulkan.util;
 public class Constants {
 
     public static final String DATA_STORE_TYPE_JDBC = "jdbc";
+    public static final String DATA_STORE_TYPE_CSV="csv";
 
     private Constants() {
 

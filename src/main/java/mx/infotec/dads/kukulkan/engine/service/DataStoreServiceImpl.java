@@ -64,6 +64,11 @@ public class DataStoreServiceImpl implements DataStoreService {
             properties.put(DATA_STORE_USERNAME, dataStore.getUsername());
             properties.put(DATA_STORE_PASSWORD, dataStore.getPassword());
             return DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
+        } else if (dataStore.getDataStoreType().getName().equals(Constants.DATA_STORE_TYPE_CSV)) {
+            DataContextPropertiesImpl properties = new DataContextPropertiesImpl();
+            properties.put(DATA_STORE_TYPE, dataStore.getDataStoreType().getName());
+            properties.put(DATA_STORE_URL, dataStore.getUrl());
+            return DataContextFactoryRegistryImpl.getDefaultInstance().createDataContext(properties);
         } else {
             return null;
         }

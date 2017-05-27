@@ -123,6 +123,8 @@ public class ConacytGenerationServiceTest {
         Example<DataStore> dataStoreFilter = Example.of(dsExample);
         List<DataStore> findAllDataStores = dataStoreRepository.findAll(dataStoreFilter);
         DataStore dataStore = findAllDataStores.get(0);
+        dataStore.setName("csv");
+        dataStore.setUrl("/home/daniel/git/kukulcan/src/test/resources/estaciones.csv");
         // Create DataModel
         DataModelContext dmCtx = new JavaDataModelContext(dataStore);
         // Create DataContext
