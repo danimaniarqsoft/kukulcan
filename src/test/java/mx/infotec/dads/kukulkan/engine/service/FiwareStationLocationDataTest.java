@@ -108,7 +108,7 @@ public class FiwareStationLocationDataTest {
         
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("stations", stations);
-        templateService.fillModel("orion", "fiware-orion-data/stations.ftl", input, BasePathEnum.SRC_MAIN_JAVA, "stations.js");
+        templateService.fillModel("orion", "fiware-orion-data/stations.ftl", input, BasePathEnum.SRC_MAIN_JAVA, "stations-others.js");
     }
 
 }
