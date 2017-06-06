@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.metamodel.DataContext;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ import mx.infotec.dads.kukulkan.engine.repository.RuleTypeRepository;
 import mx.infotec.dads.kukulkan.util.ArchetypeType;
 import mx.infotec.dads.kukulkan.util.DataMapping;
 import mx.infotec.dads.kukulkan.util.GenerationType;
+import mx.infotec.dads.kukulkan.util.H2FileDatabaseConfiguration;
 import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 
 /**
@@ -64,64 +66,70 @@ import mx.infotec.dads.kukulkan.util.InflectorProcessor;
 @DirtiesContext
 public class GenerationServiceTest {
 
-    @Autowired
-    private GenerationService generationService;
-    @Autowired
-    private DataStoreService dataStoreService;
-    @Autowired
-    private DataStoreRepository dataStoreRepository;
-    @Autowired
-    private RuleRepository ruleRepository;
-    @Autowired
-    private LayerTaskFactory layerTaskFactory;
-    @Autowired
-    private RuleTypeRepository ruleTypeRepository;
+	@Autowired
+	private GenerationService generationService;
+	@Autowired
+	private DataStoreService dataStoreService;
+	@Autowired
+	private DataStoreRepository dataStoreRepository;
+	@Autowired
+	private RuleRepository ruleRepository;
+	@Autowired
+	private LayerTaskFactory layerTaskFactory;
+	@Autowired
+	private RuleTypeRepository ruleTypeRepository;
 
-    @Test
-    public void generationService() throws Exception {
-        Rule rule = new Rule();
-        RuleType ruleType = ruleTypeRepository.findAll().get(0);
-        ruleType.setName("singular");
-        rule.setRuleType(ruleType);
-        Example<Rule> ruleExample = Example.of(rule);
-        List<Rule> rulesList = ruleRepository.findAll(ruleExample);
-        for (Rule item : rulesList) {
-            InflectorProcessor.getInstance().addSingularize(item.getExpression(), item.getReplacement());
-        }
-        // Create ProjectConfiguration
-        ProjectConfiguration pConf = new ProjectConfiguration();
-        pConf.setId("test-kukulkan");
-        pConf.setGroupId("mx.infotec.dads");
-        pConf.setVersion("1.0.0");
-        pConf.setPackaging("mx.infotec.dads.rsr");
-        pConf.setYear("2017");
-        pConf.setAuthor("KUKULKAN");
-        pConf.setWebLayerName("rest");
-        pConf.setServiceLayerName("service");
-        pConf.setDaoLayerName("repository");
-        pConf.setDomainLayerName("model");
-        pConf.setGlobalGenerationType(GenerationType.SEQUENCE);
-        // Create DataStore
-        // Create DataStore
-        DataStore dsExample = new DataStore();
-        dsExample.setName("h2-db-test");
-        Example<DataStore> dataStoreFilter = Example.of(dsExample);
-        List<DataStore> findAllDataStores = dataStoreRepository.findAll(dataStoreFilter);
-        DataStore dataStore = findAllDataStores.get(0);
-        // Create DataModel
-        DataModelContext dmCtx = new JavaDataModelContext(dataStore);
-        // Create DataContext
-        DataContext dataContext = dataStoreService.getDataContext(dataStore);
-        dmCtx.setDataContext(dataContext);
-        // Tables to process
-        List<String> tablesToProcess = new ArrayList<>();
-        // Mapping DataContext into DataModel
-        List<DataModelGroup> dmgList = DataMapping.createSingleDataModelGroupList(dmCtx.getDataContext(),
-                tablesToProcess);
-        dmCtx.setDataModelGroup(dmgList);
-        // Create GeneratorContext
-        GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);
-        // Process Activities
-        generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.REST_SPRING_JPA));
-    }
+	@BeforeClass
+	public static void runOnceBeforeClass() {
+		H2FileDatabaseConfiguration.run();
+	}
+
+	@Test
+	public void generationService() throws Exception {
+		Rule rule = new Rule();
+		RuleType ruleType = ruleTypeRepository.findAll().get(0);
+		ruleType.setName("singular");
+		rule.setRuleType(ruleType);
+		Example<Rule> ruleExample = Example.of(rule);
+		List<Rule> rulesList = ruleRepository.findAll(ruleExample);
+		for (Rule item : rulesList) {
+			InflectorProcessor.getInstance().addSingularize(item.getExpression(), item.getReplacement());
+		}
+		// Create ProjectConfiguration
+		ProjectConfiguration pConf = new ProjectConfiguration();
+		pConf.setId("test-kukulkan");
+		pConf.setGroupId("mx.infotec.dads");
+		pConf.setVersion("1.0.0");
+		pConf.setPackaging("mx.infotec.dads.rsr");
+		pConf.setYear("2017");
+		pConf.setAuthor("KUKULKAN");
+		pConf.setWebLayerName("rest");
+		pConf.setServiceLayerName("service");
+		pConf.setDaoLayerName("repository");
+		pConf.setDomainLayerName("model");
+		pConf.setGlobalGenerationType(GenerationType.SEQUENCE);
+		// Create DataStore
+		// Create DataStore
+		DataStore dsExample = new DataStore();
+		dsExample.setName("h2-db-test");
+		Example<DataStore> dataStoreFilter = Example.of(dsExample);
+		List<DataStore> findAllDataStores = dataStoreRepository.findAll(dataStoreFilter);
+		DataStore dataStore = findAllDataStores.get(0);
+		// Create DataModel
+		DataModelContext dmCtx = new JavaDataModelContext(dataStore);
+		// Create DataContext
+		DataContext dataContext = dataStoreService.getDataContext(dataStore);
+		dmCtx.setDataContext(dataContext);
+		// Tables to process
+		List<String> tablesToProcess = new ArrayList<>();
+		// Mapping DataContext into DataModel
+		List<DataModelGroup> dmgList = DataMapping.createSingleDataModelGroupList(dmCtx.getDataContext(),
+				tablesToProcess);
+		dmCtx.setDataModelGroup(dmgList);
+		// Create GeneratorContext
+		GeneratorContext genCtx = new GeneratorContext(dmCtx, pConf);
+		// Process Activities
+		generationService.process(genCtx, layerTaskFactory.getLayerTaskSet(ArchetypeType.REST_SPRING_JPA));
+		System.out.println("updating values");
+	}
 }
